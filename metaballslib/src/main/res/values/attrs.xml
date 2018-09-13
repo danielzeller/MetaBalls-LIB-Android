@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MetaBallsMenu">
+
+        <attr name="radius" format="dimension"/>
+
+        <attr name="delay_between_items_animation" format="integer"/>
+        <attr name="open_animation_duration" format="integer"/>
+        <attr name="close_animation_duration" format="integer"/>
+        <attr name="open_interpolator_resource" format="reference"/>
+        <attr name="close_interpolator_resource" format="reference"/>
+        <attr name="angle_between_menu_items" format="float"/>
+        <attr name="main_button_icon" format="reference"/>
+        <attr name="main_button_color" format="color"/>
+        <attr name="main_button_icon_color" format="color"/>
+
+        <attr name="position_grvity" format="enum">
+            <enum name="center" value="0"/>
+            <enum name="top_left" value="1"/>
+            <enum name="top_right" value="2"/>
+            <enum name="bottom_left" value="3"/>
+            <enum name="bottom_right" value="4"/>
+        </attr>
+
+    </declare-styleable>
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="menu_item_size">102dp</dimen>
+    <dimen name="main_button_size">133dp</dimen>
+    <dimen name="menu_item_padding">38dp</dimen>
+    <dimen name="main_button_padding">55dp</dimen>
+    <dimen name="default_radius">100dp</dimen>
+    <dimen name="close_line_stroke">2dp</dimen>
+    <dimen name="menu_item_touch_area_size">70dp</dimen>
+    <dimen name="main_button_touch_area_size">70dp</dimen>
+    <dimen name="margins_to_compensate_cutoff">-25dp</dimen>
+</resources>
