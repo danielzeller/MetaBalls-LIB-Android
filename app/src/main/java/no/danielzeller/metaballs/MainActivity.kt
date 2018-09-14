@@ -4,19 +4,19 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
-import no.danielzeller.metaballslib.CircularMenu
+import no.danielzeller.metaballslib.MetaBallMenuBase
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main2)
 
         initializeAdaper(createSmallMenuItemList(), R.id.circularMenuTopRight)
         initializeAdaper(createSmallMenuItemList(), R.id.circularMenuTopLeft)
         initializeAdaper(createSmallMenuItemList(), R.id.circularMenuBottomRight)
         initializeAdaper(createSmallMenuItemList(), R.id.circularMenuBottomLeft)
-        initializeAdaper(createLargeMenuItemList(), R.id.circularMenuCenter)
+        initializeAdaper(createSmallMenuItemList(), R.id.circularMenuCenter)
 
     }
 
@@ -38,12 +38,13 @@ class MainActivity : AppCompatActivity() {
         menuItem2.add(MenuItem(resources.getColor(R.color.colorAccent), resources.getDrawable(R.drawable.facebook_animation, null), Color.WHITE))
         menuItem2.add(MenuItem(resources.getColor(R.color.colorPrimary), resources.getDrawable(R.drawable.instagram_animation, null), Color.WHITE))
         menuItem2.add(MenuItem(resources.getColor(R.color.colorAccent), resources.getDrawable(R.drawable.twitter_animation, null), Color.WHITE))
+        menuItem2.add(MenuItem(resources.getColor(R.color.colorPrimary), resources.getDrawable(R.drawable.linkedin_animation, null), Color.WHITE))
         return menuItem2
     }
 
     private fun initializeAdaper(menuItem1: ArrayList<MenuItem>, viewId: Int) {
-        val circularTopRight = findViewById<CircularMenu>(viewId)
-        circularTopRight.adapter = CircularMenuAdapter(menuItem1)
+        val circularTopRight = findViewById<MetaBallMenuBase>(viewId)
+        circularTopRight.adapter = MetaBallMenuAdapter(menuItem1)
         circularTopRight.onItemSelectedListener = { index ->
             Toast.makeText(baseContext, "Clicked: " + index, Toast.LENGTH_LONG).show()
             circularTopRight.toggleMenu()

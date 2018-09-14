@@ -6,7 +6,8 @@ import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.view.animation.PathInterpolator
 
-class OpenCloseDrawable(val iconDawable: Drawable?, val iconColor: Int, context: Context) : Drawable() {
+class OpenCloseDrawable(var iconDawable: Drawable?, iconColor: Int, context: Context) : Drawable() {
+
     private val paint = Paint()
     private val closeLineRectF = RectF()
     private val iconBounds = Rect()
