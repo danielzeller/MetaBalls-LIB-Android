@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="#4F4F4F">
 
     <no.danielzeller.metaballslib.menu.DirectionalMenu
         android:id="@+id/circularMenuTopRight"
@@ -106,5 +107,22 @@
         app:main_button_icon_color="@color/white"
         app:position_grvity="center"
         />
+    <no.danielzeller.metaballslib.spinner.Spinner
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <no.danielzeller.metaballslib.spinner.Spinner
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        app:colors_array_id="@array/gradient_spinner_colors"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.084" />
 
 </android.support.constraint.ConstraintLayout>

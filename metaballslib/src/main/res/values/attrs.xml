@@ -2,7 +2,6 @@
 <resources>
     <declare-styleable name="MetaBallsMenu">
 
-
         <!-- Shared between CircularMenu and DirectionMenu -->
         <attr name="delay_between_items_animation" format="integer"/>
         <attr name="open_animation_duration" format="integer"/>
@@ -31,6 +30,10 @@
             <enum name="horizontal" value="0"/>
             <enum name="vertical" value="1"/>
         </attr>
+    </declare-styleable>
 
+
+    <declare-styleable name="MetaBallsSpinner">
+        <attr name="colors_array_id" format="reference"/>
     </declare-styleable>
 </resources>

@@ -4,5 +4,17 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
+    <color name="spinner_test1">#FDEFF9</color>
+    <color name="spinner_test2">#F59ADD</color>
+    <color name="spinner_test3">#EC38BC</color>
+    <color name="spinner_test4">#7303C0</color>
+    <color name="spinner_test5">#03001E</color>
+
+    <array name="gradient_spinner_colors">
+        <item>@color/spinner_test1</item>
+        <item>@color/spinner_test2</item>
+        <item>@color/spinner_test3</item>
+        <item>@color/spinner_test4</item>
+        <item>@color/spinner_test5</item>
+    </array>
 </resources>
