@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.graphics.*
 import android.graphics.drawable.Drawable
+import android.view.View
 import android.view.animation.Animation
 import android.view.animation.PathInterpolator
 
@@ -24,7 +25,7 @@ class CircularSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray) :
 
     fun startAnimations() {
         ballSize = (bounds.width() * 0.19f).toInt()
-        animateBallSize(0, ballSize, 300)
+        animateBallSize(0, ballSize, 300, null)
         for (i in 0 until 5) {
             renderables.add(Renderable(0f, 0f))
             animateDrawable(i)
@@ -38,7 +39,7 @@ class CircularSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray) :
         sizeAnim?.cancel()
     }
 
-    fun stopAndHide() {
+    fun stopAndHide(spinner: View) {
         var animatedFractionMin = 100000f
         var lastRunningAnimIndex = 0
         for (i in 0 until animations.count()) {
@@ -55,13 +56,13 @@ class CircularSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray) :
         }
         animations[lastRunningAnimIndex].addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator?) {
-                animateBallSize(ballSize, 0, 700)
+                animateBallSize(ballSize, 0, 700, spinner)
             }
         })
 
     }
 
-    fun animateBallSize(from: Int, to: Int, duration: Long) {
+    fun animateBallSize(from: Int, to: Int, duration: Long, spinner: View?) {
         sizeAnim?.cancel()
         sizeAnim = ValueAnimator.ofInt(from, to).setDuration(duration)
         sizeAnim?.interpolator = PathInterpolator(.88f, 0f, .15f, 1f)
@@ -69,6 +70,13 @@ class CircularSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray) :
             ballSize = animation.animatedValue as Int
             metaBall.setBounds(-ballSize, -ballSize, ballSize, ballSize)
         }
+        if (spinner != null)
+            sizeAnim?.addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationRepeat(animation: Animator?) {
+                    super.onAnimationRepeat(animation)
+                    spinner.visibility = View.GONE
+                }
+            })
         sizeAnim?.start()
     }
 
@@ -125,8 +133,6 @@ class CircularSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray) :
     override fun setColorFilter(colorFilter: ColorFilter?) {
 
     }
-
-
 }
 
 class Renderable(var pathPercent: Float, var scale: Float)

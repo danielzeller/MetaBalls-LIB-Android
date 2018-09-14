@@ -29,7 +29,7 @@ enum class PositionGravity {
 abstract class MetaBallMenuBase : FrameLayout {
 
     /**
-     * @property adapter
+     *
      * Sets the data behind this Menu.
      */
     var adapter: MetaBallAdapter = EmptyAdapter()

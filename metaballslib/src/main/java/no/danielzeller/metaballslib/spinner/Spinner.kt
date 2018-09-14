@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.graphics.Paint
+import android.os.Handler
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
@@ -45,6 +46,9 @@ class Spinner : FrameLayout {
         circularSpinnerDrawable = CircularSpinnerDrawable(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray)
         spinnerImageView.setImageDrawable(circularSpinnerDrawable)
         addView(spinnerImageView, FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT))
+        Handler().postDelayed({
+            stopAnimated()
+        },9000)
     }
 
     override fun onVisibilityChanged(changedView: View, visibility: Int) {
@@ -54,6 +58,15 @@ class Spinner : FrameLayout {
         } else {
             circularSpinnerDrawable.stopAllAnimations()
         }
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        circularSpinnerDrawable.stopAllAnimations()
+    }
+
+    fun stopAnimated() {
+        circularSpinnerDrawable.stopAndHide(this)
     }
 
     private fun createMetaBallsPaint(): Paint {
