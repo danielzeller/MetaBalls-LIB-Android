@@ -1,32 +1,24 @@
-package no.danielzeller.metaballslib
+package no.danielzeller.metaballslib.menu
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
+import no.danielzeller.metaballslib.R
 
+enum class ExpandDirection {
+    EXPAND_DIRECTION_HORIZONTAL, EXPAND_DIRECTION_VERTICAL
+}
 
 class DirectionalMenu : MetaBallMenuBase {
-
-    companion object {
-        const val EXPAND_DIRECTION_HORIZONTAL = 0
-        const val EXPAND_DIRECTION_VERTICAL = 1
-    }
 
 
     /**
      *
-     * In what direction should the menu expand? Must be either
-     * DirectionalMenu.EXPAND_DIRECTION_HORIZONTAL or DirectionalMenu.EXPAND_DIRECTION_VERTICAL
+     * In what direction should the menu expand?
      */
-    var expandDirection = EXPAND_DIRECTION_VERTICAL
-        set(value) {
-            if (!(value == EXPAND_DIRECTION_HORIZONTAL || value == EXPAND_DIRECTION_VERTICAL))
-                throw IllegalStateException("expandDirection must be either " +
-                        "DirectionalMenu.EXPAND_DIRECTION_HORIZONTAL or " +
-                        "DirectionalMenu.EXPAND_DIRECTION_VERTICAL")
-            field = value
-        }
+    lateinit var expandDirection : ExpandDirection//This really does'nt be a letinit, but at
+    //the  moment there is a bug in the compiler that freezes it to ehatever value set here -_-
 
 
     /**
@@ -46,12 +38,22 @@ class DirectionalMenu : MetaBallMenuBase {
                 R.styleable.MetaBallsMenu,
                 0, 0)
         try {
-            expandDirection = typedArray.getInteger(R.styleable.MetaBallsMenu_expand_direction, EXPAND_DIRECTION_VERTICAL)
+            val intValue = typedArray.getInteger(R.styleable.MetaBallsMenu_expand_direction, 1)
+            expandDirection = convertToEnum(intValue)
             marginBetweenMenuItems = typedArray.getLayoutDimension(R.styleable.MetaBallsMenu_margin_between_menu_items, resources.getDimension(R.dimen.default_margin_between_menu_items).toInt())
         } finally {
             typedArray.recycle()
         }
     }
+
+    fun convertToEnum(intValue: Int): ExpandDirection {
+        if (ExpandDirection.EXPAND_DIRECTION_HORIZONTAL.ordinal == intValue) {
+            return ExpandDirection.EXPAND_DIRECTION_HORIZONTAL
+        }
+
+        return ExpandDirection.EXPAND_DIRECTION_VERTICAL
+    }
+
 
     override fun openMenu() {
         stopAllRunningAnimations()
@@ -94,23 +96,23 @@ class DirectionalMenu : MetaBallMenuBase {
     }
 
     private fun getStartAngle(): Float {
-        if (positionGravity == PositionGravity.BOTTOM_LEFT && expandDirection == EXPAND_DIRECTION_VERTICAL)
+        if (positionGravity == PositionGravity.BOTTOM_LEFT && expandDirection == ExpandDirection.EXPAND_DIRECTION_VERTICAL)
             return 270f
-        else if (positionGravity == PositionGravity.BOTTOM_LEFT && expandDirection == EXPAND_DIRECTION_HORIZONTAL)
+        else if (positionGravity == PositionGravity.BOTTOM_LEFT && expandDirection == ExpandDirection.EXPAND_DIRECTION_HORIZONTAL)
             return 0f
-        else if (positionGravity == PositionGravity.BOTTOM_RIGHT && expandDirection == EXPAND_DIRECTION_HORIZONTAL)
+        else if (positionGravity == PositionGravity.BOTTOM_RIGHT && expandDirection == ExpandDirection.EXPAND_DIRECTION_HORIZONTAL)
             return 180f
-        else if (positionGravity == PositionGravity.BOTTOM_RIGHT && expandDirection == EXPAND_DIRECTION_VERTICAL)
+        else if (positionGravity == PositionGravity.BOTTOM_RIGHT && expandDirection == ExpandDirection.EXPAND_DIRECTION_VERTICAL)
             return 270f
-        else if (positionGravity == PositionGravity.TOP_RIGHT && expandDirection == EXPAND_DIRECTION_VERTICAL)
+        else if (positionGravity == PositionGravity.TOP_RIGHT && expandDirection == ExpandDirection.EXPAND_DIRECTION_VERTICAL)
             return 90f
-        else if (positionGravity == PositionGravity.TOP_RIGHT && expandDirection == EXPAND_DIRECTION_HORIZONTAL)
+        else if (positionGravity == PositionGravity.TOP_RIGHT && expandDirection == ExpandDirection.EXPAND_DIRECTION_HORIZONTAL)
             return 180f
-        else if (positionGravity == PositionGravity.TOP_LEFT && expandDirection == EXPAND_DIRECTION_HORIZONTAL)
+        else if (positionGravity == PositionGravity.TOP_LEFT && expandDirection == ExpandDirection.EXPAND_DIRECTION_HORIZONTAL)
             return 0f
-        else if (positionGravity == PositionGravity.TOP_LEFT && expandDirection == EXPAND_DIRECTION_VERTICAL)
+        else if (positionGravity == PositionGravity.TOP_LEFT && expandDirection == ExpandDirection.EXPAND_DIRECTION_VERTICAL)
             return 90f
-        else if (positionGravity == PositionGravity.CENTER && expandDirection == EXPAND_DIRECTION_VERTICAL)
+        else if (positionGravity == PositionGravity.CENTER && expandDirection == ExpandDirection.EXPAND_DIRECTION_VERTICAL)
             return 90f
         else return 0f
     }

@@ -1,4 +1,4 @@
-package no.danielzeller.metaballslib
+package no.danielzeller.metaballslib.menu
 
 import android.animation.AnimatorInflater
 import android.animation.ObjectAnimator
@@ -19,6 +19,7 @@ import android.view.animation.LinearInterpolator
 import android.view.animation.PathInterpolator
 import android.widget.FrameLayout
 import android.widget.ImageView
+import no.danielzeller.metaballslib.R
 
 
 enum class PositionGravity {

@@ -1,4 +1,4 @@
-package no.danielzeller.metaballslib
+package no.danielzeller.metaballslib.menu
 
 import android.content.Context
 import android.graphics.Rect

@@ -1,7 +1,7 @@
 package no.danielzeller.metaballs
 
 import android.graphics.drawable.Drawable
-import no.danielzeller.metaballslib.MetaBallAdapter
+import no.danielzeller.metaballslib.menu.MetaBallAdapter
 
 class MetaBallMenuAdapter(val drawables: List<MenuItem>) : MetaBallAdapter {
     override fun menuItemIconTint(index: Int): Int {

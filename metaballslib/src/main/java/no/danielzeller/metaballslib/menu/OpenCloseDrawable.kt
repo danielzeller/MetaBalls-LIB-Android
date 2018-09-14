@@ -1,10 +1,11 @@
-package no.danielzeller.metaballslib
+package no.danielzeller.metaballslib.menu
 
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.view.animation.PathInterpolator
+import no.danielzeller.metaballslib.R
 
 class OpenCloseDrawable(var iconDawable: Drawable?, iconColor: Int, context: Context) : Drawable() {
 

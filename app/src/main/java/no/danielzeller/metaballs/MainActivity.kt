@@ -3,8 +3,7 @@ package no.danielzeller.metaballs
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.widget.Toast
-import no.danielzeller.metaballslib.MetaBallMenuBase
+import no.danielzeller.metaballslib.menu.DirectionalMenu
 
 class MainActivity : AppCompatActivity() {
 
@@ -43,10 +42,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initializeAdaper(menuItem1: ArrayList<MenuItem>, viewId: Int) {
-        val circularTopRight = findViewById<MetaBallMenuBase>(viewId)
+        val circularTopRight = findViewById<DirectionalMenu>(viewId)
         circularTopRight.adapter = MetaBallMenuAdapter(menuItem1)
         circularTopRight.onItemSelectedListener = { index ->
-            Toast.makeText(baseContext, "Clicked: " + index, Toast.LENGTH_LONG).show()
             circularTopRight.toggleMenu()
         }
     }

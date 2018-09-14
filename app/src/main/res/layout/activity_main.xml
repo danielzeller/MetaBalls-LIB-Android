@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <no.danielzeller.metaballslib.CircularMenu
+    <no.danielzeller.metaballslib.menu.CircularMenu
         android:id="@+id/circularMenuTopRight"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -28,7 +28,7 @@
         app:main_button_color = "@color/default_metaballs_color"
         app:main_button_icon_color = "@color/white"
         />
-    <no.danielzeller.metaballslib.CircularMenu
+    <no.danielzeller.metaballslib.menu.CircularMenu
         android:id="@+id/circularMenuTopLeft"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -51,7 +51,7 @@
         app:main_button_icon_color = "@color/white"
         />
 
-    <no.danielzeller.metaballslib.CircularMenu
+    <no.danielzeller.metaballslib.menu.CircularMenu
         android:id="@+id/circularMenuBottomLeft"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -73,7 +73,7 @@
         app:main_button_color = "@color/default_metaballs_color"
         app:main_button_icon_color = "@color/white"
         />
-    <no.danielzeller.metaballslib.CircularMenu
+    <no.danielzeller.metaballslib.menu.CircularMenu
         android:id="@+id/circularMenuBottomRight"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -91,7 +91,7 @@
         app:main_button_color = "@color/default_metaballs_color"
         app:main_button_icon_color = "@color/white"
         />
-    <no.danielzeller.metaballslib.CircularMenu
+    <no.danielzeller.metaballslib.menu.CircularMenu
         android:id="@+id/circularMenuCenter"
         android:layout_width="0dp"
         android:layout_height="0dp"

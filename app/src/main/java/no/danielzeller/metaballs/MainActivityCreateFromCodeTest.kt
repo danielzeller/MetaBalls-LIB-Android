@@ -7,9 +7,9 @@ import android.support.v7.app.AppCompatActivity
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import android.widget.Toast
-import no.danielzeller.metaballslib.DirectionalMenu
-import no.danielzeller.metaballslib.MetaBallMenuBase
-import no.danielzeller.metaballslib.PositionGravity
+import no.danielzeller.metaballslib.menu.DirectionalMenu
+import no.danielzeller.metaballslib.menu.MetaBallMenuBase
+import no.danielzeller.metaballslib.menu.PositionGravity
 
 class MainActivityCreateFromCodeTest : AppCompatActivity() {
 
@@ -27,7 +27,6 @@ class MainActivityCreateFromCodeTest : AppCompatActivity() {
     }
 
     private fun testSetters(directionalMenu: DirectionalMenu) {
-        directionalMenu.expandDirection = DirectionalMenu.EXPAND_DIRECTION_HORIZONTAL
         directionalMenu.marginBetweenMenuItems = (50f * resources.displayMetrics.density).toInt()
 
         directionalMenu.mainButtonIconColor = Color.BLUE

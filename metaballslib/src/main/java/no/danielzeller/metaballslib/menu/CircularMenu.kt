@@ -1,8 +1,9 @@
-package no.danielzeller.metaballslib
+package no.danielzeller.metaballslib.menu
 
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.ImageView
+import no.danielzeller.metaballslib.R
 
 
 class CircularMenu : MetaBallMenuBase {
