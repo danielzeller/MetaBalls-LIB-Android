@@ -12,28 +12,28 @@ import android.view.View
 import android.view.animation.PathInterpolator
 
 
-class BlobDrawable(val metaBall: Drawable, val tinColors: IntArray) : Drawable() {
+class BlobSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray) : Drawable(), SpinnerDrawable {
 
     private val motion: ArrayList<BrownianMotion> = ArrayList()
     private var ballSize = 0
     private var sizeAnim: ValueAnimator? = null
 
-    fun startAnimations() {
+    override fun startAnimations() {
         ballSize = (bounds.width() * 0.25f).toInt()
         animateBallSize(0, ballSize, 300, null)
         val boundsSizeX = bounds.width().toFloat()
         val boundsSizeY = bounds.height().toFloat()
         motion.clear()
         for (i in 0 until 5) {
-            motion.add(BrownianMotion(Vector3(boundsSizeX*0.8f, boundsSizeY*0.8f, 1000f)))
+            motion.add(BrownianMotion(Vector3(boundsSizeX * 0.8f, boundsSizeY * 0.8f, 1000f)))
         }
     }
 
-    fun stopAllAnimations() {
+    override fun stopAllAnimations() {
         sizeAnim?.cancel()
     }
 
-    fun stopAndHide(spinner: View) {
+    override fun stopAndHide(spinner: View) {
         animateBallSize(ballSize, 0, 700, spinner)
     }
 
