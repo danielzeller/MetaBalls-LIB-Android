@@ -1,4 +1,4 @@
-package no.danielzeller.metaballslib.spinner
+package no.danielzeller.metaballslib.spinner.drawables
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -10,6 +10,8 @@ import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.animation.PathInterpolator
+import no.danielzeller.metaballslib.spinner.BrownianMotion
+import no.danielzeller.metaballslib.spinner.Vector3
 
 
 class BlobSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray) : Drawable(), SpinnerDrawable {

@@ -1,9 +1,10 @@
-package no.danielzeller.metaballslib.spinner
+package no.danielzeller.metaballslib.spinner.drawables
 
 import android.graphics.Canvas
 import android.graphics.ColorFilter
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
+import no.danielzeller.metaballslib.spinner.FrameRateCounter
 
 class DropDrawable(val metaDrawable: Drawable) : Drawable() {
 
@@ -17,18 +18,18 @@ class DropDrawable(val metaDrawable: Drawable) : Drawable() {
     var y3 = 0f
     var ballSize = 0
     val frameRate = FrameRateCounter()
-    val EASE_SPEED = 25f
-    val EASE_SPEED_LAST = 35f
+    var easeSpeed = 25f
+    var easeSpeedLast = 35f
     var pathPercent: Float = 0f
 
     override fun draw(canvas: Canvas) {
         val deltaTime = frameRate.timeStep()
-        x1 += ((x - x1) * EASE_SPEED) * deltaTime
-        y1 += ((y - y1) * EASE_SPEED) * deltaTime
-        x2 += ((x1 - x2) * EASE_SPEED) * deltaTime
-        y2 += ((y1 - y2) * EASE_SPEED) * deltaTime
-        x3 += ((x2 - x3) * EASE_SPEED_LAST) * deltaTime
-        y3 += ((y2 - y3) * EASE_SPEED_LAST) * deltaTime
+        x1 += ((x - x1) * easeSpeed) * deltaTime
+        y1 += ((y - y1) * easeSpeed) * deltaTime
+        x2 += ((x1 - x2) * easeSpeed) * deltaTime
+        y2 += ((y1 - y2) * easeSpeed) * deltaTime
+        x3 += ((x2 - x3) * easeSpeedLast) * deltaTime
+        y3 += ((y2 - y3) * easeSpeedLast) * deltaTime
 
         drawBall(canvas, x, y, 1f)
         drawBall(canvas, x1, y1, 0.7f)

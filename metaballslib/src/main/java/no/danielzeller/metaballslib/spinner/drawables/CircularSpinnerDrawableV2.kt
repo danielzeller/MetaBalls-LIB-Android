@@ -1,4 +1,4 @@
-package no.danielzeller.metaballslib.spinner
+package no.danielzeller.metaballslib.spinner.drawables
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -8,12 +8,13 @@ import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.PathInterpolator
+import no.danielzeller.metaballslib.spinner.FrameRateCounter
 
 
-class CircularSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray) : Drawable(),SpinnerDrawable {
+class CircularSpinnerDrawableV2(val metaBallGradient: Drawable, val tinColors: IntArray) : Drawable(), SpinnerDrawable {
 
     private val path = Path()
-    private val renderables: ArrayList<Renderable> = ArrayList()
+    private val dropDrawables: ArrayList<DropDrawable> = ArrayList()
     private val animations: ArrayList<ValueAnimator> = ArrayList()
     private val aCoordinates = floatArrayOf(0f, 0f)
     lateinit var pathMeasure: PathMeasure
@@ -21,13 +22,18 @@ class CircularSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray) :
     private var circleScale = 0f
     private var ballSize = 0
     private var sizeAnim: ValueAnimator? = null
+    private var rotation = 0f
+    private var framerate = FrameRateCounter()
+    private val ROTATE_SPEED = 40f
+    private val BALL_SIZE = 0.21f
 
-
-   override fun startAnimations() {
-        ballSize = (bounds.width() * 0.19f).toInt()
+    override fun startAnimations() {
+        framerate.timeStep()
+        ballSize = (bounds.width() * BALL_SIZE).toInt()
         animateBallSize(0, ballSize, 300, null)
+        dropDrawables.clear()
         for (i in 0 until 5) {
-            renderables.add(Renderable(0f, 0f))
+            dropDrawables.add(DropDrawable(metaBallGradient))
             animateDrawable(i)
         }
     }
@@ -68,7 +74,9 @@ class CircularSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray) :
         sizeAnim?.interpolator = PathInterpolator(.88f, 0f, .15f, 1f)
         sizeAnim?.addUpdateListener { animation ->
             ballSize = animation.animatedValue as Int
-            metaBall.setBounds(-ballSize, -ballSize, ballSize, ballSize)
+            for (dropDrawable in dropDrawables) {
+                dropDrawable.ballSize = ballSize
+            }
         }
         if (spinner != null)
             sizeAnim?.addListener(object : AnimatorListenerAdapter() {
@@ -82,26 +90,27 @@ class CircularSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray) :
 
     fun animateDrawable(i: Int) {
         val anim = ValueAnimator.ofFloat(0f, 1f).setDuration(1800)
-        anim.startDelay = (130 * i).toLong()
+        anim.startDelay = (170 * i).toLong()
         anim.interpolator = PathInterpolator(.65f, .14f, .17f, 1f)
         anim.repeatCount = Animation.INFINITE
         anim.addUpdateListener { animation ->
-            renderables[i].pathPercent = animation.animatedValue as Float
+            dropDrawables[i].pathPercent = animation.animatedValue as Float
         }
         animations.add(anim)
         anim.start()
     }
 
     override fun draw(canvas: Canvas) {
-        canvas.rotate(-90f, bounds.width().toFloat() / 2f, bounds.height().toFloat() / 2f)
+        canvas.rotate(rotation, bounds.width().toFloat() / 2f, bounds.height().toFloat() / 2f)
+        rotation += ROTATE_SPEED * framerate.timeStep()
+
         for (i in 0 until 5) {
-            val renderable = renderables.get(i)
-            pathMeasure.getPosTan(pathMeasure.length * renderable.pathPercent, aCoordinates, null)
-            val count = canvas.save()
-            canvas.translate(aCoordinates[0], aCoordinates[1])
-            metaBall.setTint(tinColors[i])
-            metaBall.draw(canvas)
-            canvas.restoreToCount(count)
+            val dropDrawable = dropDrawables.get(i)
+            pathMeasure.getPosTan(pathMeasure.length * dropDrawable.pathPercent, aCoordinates, null)
+            dropDrawable.setTint(tinColors[i])
+            dropDrawable.x = aCoordinates[0]
+            dropDrawable.y = aCoordinates[1]
+            dropDrawable.draw(canvas)
         }
         invalidateSelf()
     }
@@ -109,8 +118,11 @@ class CircularSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray) :
 
     override fun onBoundsChange(bounds: Rect) {
         super.onBoundsChange(bounds)
-        ballSize = (bounds.width() * 0.19f).toInt()
-        circleScale = bounds.width() - (ballSize * 1.5f)
+        for (dropDrawable in dropDrawables) {
+            dropDrawable.bounds = bounds
+        }
+        ballSize = (bounds.width() * BALL_SIZE).toInt()
+        circleScale = bounds.width() - (ballSize * 1.2f)
         createPath()
         startAnimations()
     }
@@ -134,5 +146,3 @@ class CircularSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray) :
 
     }
 }
-
-class Renderable(var pathPercent: Float, var scale: Float)

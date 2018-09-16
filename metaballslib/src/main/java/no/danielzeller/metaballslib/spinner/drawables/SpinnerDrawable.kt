@@ -1,4 +1,4 @@
-package no.danielzeller.metaballslib.spinner
+package no.danielzeller.metaballslib.spinner.drawables
 
 import android.view.View
 

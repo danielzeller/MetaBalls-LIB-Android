@@ -12,6 +12,7 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.FrameLayout
 import android.widget.ImageView
 import no.danielzeller.metaballslib.R
+import no.danielzeller.metaballslib.spinner.drawables.*
 
 
 enum class SpinnerType {
@@ -67,7 +68,7 @@ class Spinner : FrameLayout {
         } else if (spinnerType == SpinnerType.BLOBS) {
             return BlobSpinnerDrawable(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray)
         }
-        return CircularSpinnerDrawable(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray)
+        return JumpingDotSpinnerDrawable(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray)
     }
 
     override fun onVisibilityChanged(changedView: View, visibility: Int) {
