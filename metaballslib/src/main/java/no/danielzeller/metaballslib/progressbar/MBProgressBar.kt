@@ -186,7 +186,6 @@ class MBProgressBar : FrameLayout {
     }
 
     private fun rebuildDrawable() {
-        Log.e("dsds","STARTEROOO"+mbProgressBarType)
         progressDrawable?.stopAllAnimations()
         progressDrawable = createSpinnerDrawable()
         spinnerImageView.setImageDrawable(progressDrawable)

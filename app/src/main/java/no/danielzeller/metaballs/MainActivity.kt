@@ -42,6 +42,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun testSpinners(isDrop: Boolean, isRotate: Boolean, type: MBProgressBarType,   spinner: MBProgressBar): Runnable {
+//        return Runnable {
+//            spinner.visibility = View.GONE
+//            spinner.isDropDrawable = isDrop
+//            spinner.isRotate = isRotate
+//            spinner.mbProgressBarType = type
+//            Handler().postDelayed({
+//                spinner.visibility = View.VISIBLE
+//            },10)
+//
+//        }
         return Runnable {
             spinner.stopAnimated(object : SpinneHiddenListener {
                 override fun onSpinnHidden(spinne: View) {

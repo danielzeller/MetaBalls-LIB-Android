@@ -64,7 +64,6 @@ class ProgressBlobDrawable(val metaBall: Drawable, val tinColors: IntArray, val 
                     super.onAnimationEnd(animation)
                     spinner.visibility = View.GONE
                     spinnerHiddenListener?.onSpinnHidden(spinner)
-                    Log.e("CALLBACK HER","YES YES")
                 }
             })
         }
