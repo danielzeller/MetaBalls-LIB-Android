@@ -23,7 +23,8 @@ class CircularSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray) :
     private var sizeAnim: ValueAnimator? = null
 
 
-   override fun startAnimations() {
+    override fun startAnimations() {
+        stopAllAnimations()
         ballSize = (bounds.width() * 0.19f).toInt()
         animateBallSize(0, ballSize, 300, null)
         for (i in 0 until 5) {

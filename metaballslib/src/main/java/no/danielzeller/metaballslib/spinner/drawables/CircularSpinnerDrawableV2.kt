@@ -28,6 +28,7 @@ class CircularSpinnerDrawableV2(val metaBallGradient: Drawable, val tinColors: I
     private val BALL_SIZE = 0.21f
 
     override fun startAnimations() {
+        stopAllAnimations()
         framerate.timeStep()
         ballSize = (bounds.width() * BALL_SIZE).toInt()
         animateBallSize(0, ballSize, 300, null)

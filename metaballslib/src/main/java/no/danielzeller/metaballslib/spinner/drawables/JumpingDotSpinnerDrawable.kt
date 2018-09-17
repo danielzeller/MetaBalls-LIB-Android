@@ -19,6 +19,11 @@ class JumpingDotSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray)
     private var dropDrawable: DropDrawable
     private val aCoordinates = floatArrayOf(0f, 0f)
     private val BALLSIZE = 0.23f
+    private val JUMP_DURATION = 600L
+    private var pathStartX = 0f
+    private var pathStartY = 0f
+    private var pathCenterX = 0f
+    private var pathEndX = 0f
 
     init {
         dropDrawable = DropDrawable(metaBall)
@@ -27,22 +32,20 @@ class JumpingDotSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray)
     }
 
     override fun startAnimations() {
-        ballSize = (bounds.width() *BALLSIZE).toInt()
+        ballSize = (bounds.width() * BALLSIZE).toInt()
         stopAllAnimations()
         animateBallSize(0, ballSize, 300, null)
-        jumpinAnimationGroup()
+        startJumpingSequence()
     }
 
-    fun jumpinAnimationGroup() {
-        animateJumping(0, 600, 0f, 0.5f)
-        animateJumping(600, 600, 0.5f, 1f)
-        animateJumping(1200, 600, 1f, 0.5f)
-        animateJumping(1800, 600, 0.5f, 0f).addListener(object : AnimatorListenerAdapter() {
+    fun startJumpingSequence() {
+        animateJumping(0, JUMP_DURATION, 0f, 0.5f)
+        animateJumping(JUMP_DURATION, JUMP_DURATION, 0.5f, 1f)
+        animateJumping(JUMP_DURATION * 2, JUMP_DURATION, 1f, 0.5f)
+        animateJumping(JUMP_DURATION * 3, JUMP_DURATION, 0.5f, 0f).addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator?) {
-                for (animation in animations)
-                    animation.cancel()
-                animations.clear()
-                jumpinAnimationGroup()
+                stopJumpingAnimations()
+                startJumpingSequence()
             }
         })
     }
@@ -52,38 +55,26 @@ class JumpingDotSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray)
         anim.startDelay = startDelay
         anim.interpolator = PathInterpolator(0f, .6f, 1f, .5f)
         anim.addUpdateListener { animation -> dropDrawable.pathPercent = animation.animatedValue as Float }
+        animations.add(anim)
         anim.start()
         return anim
     }
 
     override fun stopAllAnimations() {
-        for (animation in animations)
-            animation.cancel()
-        animations.clear()
+        stopJumpingAnimations()
         sizeAnim?.cancel()
     }
 
-    override fun stopAndHide(spinner: View) {
-        var animatedFractionMin = 100000f
-        var lastRunningAnimIndex = 0
-        for (i in 0 until animations.count()) {
-            animations[i].addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationRepeat(animation: Animator?) {
-                    super.onAnimationRepeat(animation)
-                    animations[i].cancel()
-                }
-            })
-            if (animations[i].animatedFraction > animatedFractionMin) {
-                animatedFractionMin = animations[i].animatedFraction
-                lastRunningAnimIndex = i
-            }
+    fun stopJumpingAnimations() {
+        for (animation in animations) {
+            animation.removeAllListeners()
+            animation.cancel()
         }
-        animations[lastRunningAnimIndex].addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator?) {
-                animateBallSize(ballSize, 0, 700, spinner)
-            }
-        })
+        animations.clear()
+    }
 
+    override fun stopAndHide(spinner: View) {
+        animateBallSize(ballSize, 0, 700, spinner)
     }
 
     fun animateBallSize(from: Int, to: Int, duration: Long, spinner: View?) {
@@ -105,13 +96,7 @@ class JumpingDotSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray)
         sizeAnim?.start()
     }
 
-    fun animateDrawable(i: Int) {
-
-    }
-
     override fun draw(canvas: Canvas) {
-
-
 
         pathMeasure.getPosTan(pathMeasure.length * dropDrawable.pathPercent, aCoordinates, null)
         dropDrawable.setTint(tinColors[3])
@@ -119,9 +104,9 @@ class JumpingDotSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray)
         dropDrawable.y = aCoordinates[1]
         dropDrawable.draw(canvas)
         metaBall.setBounds(-ballSize, -ballSize, ballSize, ballSize)
-        drawDot(startX, startY, 0, canvas)
-        drawDot(centerX, startY, 1, canvas)
-        drawDot(endX, startY, 2, canvas)
+        drawDot(pathStartX, pathStartY, 0, canvas)
+        drawDot(pathCenterX, pathStartY, 1, canvas)
+        drawDot(pathEndX, pathStartY, 2, canvas)
 
         invalidateSelf()
     }
@@ -142,39 +127,30 @@ class JumpingDotSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray)
         startAnimations()
     }
 
-    var startX = 0f
-    var startY = 0f
-    var centerX = 0f
-    var endX = 0f
-
     fun createPath() {
         path.reset()
-        startY = (bounds.height() - ballSize).toFloat()
+        pathStartY = (bounds.height() - ballSize).toFloat()
         val endY = bounds.width() * 0.5f
-        startX = ballSize.toFloat()
-        centerX = bounds.centerX().toFloat()
-        endX = (bounds.width() - ballSize).toFloat()
-        val halfWidthBetwenPoints = (centerX - startX) / 2f
-        val halfHeightBetwenPoints = startY - ((startY - endY) / 2f)
+        pathStartX = ballSize.toFloat()
+        pathCenterX = bounds.centerX().toFloat()
+        pathEndX = (bounds.width() - ballSize).toFloat()
+        val halfWidthBetwenPoints = (pathCenterX - pathStartX) / 2f
+        val halfHeightBetwenPoints = pathStartY - ((pathStartY - endY) / 2f)
 
-        path.moveTo(startX, startY)
-        path.cubicTo(startX, halfHeightBetwenPoints, startX + halfWidthBetwenPoints / 2f, endY, startX + halfWidthBetwenPoints, endY)
-        path.cubicTo(centerX - halfWidthBetwenPoints / 2f, endY, centerX, halfHeightBetwenPoints, centerX, startY)
-        path.cubicTo(centerX, halfHeightBetwenPoints, centerX + halfWidthBetwenPoints / 2f, endY, centerX + halfWidthBetwenPoints, endY)
-        path.cubicTo(endX - halfWidthBetwenPoints / 2f, endY, endX, halfHeightBetwenPoints, endX, startY)
+        path.moveTo(pathStartX, pathStartY)
+        path.cubicTo(pathStartX, halfHeightBetwenPoints, pathStartX + halfWidthBetwenPoints / 2f, endY, pathStartX + halfWidthBetwenPoints, endY)
+        path.cubicTo(pathCenterX - halfWidthBetwenPoints / 2f, endY, pathCenterX, halfHeightBetwenPoints, pathCenterX, pathStartY)
+        path.cubicTo(pathCenterX, halfHeightBetwenPoints, pathCenterX + halfWidthBetwenPoints / 2f, endY, pathCenterX + halfWidthBetwenPoints, endY)
+        path.cubicTo(pathEndX - halfWidthBetwenPoints / 2f, endY, pathEndX, halfHeightBetwenPoints, pathEndX, pathStartY)
 
         pathMeasure = PathMeasure(path, false)
     }
 
-    override fun setAlpha(alpha: Int) {
-
-    }
+    override fun setAlpha(alpha: Int) {}
 
     override fun getOpacity(): Int {
         return PixelFormat.TRANSLUCENT
     }
 
-    override fun setColorFilter(colorFilter: ColorFilter?) {
-
-    }
+    override fun setColorFilter(colorFilter: ColorFilter?) {}
 }

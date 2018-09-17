@@ -55,9 +55,9 @@ class Spinner : FrameLayout {
         circularSpinnerDrawable = createSpinnerDrawable()
         spinnerImageView.setImageDrawable(circularSpinnerDrawable as Drawable)
         addView(spinnerImageView, FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT))
-//        Handler().postDelayed({
-//            stopAnimated()
-//        }, 9000)
+        Handler().postDelayed({
+            stopAnimated()
+        }, 9000)
     }
 
     fun createSpinnerDrawable(): SpinnerDrawable {
