@@ -16,7 +16,7 @@ import no.danielzeller.metaballslib.spinner.SpinneHiddenListener
 import no.danielzeller.metaballslib.spinner.Vector3
 
 
-class BlobSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray, val rotate: Boolean) : Drawable(), SpinnerDrawable {
+class BlobSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray, val isRotate: Boolean) : SpinnerDrawable() {
 
     private val motion: ArrayList<BrownianMotion> = ArrayList()
     private var ballSize = 0
@@ -25,7 +25,12 @@ class BlobSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray, val r
     private var framerate = FrameRateCounter()
     private val ROTATE_SPEED = 40f
 
+    init {
+        this.rotate = isRotate
+    }
+
     override fun startAnimations() {
+        stopAllAnimations()
         ballSize = (bounds.width() * 0.25f).toInt()
         animateBallSize(0, ballSize, 300, null, null)
         val boundsSizeX = bounds.width().toFloat()
@@ -97,7 +102,6 @@ class BlobSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray, val r
         return PixelFormat.TRANSLUCENT
     }
 
-    override fun setColorFilter(colorFilter: ColorFilter?) {
-
-    }
+    override fun setColorFilter(colorFilter: ColorFilter?) {  }
+    override fun setDrop(isDrop: Boolean) {  }
 }

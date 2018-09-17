@@ -13,7 +13,8 @@ import no.danielzeller.metaballslib.spinner.FrameRateCounter
 import no.danielzeller.metaballslib.spinner.SpinneHiddenListener
 
 
-class PathSpinnerDrawable(val metaBallGradient: Drawable, val tinColors: IntArray, val shapePath: Path, val isDropDrawable: Boolean, val rotate: Boolean, val animationDuration: Long = 1800L, val interpolator: Interpolator = PathInterpolator(.65f, .14f, .17f, 1f)) : Drawable(), SpinnerDrawable {
+class PathSpinnerDrawable(val metaBallGradient: Drawable, val tinColors: IntArray, val shapePath: Path, val isDrop: Boolean, isRotate: Boolean, val animationDuration: Long = 1800L, val interpolator: Interpolator = PathInterpolator(.65f, .14f, .17f, 1f)) : SpinnerDrawable() {
+
 
     private var path = Path()
     private val dropDrawables: ArrayList<DropDrawable> = ArrayList()
@@ -26,6 +27,18 @@ class PathSpinnerDrawable(val metaBallGradient: Drawable, val tinColors: IntArra
     private var framerate = FrameRateCounter()
     private val ROTATE_SPEED = 40f
     private val BALL_SIZE = 0.21f
+
+    init {
+        this.rotate = isRotate
+        this.isDropDrawable = isDrop
+    }
+
+    override fun setDrop(isDrop: Boolean) {
+        for (dropDrawable in dropDrawables) {
+            dropDrawable.isDropDrawable = isDrop
+        }
+        this.isDropDrawable = isDrop
+    }
 
     override fun startAnimations() {
         stopAllAnimations()
@@ -40,8 +53,10 @@ class PathSpinnerDrawable(val metaBallGradient: Drawable, val tinColors: IntArra
     }
 
     override fun stopAllAnimations() {
-        for (animation in animations)
+        for (animation in animations) {
+            animation.removeAllListeners()
             animation.cancel()
+        }
         animations.clear()
         sizeAnim?.cancel()
     }

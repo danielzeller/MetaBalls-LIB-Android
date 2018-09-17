@@ -10,7 +10,7 @@ import no.danielzeller.metaballslib.spinner.FrameRateCounter
  * Draws the first drawable. Then draws 3 dots decreasing in size which move eased towards
  * the first drawable, giving the effect of the drawable having a tail :P
  */
-class DropDrawable(val metaDrawable: Drawable, val dropDrawable: Boolean) : Drawable() {
+class DropDrawable(val metaDrawable: Drawable, val idDropEnabled: Boolean) : Drawable() {
 
     var x = 0f
     var y = 0f
@@ -25,13 +25,18 @@ class DropDrawable(val metaDrawable: Drawable, val dropDrawable: Boolean) : Draw
     var easeSpeed = 25f
     var easeSpeedLast = 35f
     var pathPercent: Float = 0f
+    var isDropDrawable = true
+
+    init {
+        isDropDrawable = idDropEnabled
+    }
 
     override fun draw(canvas: Canvas) {
         val deltaTime = frameRate.timeStep()
 
 
         drawBall(canvas, x, y, 1f)
-        if (dropDrawable) {
+        if (idDropEnabled) {
             x1 += ((x - x1) * easeSpeed) * deltaTime
             y1 += ((y - y1) * easeSpeed) * deltaTime
             x2 += ((x1 - x2) * easeSpeed) * deltaTime

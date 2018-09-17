@@ -4,6 +4,8 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import no.danielzeller.metaballslib.menu.DirectionalMenu
+import no.danielzeller.metaballslib.spinner.Spinner
+import no.danielzeller.metaballslib.spinner.SpinnerType
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,6 +18,9 @@ class MainActivity : AppCompatActivity() {
         initializeAdaper(createSmallMenuItemList(), R.id.circularMenuBottomRight)
         initializeAdaper(createSmallMenuItemList(), R.id.circularMenuBottomLeft)
         initializeAdaper(createSmallMenuItemList(), R.id.circularMenuCenter)
+        findViewById<Spinner>(R.id.dotsSpinner).spinnerType = SpinnerType.LONG_PATH
+        findViewById<Spinner>(R.id.dotsSpinner).isRotate = true
+
 
     }
 

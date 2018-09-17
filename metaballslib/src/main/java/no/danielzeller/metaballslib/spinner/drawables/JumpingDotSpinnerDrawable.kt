@@ -5,12 +5,14 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.graphics.*
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.View
 import android.view.animation.PathInterpolator
 import no.danielzeller.metaballslib.spinner.SpinneHiddenListener
 
 
-class JumpingDotSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray, val isDropDrawable: Boolean) : Drawable(), SpinnerDrawable {
+class JumpingDotSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray, val isDrop: Boolean) : SpinnerDrawable() {
+
 
     private val path = Path()
     private val animations: ArrayList<ValueAnimator> = ArrayList()
@@ -27,9 +29,14 @@ class JumpingDotSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray,
     private var pathEndX = 0f
 
     init {
+        this.isDropDrawable = isDrop
         dropDrawable = DropDrawable(metaBall, isDropDrawable)
         dropDrawable.easeSpeed = 15f
         dropDrawable.easeSpeedLast = 11f
+    }
+
+    override fun setDrop(isDrop: Boolean) {
+        dropDrawable.isDropDrawable = isDrop
     }
 
     override fun startAnimations() {
@@ -143,7 +150,7 @@ class JumpingDotSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray,
         pathStartX = ballSize.toFloat()
         pathCenterX = bounds.centerX().toFloat()
         pathEndX = (bounds.width() - ballSize).toFloat()
-        val endY = pathStartY-(pathCenterX - pathStartX)
+        val endY = pathStartY - (pathCenterX - pathStartX)
         val halfWidthBetwenPoints = (pathCenterX - pathStartX) / 2f
         val halfHeightBetwenPoints = pathStartY - ((pathStartY - endY) / 2f)
 

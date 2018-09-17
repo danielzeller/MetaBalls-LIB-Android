@@ -15,8 +15,8 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import no.danielzeller.metaballslib.R
 import no.danielzeller.metaballslib.spinner.drawables.BlobSpinnerDrawable
-import no.danielzeller.metaballslib.spinner.drawables.PathSpinnerDrawable
 import no.danielzeller.metaballslib.spinner.drawables.JumpingDotSpinnerDrawable
+import no.danielzeller.metaballslib.spinner.drawables.PathSpinnerDrawable
 import no.danielzeller.metaballslib.spinner.drawables.SpinnerDrawable
 
 
@@ -30,11 +30,46 @@ interface SpinneHiddenListener {
 
 class Spinner : FrameLayout {
 
+    /**
+     * Sets the spinner drawable type
+     */
+    var spinnerType: SpinnerType = SpinnerType.CIRCULAR
+        set(value) {
+            if (spinnerDrawable != null && field != value) {
+                field = value
+                rebuildDrawable()
+            } else {
+                field = value
+            }
+        }
+
+    /**
+     * With this enabled the moving circles will look like a water drop(with a tail)
+     */
+    var isDropDrawable: Boolean = true
+        set(value) {
+            field = value
+            spinnerDrawable?.setDrop(field)
+        }
+
+    /**
+     * Should the spinner rotate. Not Width and Height of the View should be equal in order to
+     * get the correct result.
+     */
+    var isRotate: Boolean = true
+        set(value) {
+            field = value
+            spinnerDrawable?.rotate = field
+        }
+
     private lateinit var colorArray: IntArray
-    private lateinit var circularSpinnerDrawable: SpinnerDrawable
-    private lateinit var spinnerType: SpinnerType
-    private var isDropDrawable: Boolean = true
-    private var isRotate: Boolean = true
+    private lateinit var spinnerImageView: ImageView
+    private var spinnerDrawable: SpinnerDrawable? = null
+
+    private val EIGHT_PATH_DATA = floatArrayOf(85f, 50.934f, 85f, 58.16f, 81.419f, 67f, 70.09f, 67f, 58.761f, 67f, 51.776f, 53.948f, 48.5f, 50.5f, 45.224f, 47.052f, 37.252f, 34f, 26.717f, 34f, 16.181f, 34f, 12f, 43.123f, 12f, 50.934f, 12f, 58.744f, 16.256f, 67f, 25.354f, 67f, 34.451f, 67f, 44.12f, 55.534f, 48.5f, 50.934f, 52.88f, 46.334f, 59.597f, 34f, 70.77f, 34f, 81.943f, 34f, 85f, 43.708f, 85f, 50.934f)
+    private  val CIRCLE_PATH_DATA = floatArrayOf(51.243f, 12.001f, 69.013f, 12.001f, 88.112f, 27.121f, 88.112f, 50f, 88.112f, 72.879f, 67.671f, 87.084f, 51.243f, 87.084f, 34.815f, 87.084f, 13.04f, 75.041f, 13.04f, 49.679f, 13.04f, 24.318f, 33.473f, 12.001f, 51.243f, 12.001f)
+    private val SQUARE_PATH_DATA = floatArrayOf(50.554f, 12.523f, 50.554f, 12.523f, 88.638f, 50.647f, 88.638f, 50.647f, 88.638f, 50.647f, 50.554f, 88.58f, 50.554f, 88.58f, 50.554f, 88.58f, 12.365f, 50.647f, 12.365f, 50.647f, 12.365f, 50.647f, 50.554f, 12.523f, 50.554f, 12.523f)
+    private val LONG_PATH_DATA = floatArrayOf(15f, 53.44f, 15f, 49.571f, 13.841f, 13.301f, 25.976f, 13.301f, 38.112f, 13.301f, 38.229f, 45.513f, 38.229f, 53.44f, 38.229f, 61.368f, 39.76f, 89.087f, 50f, 89.087f, 60.24f, 89.087f, 60.797f, 60.835f, 60.797f, 53.44f, 60.797f, 46.045f, 61.581f, 13.301f, 73.29f, 13.301f, 84.999f, 13.301f, 84.999f, 40.987f, 84.999f, 53.44f, 84.999f, 65.894f, 84.999f, 90.718f, 73.29f, 90.718f, 61.581f, 90.718f, 60.797f, 64.684f, 60.797f, 53.44f, 60.797f, 42.197f, 61.771f, 13.301f, 50f, 13.301f, 38.229f, 13.301f, 38.229f, 42.623f, 38.229f, 53.44f, 38.229f, 64.257f, 37.07f, 89.087f, 25.976f, 89.087f, 14.883f, 89.087f, 15f, 57.31f, 15f, 53.44f)
 
     constructor(context: Context) : super(context) {
         loadAttributesFromXml(null)
@@ -52,7 +87,7 @@ class Spinner : FrameLayout {
      * Callback for when the Spinner is hidden
      */
     fun stopAnimated(spinnerHiddenListener: SpinneHiddenListener? = null) {
-        circularSpinnerDrawable.stopAndHide(this, spinnerHiddenListener)
+        spinnerDrawable?.stopAndHide(this, spinnerHiddenListener)
     }
 
     private fun loadAttributesFromXml(attrs: AttributeSet?) {
@@ -64,7 +99,7 @@ class Spinner : FrameLayout {
             val colorsArrayID = typedArray.getResourceId(R.styleable.MetaBallsSpinner_colors_array_id, R.array.default_spinner_colors)
             colorArray = resources.getIntArray(colorsArrayID)
             spinnerType = convertIntToSpinnertype(typedArray.getInteger(R.styleable.MetaBallsSpinner_spinner_type, SpinnerType.CIRCULAR.ordinal))
-            isDropDrawable = typedArray.getBoolean(R.styleable.MetaBallsSpinner_drop_drawable, true)
+            isDropDrawable = typedArray.getBoolean(R.styleable.MetaBallsSpinner_drop_drawable, isDropDrawable)
             isRotate = typedArray.getBoolean(R.styleable.MetaBallsSpinner_rotate, false)
 
         } finally {
@@ -75,15 +110,15 @@ class Spinner : FrameLayout {
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
         if (width != height && isRotate) {
-            Log.w("SPINNER view", "Warning: width and height are not equal. This may lead to unexpected results when rotation is enabled.")
+            Log.w("SPINNER", "Warning: width and height are not equal. This may lead to unexpected results when rotation is enabled.")
         }
     }
 
     private fun setupBaseViews(context: Context) {
-        val spinnerImageView = ImageView(context)
+        spinnerImageView = ImageView(context)
         spinnerImageView.setLayerType(View.LAYER_TYPE_HARDWARE, createMetaBallsPaint())
-        circularSpinnerDrawable = createSpinnerDrawable()
-        spinnerImageView.setImageDrawable(circularSpinnerDrawable as Drawable)
+        spinnerDrawable = createSpinnerDrawable()
+        spinnerImageView.setImageDrawable(spinnerDrawable as Drawable)
         addView(spinnerImageView, FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT))
     }
 
@@ -114,15 +149,15 @@ class Spinner : FrameLayout {
     override fun onVisibilityChanged(changedView: View, visibility: Int) {
         super.onVisibilityChanged(changedView, visibility)
         if (visibility == View.VISIBLE) {
-            circularSpinnerDrawable.startAnimations()
+            spinnerDrawable?.startAnimations()
         } else {
-            circularSpinnerDrawable.stopAllAnimations()
+            spinnerDrawable?.stopAllAnimations()
         }
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        circularSpinnerDrawable.stopAllAnimations()
+        spinnerDrawable?.stopAllAnimations()
     }
 
     private fun createMetaBallsPaint(): Paint {
@@ -143,8 +178,10 @@ class Spinner : FrameLayout {
         return SpinnerType.CIRCULAR
     }
 
-    val EIGHT_PATH_DATA = floatArrayOf(85f, 50.934f, 85f, 58.16f, 81.419f, 67f, 70.09f, 67f, 58.761f, 67f, 51.776f, 53.948f, 48.5f, 50.5f, 45.224f, 47.052f, 37.252f, 34f, 26.717f, 34f, 16.181f, 34f, 12f, 43.123f, 12f, 50.934f, 12f, 58.744f, 16.256f, 67f, 25.354f, 67f, 34.451f, 67f, 44.12f, 55.534f, 48.5f, 50.934f, 52.88f, 46.334f, 59.597f, 34f, 70.77f, 34f, 81.943f, 34f, 85f, 43.708f, 85f, 50.934f)
-    val CIRCLE_PATH_DATA = floatArrayOf(51.243f, 12.001f, 69.013f, 12.001f, 88.112f, 27.121f, 88.112f, 50f, 88.112f, 72.879f, 67.671f, 87.084f, 51.243f, 87.084f, 34.815f, 87.084f, 13.04f, 75.041f, 13.04f, 49.679f, 13.04f, 24.318f, 33.473f, 12.001f, 51.243f, 12.001f)
-    val SQUARE_PATH_DATA = floatArrayOf(50.554f, 12.523f, 50.554f, 12.523f, 88.638f, 50.647f, 88.638f, 50.647f, 88.638f, 50.647f, 50.554f, 88.58f, 50.554f, 88.58f, 50.554f, 88.58f, 12.365f, 50.647f, 12.365f, 50.647f, 12.365f, 50.647f, 50.554f, 12.523f, 50.554f, 12.523f)
-    val LONG_PATH_DATA = floatArrayOf(15f, 53.44f, 15f, 49.571f, 13.841f, 13.301f, 25.976f, 13.301f, 38.112f, 13.301f, 38.229f, 45.513f, 38.229f, 53.44f, 38.229f, 61.368f, 39.76f, 89.087f, 50f, 89.087f, 60.24f, 89.087f, 60.797f, 60.835f, 60.797f, 53.44f, 60.797f, 46.045f, 61.581f, 13.301f, 73.29f, 13.301f, 84.999f, 13.301f, 84.999f, 40.987f, 84.999f, 53.44f, 84.999f, 65.894f, 84.999f, 90.718f, 73.29f, 90.718f, 61.581f, 90.718f, 60.797f, 64.684f, 60.797f, 53.44f, 60.797f, 42.197f, 61.771f, 13.301f, 50f, 13.301f, 38.229f, 13.301f, 38.229f, 42.623f, 38.229f, 53.44f, 38.229f, 64.257f, 37.07f, 89.087f, 25.976f, 89.087f, 14.883f, 89.087f, 15f, 57.31f, 15f, 53.44f)
+    private fun rebuildDrawable() {
+        Log.i("REBUILDING DRAWABLE", "dsdsadsa")
+        spinnerDrawable?.stopAllAnimations()
+        spinnerDrawable = createSpinnerDrawable()
+        spinnerImageView.setImageDrawable(spinnerDrawable)
+    }
 }

@@ -1,12 +1,17 @@
 package no.danielzeller.metaballslib.spinner.drawables
 
+import android.graphics.drawable.Drawable
 import android.view.View
 import no.danielzeller.metaballslib.spinner.SpinneHiddenListener
 
-interface SpinnerDrawable {
-    fun stopAndHide(spinner: View, spinnerHiddenListener: SpinneHiddenListener?)
+abstract class SpinnerDrawable : Drawable() {
 
-    fun startAnimations()
+    abstract fun stopAndHide(spinner: View, spinnerHiddenListener: SpinneHiddenListener?)
 
-    fun stopAllAnimations()
+    abstract fun startAnimations()
+
+    abstract fun stopAllAnimations()
+    abstract fun setDrop(isDrop: Boolean)
+    var isDropDrawable = false
+    var rotate = false
 }
