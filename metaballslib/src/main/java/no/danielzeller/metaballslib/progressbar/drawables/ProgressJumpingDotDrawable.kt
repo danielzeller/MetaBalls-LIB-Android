@@ -1,4 +1,4 @@
-package no.danielzeller.metaballslib.spinner.drawables
+package no.danielzeller.metaballslib.progressbar.drawables
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -8,10 +8,10 @@ import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.View
 import android.view.animation.PathInterpolator
-import no.danielzeller.metaballslib.spinner.SpinneHiddenListener
+import no.danielzeller.metaballslib.progressbar.SpinneHiddenListener
 
 
-class JumpingDotSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray, val isDrop: Boolean) : SpinnerDrawable() {
+class ProgressJumpingDotDrawable(val metaBall: Drawable, val tinColors: IntArray, val isDrop: Boolean) : ProgressDrawable() {
 
 
     private val path = Path()
@@ -40,6 +40,7 @@ class JumpingDotSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray,
     }
 
     override fun startAnimations() {
+        Log.i("dsds","STARTEROOO")
         ballSize = (bounds.width() * BALLSIZE).toInt()
         stopAllAnimations()
         animateBallSize(0, ballSize, 300, null, null)
@@ -96,8 +97,8 @@ class JumpingDotSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray,
         }
         if (spinner != null)
             sizeAnim?.addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationRepeat(animation: Animator?) {
-                    super.onAnimationRepeat(animation)
+                override fun onAnimationEnd(animation: Animator?) {
+                    super.onAnimationEnd(animation)
                     spinner.visibility = View.GONE
                     spinnerHiddenListener?.onSpinnHidden(spinner)
                 }

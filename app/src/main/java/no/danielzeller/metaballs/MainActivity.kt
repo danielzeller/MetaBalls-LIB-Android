@@ -2,10 +2,13 @@ package no.danielzeller.metaballs
 
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import no.danielzeller.metaballslib.menu.DirectionalMenu
-import no.danielzeller.metaballslib.spinner.Spinner
-import no.danielzeller.metaballslib.spinner.SpinnerType
+import no.danielzeller.metaballslib.progressbar.MBProgressBar
+import no.danielzeller.metaballslib.progressbar.MBProgressBarType
+import no.danielzeller.metaballslib.progressbar.SpinneHiddenListener
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,10 +21,38 @@ class MainActivity : AppCompatActivity() {
         initializeAdaper(createSmallMenuItemList(), R.id.circularMenuBottomRight)
         initializeAdaper(createSmallMenuItemList(), R.id.circularMenuBottomLeft)
         initializeAdaper(createSmallMenuItemList(), R.id.circularMenuCenter)
-        findViewById<Spinner>(R.id.dotsSpinner).spinnerType = SpinnerType.LONG_PATH
-        findViewById<Spinner>(R.id.dotsSpinner).isRotate = true
+        val spinnerTest = findViewById<MBProgressBar>(R.id.dotsSpinner)
+        spinnerTest.mbProgressBarType = MBProgressBarType.LONG_PATH
+        spinnerTest.isRotate = true
+        val handler = Handler()
+        handler.postDelayed(testSpinners(true, true,  MBProgressBarType.CIRCULAR,   spinnerTest), 3000)
+        handler.postDelayed(testSpinners(true, true,  MBProgressBarType.EIGHT,   spinnerTest), 6000)
+        handler.postDelayed(testSpinners(true, true,  MBProgressBarType.LONG_PATH,   spinnerTest), 9000)
+        handler.postDelayed(testSpinners(true, true,  MBProgressBarType.SQUARE,   spinnerTest), 12000)
+        handler.postDelayed(testSpinners(true, true,  MBProgressBarType.BLOBS,   spinnerTest), 15000)
+        handler.postDelayed(testSpinners(true, true,  MBProgressBarType.DOTS,   spinnerTest), 18000)
 
 
+        handler.postDelayed(testSpinners(false, false,  MBProgressBarType.CIRCULAR,   spinnerTest), 21000)
+        handler.postDelayed(testSpinners(false, false,  MBProgressBarType.EIGHT,   spinnerTest), 24000)
+        handler.postDelayed(testSpinners(false, false,  MBProgressBarType.BLOBS,   spinnerTest), 27000)
+        handler.postDelayed(testSpinners(false, false,  MBProgressBarType.DOTS,   spinnerTest), 30000)
+        handler.postDelayed(testSpinners(false, false,  MBProgressBarType.LONG_PATH,   spinnerTest), 33000)
+        handler.postDelayed(testSpinners(false, false,  MBProgressBarType.SQUARE,   spinnerTest), 36000)
+    }
+
+    fun testSpinners(isDrop: Boolean, isRotate: Boolean, type: MBProgressBarType,   spinner: MBProgressBar): Runnable {
+        return Runnable {
+            spinner.stopAnimated(object : SpinneHiddenListener {
+                override fun onSpinnHidden(spinne: View) {
+                    spinner.isDropDrawable = isDrop
+                    spinner.isRotate = isRotate
+                    spinner.mbProgressBarType = type
+                    spinner.visibility = View.VISIBLE
+                }
+            })
+
+        }
     }
 
     private fun createLargeMenuItemList(): ArrayList<MenuItem> {

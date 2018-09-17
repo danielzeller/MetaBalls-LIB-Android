@@ -105,7 +105,7 @@
         app:main_button_icon_color="@color/white"
         app:position_grvity="center" />
 
-    <no.danielzeller.metaballslib.spinner.Spinner
+    <no.danielzeller.metaballslib.progressbar.MBProgressBar
         android:layout_width="120dp"
         android:layout_height="120dp"
         app:colors_array_id="@array/gradient_spinner_colors"
@@ -117,7 +117,7 @@
         app:layout_constraintVertical_bias="0.347"
         app:rotate="true" />
 
-    <no.danielzeller.metaballslib.spinner.Spinner
+    <no.danielzeller.metaballslib.progressbar.MBProgressBar
         android:layout_width="120dp"
         android:layout_height="120dp"
         app:colors_array_id="@array/gradient_spinner_colors"
@@ -126,10 +126,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.654"
-        app:rotate="true"
-        app:spinner_type="blobs" />
+        app:progressbar_type="blobs"
+        app:rotate="true" />
 
-    <no.danielzeller.metaballslib.spinner.Spinner
+    <no.danielzeller.metaballslib.progressbar.MBProgressBar
         android:layout_width="120dp"
         android:layout_height="120dp"
         app:colors_array_id="@array/gradient_spinner_colors"
@@ -139,10 +139,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.04"
-        app:rotate="false"
-        app:spinner_type="eight" />
+        app:progressbar_type="eight"
+        app:rotate="false" />
 
-    <no.danielzeller.metaballslib.spinner.Spinner
+    <no.danielzeller.metaballslib.progressbar.MBProgressBar
         android:id="@+id/dotsSpinner"
         android:layout_width="120dp"
         android:layout_height="120dp"
@@ -153,9 +153,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.959"
-        app:spinner_type="dots" />
+        app:progressbar_type="dots" />
 
-    <no.danielzeller.metaballslib.spinner.Spinner
+    <no.danielzeller.metaballslib.progressbar.MBProgressBar
         android:layout_width="120dp"
         android:layout_height="120dp"
         app:colors_array_id="@array/gradient_spinner_colors"
@@ -166,10 +166,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.654"
-        app:rotate="true"
-        app:spinner_type="square" />
+        app:progressbar_type="square"
+        app:rotate="true" />
 
-    <no.danielzeller.metaballslib.spinner.Spinner
+    <no.danielzeller.metaballslib.progressbar.MBProgressBar
         android:layout_width="120dp"
         android:layout_height="80dp"
         app:colors_array_id="@array/gradient_spinner_colors"
@@ -180,6 +180,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.347"
-        app:rotate="false"
-        app:spinner_type="long_path" />
+        app:progressbar_type="long_path"
+        app:rotate="false" />
 </android.support.constraint.ConstraintLayout>

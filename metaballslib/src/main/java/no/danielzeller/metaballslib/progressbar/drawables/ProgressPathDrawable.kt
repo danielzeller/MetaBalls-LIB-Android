@@ -1,4 +1,4 @@
-package no.danielzeller.metaballslib.spinner.drawables
+package no.danielzeller.metaballslib.progressbar.drawables
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -9,11 +9,11 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.Interpolator
 import android.view.animation.PathInterpolator
-import no.danielzeller.metaballslib.spinner.FrameRateCounter
-import no.danielzeller.metaballslib.spinner.SpinneHiddenListener
+import no.danielzeller.metaballslib.progressbar.FrameRateCounter
+import no.danielzeller.metaballslib.progressbar.SpinneHiddenListener
 
 
-class PathSpinnerDrawable(val metaBallGradient: Drawable, val tinColors: IntArray, val shapePath: Path, val isDrop: Boolean, isRotate: Boolean, val animationDuration: Long = 1800L, val interpolator: Interpolator = PathInterpolator(.65f, .14f, .17f, 1f)) : SpinnerDrawable() {
+class ProgressPathDrawable(val metaBallGradient: Drawable, val tinColors: IntArray, val shapePath: Path, val isDrop: Boolean, isRotate: Boolean, val animationDuration: Long = 1800L, val interpolator: Interpolator = PathInterpolator(.65f, .14f, .17f, 1f)) : ProgressDrawable() {
 
 
     private var path = Path()
@@ -95,7 +95,7 @@ class PathSpinnerDrawable(val metaBallGradient: Drawable, val tinColors: IntArra
         }
         if (spinner != null)
             sizeAnim?.addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationRepeat(animation: Animator?) {
+                override fun onAnimationEnd(animation: Animator?) {
                     super.onAnimationRepeat(animation)
                     spinner.visibility = View.GONE
                     spinnerHiddenListener?.onSpinnHidden(spinner)

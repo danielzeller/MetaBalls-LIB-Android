@@ -1,4 +1,4 @@
-package no.danielzeller.metaballslib.spinner
+package no.danielzeller.metaballslib.progressbar
 
 import android.content.Context
 import android.graphics.ColorMatrix
@@ -14,13 +14,13 @@ import android.view.animation.LinearInterpolator
 import android.widget.FrameLayout
 import android.widget.ImageView
 import no.danielzeller.metaballslib.R
-import no.danielzeller.metaballslib.spinner.drawables.BlobSpinnerDrawable
-import no.danielzeller.metaballslib.spinner.drawables.JumpingDotSpinnerDrawable
-import no.danielzeller.metaballslib.spinner.drawables.PathSpinnerDrawable
-import no.danielzeller.metaballslib.spinner.drawables.SpinnerDrawable
+import no.danielzeller.metaballslib.progressbar.drawables.ProgressBlobDrawable
+import no.danielzeller.metaballslib.progressbar.drawables.ProgressJumpingDotDrawable
+import no.danielzeller.metaballslib.progressbar.drawables.ProgressPathDrawable
+import no.danielzeller.metaballslib.progressbar.drawables.ProgressDrawable
 
 
-enum class SpinnerType {
+enum class MBProgressBarType {
     CIRCULAR, BLOBS, DOTS, EIGHT, SQUARE, LONG_PATH
 }
 
@@ -28,14 +28,14 @@ interface SpinneHiddenListener {
     fun onSpinnHidden(spinner: View)
 }
 
-class Spinner : FrameLayout {
+class MBProgressBar : FrameLayout {
 
     /**
-     * Sets the spinner drawable type
+     * Sets the ProgressBar drawable type
      */
-    var spinnerType: SpinnerType = SpinnerType.CIRCULAR
+    var mbProgressBarType: MBProgressBarType = MBProgressBarType.CIRCULAR
         set(value) {
-            if (spinnerDrawable != null && field != value) {
+            if (progressDrawable != null && field != value) {
                 field = value
                 rebuildDrawable()
             } else {
@@ -49,22 +49,22 @@ class Spinner : FrameLayout {
     var isDropDrawable: Boolean = true
         set(value) {
             field = value
-            spinnerDrawable?.setDrop(field)
+            progressDrawable?.setDrop(field)
         }
 
     /**
-     * Should the spinner rotate. Not Width and Height of the View should be equal in order to
+     * Should the ProgressBar Drawable rotate. Note: Width and Height of the View should be equal in order to
      * get the correct result.
      */
     var isRotate: Boolean = true
         set(value) {
             field = value
-            spinnerDrawable?.rotate = field
+            progressDrawable?.rotate = field
         }
 
     private lateinit var colorArray: IntArray
     private lateinit var spinnerImageView: ImageView
-    private var spinnerDrawable: SpinnerDrawable? = null
+    private var progressDrawable: ProgressDrawable? = null
 
     private val EIGHT_PATH_DATA = floatArrayOf(85f, 50.934f, 85f, 58.16f, 81.419f, 67f, 70.09f, 67f, 58.761f, 67f, 51.776f, 53.948f, 48.5f, 50.5f, 45.224f, 47.052f, 37.252f, 34f, 26.717f, 34f, 16.181f, 34f, 12f, 43.123f, 12f, 50.934f, 12f, 58.744f, 16.256f, 67f, 25.354f, 67f, 34.451f, 67f, 44.12f, 55.534f, 48.5f, 50.934f, 52.88f, 46.334f, 59.597f, 34f, 70.77f, 34f, 81.943f, 34f, 85f, 43.708f, 85f, 50.934f)
     private  val CIRCLE_PATH_DATA = floatArrayOf(51.243f, 12.001f, 69.013f, 12.001f, 88.112f, 27.121f, 88.112f, 50f, 88.112f, 72.879f, 67.671f, 87.084f, 51.243f, 87.084f, 34.815f, 87.084f, 13.04f, 75.041f, 13.04f, 49.679f, 13.04f, 24.318f, 33.473f, 12.001f, 51.243f, 12.001f)
@@ -87,20 +87,27 @@ class Spinner : FrameLayout {
      * Callback for when the Spinner is hidden
      */
     fun stopAnimated(spinnerHiddenListener: SpinneHiddenListener? = null) {
-        spinnerDrawable?.stopAndHide(this, spinnerHiddenListener)
+        progressDrawable?.stopAndHide(this, spinnerHiddenListener)
+    }
+
+    /**
+     * Call this after stopAnimated
+     */
+    fun startAnimating() {
+        progressDrawable?.startAnimations()
     }
 
     private fun loadAttributesFromXml(attrs: AttributeSet?) {
         val typedArray = context.theme.obtainStyledAttributes(
                 attrs,
-                R.styleable.MetaBallsSpinner,
+                R.styleable.MetaBallsProgressBar,
                 0, 0)
         try {
-            val colorsArrayID = typedArray.getResourceId(R.styleable.MetaBallsSpinner_colors_array_id, R.array.default_spinner_colors)
+            val colorsArrayID = typedArray.getResourceId(R.styleable.MetaBallsProgressBar_colors_array_id, R.array.default_spinner_colors)
             colorArray = resources.getIntArray(colorsArrayID)
-            spinnerType = convertIntToSpinnertype(typedArray.getInteger(R.styleable.MetaBallsSpinner_spinner_type, SpinnerType.CIRCULAR.ordinal))
-            isDropDrawable = typedArray.getBoolean(R.styleable.MetaBallsSpinner_drop_drawable, isDropDrawable)
-            isRotate = typedArray.getBoolean(R.styleable.MetaBallsSpinner_rotate, false)
+            mbProgressBarType = convertIntToSpinnertype(typedArray.getInteger(R.styleable.MetaBallsProgressBar_progressbar_type, MBProgressBarType.CIRCULAR.ordinal))
+            isDropDrawable = typedArray.getBoolean(R.styleable.MetaBallsProgressBar_drop_drawable, isDropDrawable)
+            isRotate = typedArray.getBoolean(R.styleable.MetaBallsProgressBar_rotate, false)
 
         } finally {
             typedArray.recycle()
@@ -117,24 +124,24 @@ class Spinner : FrameLayout {
     private fun setupBaseViews(context: Context) {
         spinnerImageView = ImageView(context)
         spinnerImageView.setLayerType(View.LAYER_TYPE_HARDWARE, createMetaBallsPaint())
-        spinnerDrawable = createSpinnerDrawable()
-        spinnerImageView.setImageDrawable(spinnerDrawable as Drawable)
+        progressDrawable = createSpinnerDrawable()
+        spinnerImageView.setImageDrawable(progressDrawable as Drawable)
         addView(spinnerImageView, FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT))
     }
 
-    private fun createSpinnerDrawable(): SpinnerDrawable {
-        if (spinnerType == SpinnerType.CIRCULAR) {
-            return PathSpinnerDrawable(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray, parsePath(CIRCLE_PATH_DATA), isDropDrawable, isRotate)
-        } else if (spinnerType == SpinnerType.EIGHT) {
-            return PathSpinnerDrawable(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray, parsePath(EIGHT_PATH_DATA), isDropDrawable, isRotate, 900, LinearInterpolator())
-        } else if (spinnerType == SpinnerType.BLOBS) {
-            return BlobSpinnerDrawable(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray, isRotate)
-        } else if (spinnerType == SpinnerType.SQUARE) {
-            return PathSpinnerDrawable(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray, parsePath(SQUARE_PATH_DATA), isDropDrawable, isRotate)
-        } else if (spinnerType == SpinnerType.LONG_PATH) {
-            return PathSpinnerDrawable(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray, parsePath(LONG_PATH_DATA), isDropDrawable, isRotate, 1300, LinearInterpolator())
+    private fun createSpinnerDrawable(): ProgressDrawable {
+        if (mbProgressBarType == MBProgressBarType.CIRCULAR) {
+            return ProgressPathDrawable(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray, parsePath(CIRCLE_PATH_DATA), isDropDrawable, isRotate)
+        } else if (mbProgressBarType == MBProgressBarType.EIGHT) {
+            return ProgressPathDrawable(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray, parsePath(EIGHT_PATH_DATA), isDropDrawable, isRotate, 900, LinearInterpolator())
+        } else if (mbProgressBarType == MBProgressBarType.BLOBS) {
+            return ProgressBlobDrawable(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray, isRotate)
+        } else if (mbProgressBarType == MBProgressBarType.SQUARE) {
+            return ProgressPathDrawable(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray, parsePath(SQUARE_PATH_DATA), isDropDrawable, isRotate)
+        } else if (mbProgressBarType == MBProgressBarType.LONG_PATH) {
+            return ProgressPathDrawable(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray, parsePath(LONG_PATH_DATA), isDropDrawable, isRotate, 1300, LinearInterpolator())
         }
-        return JumpingDotSpinnerDrawable(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray, isDropDrawable)
+        return ProgressJumpingDotDrawable(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray, isDropDrawable)
     }
 
     private fun parsePath(pathData: FloatArray): Path {
@@ -149,15 +156,15 @@ class Spinner : FrameLayout {
     override fun onVisibilityChanged(changedView: View, visibility: Int) {
         super.onVisibilityChanged(changedView, visibility)
         if (visibility == View.VISIBLE) {
-            spinnerDrawable?.startAnimations()
+            progressDrawable?.startAnimations()
         } else {
-            spinnerDrawable?.stopAllAnimations()
+            progressDrawable?.stopAllAnimations()
         }
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        spinnerDrawable?.stopAllAnimations()
+        progressDrawable?.stopAllAnimations()
     }
 
     private fun createMetaBallsPaint(): Paint {
@@ -171,17 +178,17 @@ class Spinner : FrameLayout {
         return metaBallsPaint
     }
 
-    private fun convertIntToSpinnertype(id: Int): SpinnerType {
-        for (f in SpinnerType.values()) {
+    private fun convertIntToSpinnertype(id: Int): MBProgressBarType {
+        for (f in MBProgressBarType.values()) {
             if (f.ordinal == id) return f
         }
-        return SpinnerType.CIRCULAR
+        return MBProgressBarType.CIRCULAR
     }
 
     private fun rebuildDrawable() {
-        Log.i("REBUILDING DRAWABLE", "dsdsadsa")
-        spinnerDrawable?.stopAllAnimations()
-        spinnerDrawable = createSpinnerDrawable()
-        spinnerImageView.setImageDrawable(spinnerDrawable)
+        Log.e("dsds","STARTEROOO"+mbProgressBarType)
+        progressDrawable?.stopAllAnimations()
+        progressDrawable = createSpinnerDrawable()
+        spinnerImageView.setImageDrawable(progressDrawable)
     }
 }

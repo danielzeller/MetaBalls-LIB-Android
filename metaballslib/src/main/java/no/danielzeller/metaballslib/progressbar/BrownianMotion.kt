@@ -1,4 +1,4 @@
-package no.danielzeller.metaballslib.spinner
+package no.danielzeller.metaballslib.progressbar
 
 import android.os.SystemClock
 import java.util.*

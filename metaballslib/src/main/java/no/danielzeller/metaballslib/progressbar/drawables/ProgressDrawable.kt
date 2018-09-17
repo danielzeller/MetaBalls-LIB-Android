@@ -1,10 +1,10 @@
-package no.danielzeller.metaballslib.spinner.drawables
+package no.danielzeller.metaballslib.progressbar.drawables
 
 import android.graphics.drawable.Drawable
 import android.view.View
-import no.danielzeller.metaballslib.spinner.SpinneHiddenListener
+import no.danielzeller.metaballslib.progressbar.SpinneHiddenListener
 
-abstract class SpinnerDrawable : Drawable() {
+abstract class ProgressDrawable : Drawable() {
 
     abstract fun stopAndHide(spinner: View, spinnerHiddenListener: SpinneHiddenListener?)
 

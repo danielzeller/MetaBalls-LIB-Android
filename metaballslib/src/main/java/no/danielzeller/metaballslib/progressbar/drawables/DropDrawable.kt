@@ -1,13 +1,13 @@
-package no.danielzeller.metaballslib.spinner.drawables
+package no.danielzeller.metaballslib.progressbar.drawables
 
 import android.graphics.Canvas
 import android.graphics.ColorFilter
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
-import no.danielzeller.metaballslib.spinner.FrameRateCounter
+import no.danielzeller.metaballslib.progressbar.FrameRateCounter
 
 /**
- * Draws the first drawable. Then draws 3 dots decreasing in size which move eased towards
+ * Draws the first drawable, then draws 3 dots decreasing in size which move eased towards
  * the first drawable, giving the effect of the drawable having a tail :P
  */
 class DropDrawable(val metaDrawable: Drawable, val idDropEnabled: Boolean) : Drawable() {
