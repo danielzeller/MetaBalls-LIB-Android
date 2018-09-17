@@ -65,7 +65,7 @@ class MBProgressBar : FrameLayout {
     /**
      * Sets the colors of each circle
      */
-    private var colorArray = intArrayOf()
+    var colorArray = intArrayOf()
         set(value) {
             field = value
             progressDrawable?.tinColorsArray = value

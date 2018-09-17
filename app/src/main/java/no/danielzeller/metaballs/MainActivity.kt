@@ -10,7 +10,7 @@ import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup 
+import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_main.view.*
 import no.danielzeller.metaballslib.MetaBallPageIndicator
 import no.danielzeller.metaballslib.menu.DirectionalMenu
@@ -111,6 +111,7 @@ class MainActivity : AppCompatActivity() {
                 spinner.isRotate = isRotate
                 spinner.mbProgressBarType = type
                 spinner.visibility = View.VISIBLE
+                spinner.colorArray = resources.getIntArray(R.array.default_spinner_colors)
             })
 
         }
