@@ -15,7 +15,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import no.danielzeller.metaballslib.R
 import no.danielzeller.metaballslib.spinner.drawables.BlobSpinnerDrawable
-import no.danielzeller.metaballslib.spinner.drawables.CircularSpinnerDrawableV2
+import no.danielzeller.metaballslib.spinner.drawables.PathSpinnerDrawable
 import no.danielzeller.metaballslib.spinner.drawables.JumpingDotSpinnerDrawable
 import no.danielzeller.metaballslib.spinner.drawables.SpinnerDrawable
 
@@ -89,15 +89,15 @@ class Spinner : FrameLayout {
 
     private fun createSpinnerDrawable(): SpinnerDrawable {
         if (spinnerType == SpinnerType.CIRCULAR) {
-            return CircularSpinnerDrawableV2(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray, parsePath(CIRCLE_PATH_DATA), isDropDrawable, isRotate)
+            return PathSpinnerDrawable(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray, parsePath(CIRCLE_PATH_DATA), isDropDrawable, isRotate)
         } else if (spinnerType == SpinnerType.EIGHT) {
-            return CircularSpinnerDrawableV2(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray, parsePath(EIGHT_PATH_DATA), isDropDrawable, isRotate, 900, LinearInterpolator())
+            return PathSpinnerDrawable(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray, parsePath(EIGHT_PATH_DATA), isDropDrawable, isRotate, 900, LinearInterpolator())
         } else if (spinnerType == SpinnerType.BLOBS) {
             return BlobSpinnerDrawable(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray, isRotate)
         } else if (spinnerType == SpinnerType.SQUARE) {
-            return CircularSpinnerDrawableV2(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray, parsePath(SQUARE_PATH_DATA), isDropDrawable, isRotate)
+            return PathSpinnerDrawable(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray, parsePath(SQUARE_PATH_DATA), isDropDrawable, isRotate)
         } else if (spinnerType == SpinnerType.LONG_PATH) {
-            return CircularSpinnerDrawableV2(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray, parsePath(LONG_PATH_DATA), isDropDrawable, isRotate, 1300, LinearInterpolator())
+            return PathSpinnerDrawable(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray, parsePath(LONG_PATH_DATA), isDropDrawable, isRotate, 1300, LinearInterpolator())
         }
         return JumpingDotSpinnerDrawable(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray, isDropDrawable)
     }
