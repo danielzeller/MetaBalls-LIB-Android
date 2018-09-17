@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="#4F4F4F">
+    android:background="#4F4F4F"
+    tools:context=".MainActivity">
 
     <no.danielzeller.metaballslib.menu.DirectionalMenu
         android:id="@+id/circularMenuTopRight"
@@ -69,8 +69,7 @@
         app:main_button_icon_color="@color/white"
         app:open_animation_duration="1300"
         app:open_interpolator_resource="@anim/overshoot_interpolator"
-        app:position_grvity="bottom_left"
-        />
+        app:position_grvity="bottom_left" />
 
     <no.danielzeller.metaballslib.menu.DirectionalMenu
         android:id="@+id/circularMenuBottomRight"
@@ -87,8 +86,7 @@
         app:main_button_color="@color/default_metaballs_color"
         app:main_button_icon="@drawable/ic_share_black_24dp"
         app:main_button_icon_color="@color/white"
-        app:position_grvity="bottom_right"
-      />
+        app:position_grvity="bottom_right" />
 
     <no.danielzeller.metaballslib.menu.DirectionalMenu
         android:id="@+id/circularMenuCenter"
@@ -105,18 +103,19 @@
         app:main_button_color="@color/default_metaballs_color"
         app:main_button_icon="@drawable/ic_twitter"
         app:main_button_icon_color="@color/white"
-        app:position_grvity="center"
-        />
+        app:position_grvity="center" />
 
     <no.danielzeller.metaballslib.spinner.Spinner
         android:layout_width="120dp"
         android:layout_height="120dp"
         app:colors_array_id="@array/gradient_spinner_colors"
+        app:drop_drawable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.347" />
+        app:layout_constraintVertical_bias="0.347"
+        app:rotate="true" />
 
     <no.danielzeller.metaballslib.spinner.Spinner
         android:layout_width="120dp"
@@ -127,23 +126,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.654"
+        app:rotate="true"
         app:spinner_type="blobs" />
 
     <no.danielzeller.metaballslib.spinner.Spinner
         android:layout_width="120dp"
         android:layout_height="120dp"
         app:colors_array_id="@array/gradient_spinner_colors"
+        app:drop_drawable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.04"
-        app:spinner_type="circularv2" />
+        app:rotate="false"
+        app:spinner_type="eight" />
 
     <no.danielzeller.metaballslib.spinner.Spinner
         android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_height="80dp"
         app:colors_array_id="@array/gradient_spinner_colors"
+        app:drop_drawable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -151,4 +154,31 @@
         app:layout_constraintVertical_bias="0.959"
         app:spinner_type="dots" />
 
+    <no.danielzeller.metaballslib.spinner.Spinner
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        app:colors_array_id="@array/gradient_spinner_colors"
+        app:drop_drawable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.939"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.654"
+        app:rotate="true"
+        app:spinner_type="square" />
+
+    <no.danielzeller.metaballslib.spinner.Spinner
+        android:layout_width="120dp"
+        android:layout_height="80dp"
+        app:colors_array_id="@array/gradient_spinner_colors"
+        app:drop_drawable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.939"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.347"
+        app:rotate="false"
+        app:spinner_type="long_path" />
 </android.support.constraint.ConstraintLayout>

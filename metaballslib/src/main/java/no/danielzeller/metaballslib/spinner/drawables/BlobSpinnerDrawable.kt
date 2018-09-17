@@ -11,18 +11,23 @@ import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.animation.PathInterpolator
 import no.danielzeller.metaballslib.spinner.BrownianMotion
+import no.danielzeller.metaballslib.spinner.FrameRateCounter
+import no.danielzeller.metaballslib.spinner.SpinneHiddenListener
 import no.danielzeller.metaballslib.spinner.Vector3
 
 
-class BlobSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray) : Drawable(), SpinnerDrawable {
+class BlobSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray, val rotate: Boolean) : Drawable(), SpinnerDrawable {
 
     private val motion: ArrayList<BrownianMotion> = ArrayList()
     private var ballSize = 0
     private var sizeAnim: ValueAnimator? = null
+    private var rotation = 0f
+    private var framerate = FrameRateCounter()
+    private val ROTATE_SPEED = 40f
 
     override fun startAnimations() {
         ballSize = (bounds.width() * 0.25f).toInt()
-        animateBallSize(0, ballSize, 300, null)
+        animateBallSize(0, ballSize, 300, null, null)
         val boundsSizeX = bounds.width().toFloat()
         val boundsSizeY = bounds.height().toFloat()
         motion.clear()
@@ -35,11 +40,11 @@ class BlobSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray) : Dra
         sizeAnim?.cancel()
     }
 
-    override fun stopAndHide(spinner: View) {
-        animateBallSize(ballSize, 0, 700, spinner)
+    override fun stopAndHide(spinner: View, spinnerHiddenListener: SpinneHiddenListener?) {
+        animateBallSize(ballSize, 0, 700, spinner, spinnerHiddenListener)
     }
 
-    fun animateBallSize(from: Int, to: Int, duration: Long, spinner: View?) {
+    fun animateBallSize(from: Int, to: Int, duration: Long, spinner: View?, spinnerHiddenListener: SpinneHiddenListener?) {
         sizeAnim?.cancel()
         sizeAnim = ValueAnimator.ofInt(from, to).setDuration(duration)
         sizeAnim?.interpolator = PathInterpolator(.88f, 0f, .15f, 1f)
@@ -52,6 +57,7 @@ class BlobSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray) : Dra
                 override fun onAnimationRepeat(animation: Animator?) {
                     super.onAnimationRepeat(animation)
                     spinner.visibility = View.GONE
+                    spinnerHiddenListener?.onSpinnHidden(spinner)
                     stopAllAnimations()
                 }
             })
@@ -60,6 +66,10 @@ class BlobSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray) : Dra
 
 
     override fun draw(canvas: Canvas) {
+        if (rotate) {
+            canvas.rotate(rotation, bounds.width().toFloat() / 2f, bounds.height().toFloat() / 2f)
+            rotation += ROTATE_SPEED * framerate.timeStep()
+        }
         canvas.translate((bounds.width() / 2).toFloat(), (bounds.height() / 2).toFloat())
         for (i in 0 until 5) {
             val count = canvas.save()

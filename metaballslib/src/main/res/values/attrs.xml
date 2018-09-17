@@ -35,11 +35,15 @@
 
     <declare-styleable name="MetaBallsSpinner">
         <attr name="colors_array_id" format="reference"/>
+        <attr name="drop_drawable" format="boolean"/>
+        <attr name="rotate" format="boolean"/>
         <attr name="spinner_type" format="enum">
             <enum name="circular" value="0" />
-            <enum name="circularv2" value="1" />
-            <enum name="blobs" value="2" />
-            <enum name="dots" value="3" />
+            <enum name="blobs" value="1" />
+            <enum name="dots" value="2" />
+            <enum name="eight" value="3" />
+            <enum name="square" value="4"  />
+            <enum name="long_path" value="5" />
         </attr>
     </declare-styleable>
 </resources>

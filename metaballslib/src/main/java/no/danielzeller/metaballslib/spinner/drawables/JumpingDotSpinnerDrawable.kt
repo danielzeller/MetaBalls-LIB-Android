@@ -7,9 +7,10 @@ import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.animation.PathInterpolator
+import no.danielzeller.metaballslib.spinner.SpinneHiddenListener
 
 
-class JumpingDotSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray) : Drawable(), SpinnerDrawable {
+class JumpingDotSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray, val isDropDrawable: Boolean) : Drawable(), SpinnerDrawable {
 
     private val path = Path()
     private val animations: ArrayList<ValueAnimator> = ArrayList()
@@ -26,7 +27,7 @@ class JumpingDotSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray)
     private var pathEndX = 0f
 
     init {
-        dropDrawable = DropDrawable(metaBall)
+        dropDrawable = DropDrawable(metaBall, isDropDrawable)
         dropDrawable.easeSpeed = 15f
         dropDrawable.easeSpeedLast = 11f
     }
@@ -34,7 +35,7 @@ class JumpingDotSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray)
     override fun startAnimations() {
         ballSize = (bounds.width() * BALLSIZE).toInt()
         stopAllAnimations()
-        animateBallSize(0, ballSize, 300, null)
+        animateBallSize(0, ballSize, 300, null, null)
         startJumpingSequence()
     }
 
@@ -73,27 +74,35 @@ class JumpingDotSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray)
         animations.clear()
     }
 
-    override fun stopAndHide(spinner: View) {
-        animateBallSize(ballSize, 0, 700, spinner)
+    override fun stopAndHide(spinner: View, spinnerHiddenListener: SpinneHiddenListener?) {
+        animateBallSize(ballSize, 0, 700, spinner, spinnerHiddenListener)
     }
 
-    fun animateBallSize(from: Int, to: Int, duration: Long, spinner: View?) {
+    fun animateBallSize(from: Int, to: Int, duration: Long, spinner: View?, spinnerHiddenListener: SpinneHiddenListener?) {
         sizeAnim?.cancel()
         sizeAnim = ValueAnimator.ofInt(from, to).setDuration(duration)
         sizeAnim?.interpolator = PathInterpolator(.88f, 0f, .15f, 1f)
         sizeAnim?.addUpdateListener { animation ->
             ballSize = animation.animatedValue as Int
             metaBall.setBounds(-ballSize, -ballSize, ballSize, ballSize)
-            dropDrawable.ballSize = (ballSize * 0.75f).toInt()
+            dropDrawable.ballSize = (ballSize * getDropScale()).toInt()
         }
         if (spinner != null)
             sizeAnim?.addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationRepeat(animation: Animator?) {
                     super.onAnimationRepeat(animation)
                     spinner.visibility = View.GONE
+                    spinnerHiddenListener?.onSpinnHidden(spinner)
                 }
             })
         sizeAnim?.start()
+    }
+
+    fun getDropScale(): Float {
+        if (isDropDrawable) {
+            return 0.75f
+        }
+        return 1f
     }
 
     override fun draw(canvas: Canvas) {
@@ -130,10 +139,11 @@ class JumpingDotSpinnerDrawable(val metaBall: Drawable, val tinColors: IntArray)
     fun createPath() {
         path.reset()
         pathStartY = (bounds.height() - ballSize).toFloat()
-        val endY = bounds.width() * 0.5f
+
         pathStartX = ballSize.toFloat()
         pathCenterX = bounds.centerX().toFloat()
         pathEndX = (bounds.width() - ballSize).toFloat()
+        val endY = pathStartY-(pathCenterX - pathStartX)
         val halfWidthBetwenPoints = (pathCenterX - pathStartX) / 2f
         val halfHeightBetwenPoints = pathStartY - ((pathStartY - endY) / 2f)
 
