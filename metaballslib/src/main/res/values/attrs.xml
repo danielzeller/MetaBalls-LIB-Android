@@ -3,29 +3,29 @@
     <declare-styleable name="MetaBallsMenu">
 
         <!-- Shared between CircularMenu and DirectionMenu -->
-        <attr name="delay_between_items_animation" format="integer"/>
-        <attr name="open_animation_duration" format="integer"/>
-        <attr name="close_animation_duration" format="integer"/>
-        <attr name="open_interpolator_resource" format="reference"/>
-        <attr name="close_interpolator_resource" format="reference"/>
-        <attr name="main_button_icon" format="reference"/>
-        <attr name="main_button_color" format="color"/>
-        <attr name="main_button_icon_color" format="color"/>
+        <attr name="delay_between_items_animation" format="integer" />
+        <attr name="open_animation_duration" format="integer" />
+        <attr name="close_animation_duration" format="integer" />
+        <attr name="open_interpolator_resource" format="reference" />
+        <attr name="close_interpolator_resource" format="reference" />
+        <attr name="main_button_icon" format="reference" />
+        <attr name="main_button_color" format="color" />
+        <attr name="main_button_icon_color" format="color" />
 
         <attr name="position_grvity" format="enum">
-            <enum name="center" value="0"/>
-            <enum name="top_left" value="1"/>
-            <enum name="top_right" value="2"/>
-            <enum name="bottom_left" value="3"/>
-            <enum name="bottom_right" value="4"/>
+            <enum name="center" value="0" />
+            <enum name="top_left" value="1" />
+            <enum name="top_right" value="2" />
+            <enum name="bottom_left" value="3" />
+            <enum name="bottom_right" value="4" />
         </attr>
 
         <!-- CircularMenu -->
-        <attr name="radius" format="dimension"/>
-        <attr name="angle_between_menu_items" format="float"/>
+        <attr name="radius" format="dimension" />
+        <attr name="angle_between_menu_items" format="float" />
 
         <!-- DirectionMenu -->
-        <attr name="margin_between_menu_items" format="dimension"/>
+        <attr name="margin_between_menu_items" format="dimension" />
         <attr name="expand_direction" format="enum">
             <enum name="horizontal" value="0" />
             <enum name="vertical" value="1" />
@@ -34,16 +34,24 @@
 
 
     <declare-styleable name="MetaBallsProgressBar">
-        <attr name="colors_array_id" format="reference"/>
-        <attr name="drop_drawable" format="boolean"/>
-        <attr name="rotate" format="boolean"/>
+        <attr name="colors_array_id" format="reference" />
+        <attr name="drop_drawable" format="boolean" />
+        <attr name="rotate" format="boolean" />
         <attr name="progressbar_type" format="enum">
             <enum name="circular" value="0" />
             <enum name="blobs" value="1" />
             <enum name="dots" value="2" />
             <enum name="eight" value="3" />
-            <enum name="square" value="4"  />
+            <enum name="square" value="4" />
             <enum name="long_path" value="5" />
         </attr>
+    </declare-styleable>
+    <declare-styleable name="MetaBallsPageIndicator">
+        <attr name="dot_colors_override_array_id" format="reference" />
+        <attr name="selected_dot_color" format="color" />
+        <attr name="un_selected_dot_color" format="color" />
+        <attr name="dot_size" format="dimension" />
+        <attr name="dot_margin" format="dimension" />
+        <attr name="selected_indicator_is_drop_drawable" format="boolean" />
     </declare-styleable>
 </resources>

@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.View
 import android.view.animation.PathInterpolator
-import no.danielzeller.metaballslib.progressbar.SpinneHiddenListener
 
 
 class ProgressJumpingDotDrawable(val metaBall: Drawable, val tinColors: IntArray, val isDrop: Boolean) : ProgressDrawable() {
@@ -33,6 +32,7 @@ class ProgressJumpingDotDrawable(val metaBall: Drawable, val tinColors: IntArray
         dropDrawable = DropDrawable(metaBall, isDropDrawable)
         dropDrawable.easeSpeed = 15f
         dropDrawable.easeSpeedLast = 11f
+        this.tinColorsArray=tinColors
     }
 
     override fun setDrop(isDrop: Boolean) {
@@ -82,11 +82,11 @@ class ProgressJumpingDotDrawable(val metaBall: Drawable, val tinColors: IntArray
         animations.clear()
     }
 
-    override fun stopAndHide(spinner: View, spinnerHiddenListener: SpinneHiddenListener?) {
+    override fun stopAndHide(spinner: View, spinnerHiddenListener: (() -> Unit)?) {
         animateBallSize(ballSize, 0, 700, spinner, spinnerHiddenListener)
     }
 
-    fun animateBallSize(from: Int, to: Int, duration: Long, spinner: View?, spinnerHiddenListener: SpinneHiddenListener?) {
+    fun animateBallSize(from: Int, to: Int, duration: Long, spinner: View?, spinnerHiddenListener: (() -> Unit)?) {
         sizeAnim?.cancel()
         sizeAnim = ValueAnimator.ofInt(from, to).setDuration(duration)
         sizeAnim?.interpolator = PathInterpolator(.88f, 0f, .15f, 1f)
@@ -100,7 +100,7 @@ class ProgressJumpingDotDrawable(val metaBall: Drawable, val tinColors: IntArray
                 override fun onAnimationEnd(animation: Animator?) {
                     super.onAnimationEnd(animation)
                     spinner.visibility = View.GONE
-                    spinnerHiddenListener?.onSpinnHidden(spinner)
+                    spinnerHiddenListener?.invoke()
                 }
             })
         sizeAnim?.start()

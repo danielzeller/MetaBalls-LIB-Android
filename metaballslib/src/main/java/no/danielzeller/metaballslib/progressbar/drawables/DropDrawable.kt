@@ -4,6 +4,7 @@ import android.graphics.Canvas
 import android.graphics.ColorFilter
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
+import android.util.Log
 import no.danielzeller.metaballslib.progressbar.FrameRateCounter
 
 /**
@@ -33,8 +34,6 @@ class DropDrawable(val metaDrawable: Drawable, val idDropEnabled: Boolean) : Dra
 
     override fun draw(canvas: Canvas) {
         val deltaTime = frameRate.timeStep()
-
-
         drawBall(canvas, x, y, 1f)
         if (idDropEnabled) {
             x1 += ((x - x1) * easeSpeed) * deltaTime
@@ -77,5 +76,14 @@ class DropDrawable(val metaDrawable: Drawable, val idDropEnabled: Boolean) : Dra
 
     override fun setAlpha(alpha: Int) {
 
+    }
+
+    fun setAllCoordinatesToStart() {
+        x1 += x
+        y1 += y
+        x2 += x
+        y2 += y
+        x3 += x
+        y3 += y
     }
 }

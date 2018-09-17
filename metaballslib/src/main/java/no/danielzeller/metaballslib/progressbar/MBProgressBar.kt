@@ -15,20 +15,17 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import no.danielzeller.metaballslib.R
 import no.danielzeller.metaballslib.progressbar.drawables.ProgressBlobDrawable
+import no.danielzeller.metaballslib.progressbar.drawables.ProgressDrawable
 import no.danielzeller.metaballslib.progressbar.drawables.ProgressJumpingDotDrawable
 import no.danielzeller.metaballslib.progressbar.drawables.ProgressPathDrawable
-import no.danielzeller.metaballslib.progressbar.drawables.ProgressDrawable
 
 
 enum class MBProgressBarType {
     CIRCULAR, BLOBS, DOTS, EIGHT, SQUARE, LONG_PATH
 }
 
-interface SpinneHiddenListener {
-    fun onSpinnHidden(spinner: View)
-}
-
 class MBProgressBar : FrameLayout {
+
 
     /**
      * Sets the ProgressBar drawable type
@@ -43,6 +40,7 @@ class MBProgressBar : FrameLayout {
             }
         }
 
+
     /**
      * With this enabled the moving circles will look like a water drop(with a tail)
      */
@@ -51,6 +49,7 @@ class MBProgressBar : FrameLayout {
             field = value
             progressDrawable?.setDrop(field)
         }
+
 
     /**
      * Should the ProgressBar Drawable rotate. Note: Width and Height of the View should be equal in order to
@@ -62,19 +61,25 @@ class MBProgressBar : FrameLayout {
             progressDrawable?.rotate = field
         }
 
-    private lateinit var colorArray: IntArray
+
+    /**
+     * Sets the colors of each circle
+     */
+    private var colorArray = intArrayOf()
+        set(value) {
+            field = value
+            progressDrawable?.tinColorsArray = value
+        }
+
     private lateinit var spinnerImageView: ImageView
     private var progressDrawable: ProgressDrawable? = null
 
     private val EIGHT_PATH_DATA = floatArrayOf(85f, 50.934f, 85f, 58.16f, 81.419f, 67f, 70.09f, 67f, 58.761f, 67f, 51.776f, 53.948f, 48.5f, 50.5f, 45.224f, 47.052f, 37.252f, 34f, 26.717f, 34f, 16.181f, 34f, 12f, 43.123f, 12f, 50.934f, 12f, 58.744f, 16.256f, 67f, 25.354f, 67f, 34.451f, 67f, 44.12f, 55.534f, 48.5f, 50.934f, 52.88f, 46.334f, 59.597f, 34f, 70.77f, 34f, 81.943f, 34f, 85f, 43.708f, 85f, 50.934f)
-    private  val CIRCLE_PATH_DATA = floatArrayOf(51.243f, 12.001f, 69.013f, 12.001f, 88.112f, 27.121f, 88.112f, 50f, 88.112f, 72.879f, 67.671f, 87.084f, 51.243f, 87.084f, 34.815f, 87.084f, 13.04f, 75.041f, 13.04f, 49.679f, 13.04f, 24.318f, 33.473f, 12.001f, 51.243f, 12.001f)
+    private val CIRCLE_PATH_DATA = floatArrayOf(51.243f, 12.001f, 69.013f, 12.001f, 88.112f, 27.121f, 88.112f, 50f, 88.112f, 72.879f, 67.671f, 87.084f, 51.243f, 87.084f, 34.815f, 87.084f, 13.04f, 75.041f, 13.04f, 49.679f, 13.04f, 24.318f, 33.473f, 12.001f, 51.243f, 12.001f)
     private val SQUARE_PATH_DATA = floatArrayOf(50.554f, 12.523f, 50.554f, 12.523f, 88.638f, 50.647f, 88.638f, 50.647f, 88.638f, 50.647f, 50.554f, 88.58f, 50.554f, 88.58f, 50.554f, 88.58f, 12.365f, 50.647f, 12.365f, 50.647f, 12.365f, 50.647f, 50.554f, 12.523f, 50.554f, 12.523f)
     private val LONG_PATH_DATA = floatArrayOf(15f, 53.44f, 15f, 49.571f, 13.841f, 13.301f, 25.976f, 13.301f, 38.112f, 13.301f, 38.229f, 45.513f, 38.229f, 53.44f, 38.229f, 61.368f, 39.76f, 89.087f, 50f, 89.087f, 60.24f, 89.087f, 60.797f, 60.835f, 60.797f, 53.44f, 60.797f, 46.045f, 61.581f, 13.301f, 73.29f, 13.301f, 84.999f, 13.301f, 84.999f, 40.987f, 84.999f, 53.44f, 84.999f, 65.894f, 84.999f, 90.718f, 73.29f, 90.718f, 61.581f, 90.718f, 60.797f, 64.684f, 60.797f, 53.44f, 60.797f, 42.197f, 61.771f, 13.301f, 50f, 13.301f, 38.229f, 13.301f, 38.229f, 42.623f, 38.229f, 53.44f, 38.229f, 64.257f, 37.07f, 89.087f, 25.976f, 89.087f, 14.883f, 89.087f, 15f, 57.31f, 15f, 53.44f)
 
-    constructor(context: Context) : super(context) {
-        loadAttributesFromXml(null)
-        setupBaseViews(context)
-    }
+    constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         loadAttributesFromXml(attrs)
@@ -83,11 +88,10 @@ class MBProgressBar : FrameLayout {
 
     /**
      * Stops the spinner animated, and sets View.GONE after an exit animation.
-     * @param spinnerHiddenListener
-     * Callback for when the Spinner is hidden
+     * @param spinnerHiddenListener  Callback for when the Spinner is hidden.
      */
-    fun stopAnimated(spinnerHiddenListener: SpinneHiddenListener? = null) {
-        progressDrawable?.stopAndHide(this, spinnerHiddenListener)
+    fun stopAnimated( onProgressBarHiddenListener: (() -> Unit)? = null) {
+        progressDrawable?.stopAndHide(this, onProgressBarHiddenListener)
     }
 
     /**

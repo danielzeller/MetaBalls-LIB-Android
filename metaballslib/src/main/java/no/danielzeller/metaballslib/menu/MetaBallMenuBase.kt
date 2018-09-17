@@ -29,7 +29,6 @@ enum class PositionGravity {
 abstract class MetaBallMenuBase : FrameLayout {
 
     /**
-     *
      * Sets the data behind this Menu.
      */
     var adapter: MetaBallAdapter = EmptyAdapter()
@@ -114,16 +113,19 @@ abstract class MetaBallMenuBase : FrameLayout {
             rebuildView()
         }
 
+
     /**
      * Has the menu been initialized with Views?
      */
     fun isInitialized() = metaBallsContainerFrameLayout.childCount != 0
+
 
     /**
      *  Callback for when a menu item is clicked.
      *  @param index the index of the View from the MetaBallAdapter data.
      */
     var onItemSelectedListener: ((index: Int) -> Unit)? = null
+
 
     /**
      * Opens or closes the menu dpending on if the menu is open or closed
@@ -139,6 +141,7 @@ abstract class MetaBallMenuBase : FrameLayout {
 
         isMenuOpen = !isMenuOpen
     }
+
 
     /**
      * Is the menu open or closed?

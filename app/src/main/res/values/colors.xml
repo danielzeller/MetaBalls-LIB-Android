@@ -9,6 +9,7 @@
     <color name="spinner_test3">#EC38BC</color>
     <color name="spinner_test4">#7303C0</color>
     <color name="spinner_test5">#03001E</color>
+    <color name="transparent_black">#80000000</color>
 
     <array name="gradient_spinner_colors">
         <item>@color/spinner_test1</item>

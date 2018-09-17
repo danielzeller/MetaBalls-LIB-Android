@@ -10,7 +10,6 @@ import android.view.animation.Animation
 import android.view.animation.Interpolator
 import android.view.animation.PathInterpolator
 import no.danielzeller.metaballslib.progressbar.FrameRateCounter
-import no.danielzeller.metaballslib.progressbar.SpinneHiddenListener
 
 
 class ProgressPathDrawable(val metaBallGradient: Drawable, val tinColors: IntArray, val shapePath: Path, val isDrop: Boolean, isRotate: Boolean, val animationDuration: Long = 1800L, val interpolator: Interpolator = PathInterpolator(.65f, .14f, .17f, 1f)) : ProgressDrawable() {
@@ -31,6 +30,7 @@ class ProgressPathDrawable(val metaBallGradient: Drawable, val tinColors: IntArr
     init {
         this.rotate = isRotate
         this.isDropDrawable = isDrop
+        this.tinColorsArray=tinColors
     }
 
     override fun setDrop(isDrop: Boolean) {
@@ -61,7 +61,7 @@ class ProgressPathDrawable(val metaBallGradient: Drawable, val tinColors: IntArr
         sizeAnim?.cancel()
     }
 
-    override fun stopAndHide(spinner: View, spinnerHiddenListener: SpinneHiddenListener?) {
+    override fun stopAndHide(spinner: View, spinnerHiddenListener: (() -> Unit)?) {
         var animatedFractionMin = 100000f
         var lastRunningAnimIndex = 0
         for (i in 0 until animations.count()) {
@@ -83,7 +83,7 @@ class ProgressPathDrawable(val metaBallGradient: Drawable, val tinColors: IntArr
         })
     }
 
-    fun animateBallSize(from: Int, to: Int, duration: Long, spinner: View?, spinnerHiddenListener: SpinneHiddenListener?) {
+    fun animateBallSize(from: Int, to: Int, duration: Long, spinner: View?, spinnerHiddenListener: (() -> Unit)?) {
         sizeAnim?.cancel()
         sizeAnim = ValueAnimator.ofInt(from, to).setDuration(duration)
         sizeAnim?.interpolator = PathInterpolator(.88f, 0f, .15f, 1f)
@@ -98,7 +98,7 @@ class ProgressPathDrawable(val metaBallGradient: Drawable, val tinColors: IntArr
                 override fun onAnimationEnd(animation: Animator?) {
                     super.onAnimationRepeat(animation)
                     spinner.visibility = View.GONE
-                    spinnerHiddenListener?.onSpinnHidden(spinner)
+                    spinnerHiddenListener?.invoke()
                 }
             })
         sizeAnim?.start()
@@ -131,7 +131,7 @@ class ProgressPathDrawable(val metaBallGradient: Drawable, val tinColors: IntArr
         for (i in 0 until 5) {
             val dropDrawable = dropDrawables.get(i)
             pathMeasure.getPosTan(pathMeasure.length * dropDrawable.pathPercent, aCoordinates, null)
-            dropDrawable.setTint(tinColors[i])
+            dropDrawable.setTint(tinColorsArray[i])
             dropDrawable.x = aCoordinates[0]
             dropDrawable.y = aCoordinates[1]
             dropDrawable.draw(canvas)

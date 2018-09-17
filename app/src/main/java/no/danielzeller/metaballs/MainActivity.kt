@@ -3,12 +3,19 @@ package no.danielzeller.metaballs
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup 
+import kotlinx.android.synthetic.main.fragment_main.view.*
+import no.danielzeller.metaballslib.MetaBallPageIndicator
 import no.danielzeller.metaballslib.menu.DirectionalMenu
 import no.danielzeller.metaballslib.progressbar.MBProgressBar
 import no.danielzeller.metaballslib.progressbar.MBProgressBarType
-import no.danielzeller.metaballslib.progressbar.SpinneHiddenListener
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,23 +32,69 @@ class MainActivity : AppCompatActivity() {
         spinnerTest.mbProgressBarType = MBProgressBarType.LONG_PATH
         spinnerTest.isRotate = true
         val handler = Handler()
-        handler.postDelayed(testSpinners(true, true,  MBProgressBarType.CIRCULAR,   spinnerTest), 3000)
-        handler.postDelayed(testSpinners(true, true,  MBProgressBarType.EIGHT,   spinnerTest), 6000)
-        handler.postDelayed(testSpinners(true, true,  MBProgressBarType.LONG_PATH,   spinnerTest), 9000)
-        handler.postDelayed(testSpinners(true, true,  MBProgressBarType.SQUARE,   spinnerTest), 12000)
-        handler.postDelayed(testSpinners(true, true,  MBProgressBarType.BLOBS,   spinnerTest), 15000)
-        handler.postDelayed(testSpinners(true, true,  MBProgressBarType.DOTS,   spinnerTest), 18000)
+        handler.postDelayed(testSpinners(true, true, MBProgressBarType.CIRCULAR, spinnerTest), 3000)
+        handler.postDelayed(testSpinners(true, true, MBProgressBarType.EIGHT, spinnerTest), 6000)
+        handler.postDelayed(testSpinners(true, true, MBProgressBarType.LONG_PATH, spinnerTest), 9000)
+        handler.postDelayed(testSpinners(true, true, MBProgressBarType.SQUARE, spinnerTest), 12000)
+        handler.postDelayed(testSpinners(true, true, MBProgressBarType.BLOBS, spinnerTest), 15000)
+        handler.postDelayed(testSpinners(true, true, MBProgressBarType.DOTS, spinnerTest), 18000)
 
 
-        handler.postDelayed(testSpinners(false, false,  MBProgressBarType.CIRCULAR,   spinnerTest), 21000)
-        handler.postDelayed(testSpinners(false, false,  MBProgressBarType.EIGHT,   spinnerTest), 24000)
-        handler.postDelayed(testSpinners(false, false,  MBProgressBarType.BLOBS,   spinnerTest), 27000)
-        handler.postDelayed(testSpinners(false, false,  MBProgressBarType.DOTS,   spinnerTest), 30000)
-        handler.postDelayed(testSpinners(false, false,  MBProgressBarType.LONG_PATH,   spinnerTest), 33000)
-        handler.postDelayed(testSpinners(false, false,  MBProgressBarType.SQUARE,   spinnerTest), 36000)
+        handler.postDelayed(testSpinners(false, false, MBProgressBarType.CIRCULAR, spinnerTest), 21000)
+        handler.postDelayed(testSpinners(false, false, MBProgressBarType.EIGHT, spinnerTest), 24000)
+        handler.postDelayed(testSpinners(false, false, MBProgressBarType.BLOBS, spinnerTest), 27000)
+        handler.postDelayed(testSpinners(false, false, MBProgressBarType.DOTS, spinnerTest), 30000)
+        handler.postDelayed(testSpinners(false, false, MBProgressBarType.LONG_PATH, spinnerTest), 33000)
+        handler.postDelayed(testSpinners(false, false, MBProgressBarType.SQUARE, spinnerTest), 36000)
+
+        val viewPager = findViewById<ViewPager>(R.id.viewPager)
+        viewPager.adapter = SectionsPagerAdapter(supportFragmentManager)
+        findViewById<MetaBallPageIndicator>(R.id.pageIndicator).attachToViewPager(viewPager)
     }
 
-    fun testSpinners(isDrop: Boolean, isRotate: Boolean, type: MBProgressBarType,   spinner: MBProgressBar): Runnable {
+    inner class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+
+        override fun getItem(position: Int): Fragment {
+            return PlaceholderFragment.newInstance(position + 1)
+        }
+
+        override fun getCount(): Int {
+            // Show 3 total pages.
+            return 3
+        }
+    }
+
+    class PlaceholderFragment : Fragment() {
+
+        override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                                  savedInstanceState: Bundle?): View? {
+            val rootView = inflater.inflate(R.layout.fragment_main, container, false)
+            rootView.section_label.text = "HORSE" + arguments?.getInt(ARG_SECTION_NUMBER)
+            return rootView
+        }
+
+        companion object {
+            /**
+             * The fragment argument representing the section number for this
+             * fragment.
+             */
+            private val ARG_SECTION_NUMBER = "section_number"
+
+            /**
+             * Returns a new instance of this fragment for the given section
+             * number.
+             */
+            fun newInstance(sectionNumber: Int): PlaceholderFragment {
+                val fragment = PlaceholderFragment()
+                val args = Bundle()
+                args.putInt(ARG_SECTION_NUMBER, sectionNumber)
+                fragment.arguments = args
+                return fragment
+            }
+        }
+    }
+
+    fun testSpinners(isDrop: Boolean, isRotate: Boolean, type: MBProgressBarType, spinner: MBProgressBar): Runnable {
 //        return Runnable {
 //            spinner.visibility = View.GONE
 //            spinner.isDropDrawable = isDrop
@@ -53,13 +106,11 @@ class MainActivity : AppCompatActivity() {
 //
 //        }
         return Runnable {
-            spinner.stopAnimated(object : SpinneHiddenListener {
-                override fun onSpinnHidden(spinne: View) {
-                    spinner.isDropDrawable = isDrop
-                    spinner.isRotate = isRotate
-                    spinner.mbProgressBarType = type
-                    spinner.visibility = View.VISIBLE
-                }
+            spinner.stopAnimated({
+                spinner.isDropDrawable = isDrop
+                spinner.isRotate = isRotate
+                spinner.mbProgressBarType = type
+                spinner.visibility = View.VISIBLE
             })
 
         }

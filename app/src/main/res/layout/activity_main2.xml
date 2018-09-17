@@ -7,6 +7,15 @@
     android:background="#4F4F4F"
     tools:context=".MainActivity">
 
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <no.danielzeller.metaballslib.menu.DirectionalMenu
         android:id="@+id/circularMenuTopRight"
         android:layout_width="0dp"
@@ -182,4 +191,21 @@
         app:layout_constraintVertical_bias="0.347"
         app:progressbar_type="long_path"
         app:rotate="false" />
+
+
+    <no.danielzeller.metaballslib.MetaBallPageIndicator
+        android:id="@+id/pageIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/transparent_black"
+        app:selected_dot_color="@color/colorPrimary"
+        app:un_selected_dot_color="@color/colorAccent"
+        app:dot_size="40dp"
+        app:dot_margin="50dp"
+        />
+
 </android.support.constraint.ConstraintLayout>

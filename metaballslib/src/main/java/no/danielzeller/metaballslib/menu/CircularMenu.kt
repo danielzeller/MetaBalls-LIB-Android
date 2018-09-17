@@ -21,6 +21,7 @@ class CircularMenu : MetaBallMenuBase {
      */
     var angleBetweenMenuItems = 45f
 
+
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
