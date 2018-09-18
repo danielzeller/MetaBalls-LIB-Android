@@ -113,7 +113,6 @@ class MainActivity : AppCompatActivity() {
                 spinner.isRotate = isRotate
                 spinner.mbProgressBarType = type
                 spinner.visibility = View.VISIBLE
-                spinner.colorArray = resources.getIntArray(R.array.default_spinner_colors)
             })
 
         }

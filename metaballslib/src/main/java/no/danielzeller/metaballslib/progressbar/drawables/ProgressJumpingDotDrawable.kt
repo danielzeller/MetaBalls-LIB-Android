@@ -40,7 +40,6 @@ class ProgressJumpingDotDrawable(val metaBall: Drawable, val tinColors: IntArray
     }
 
     override fun startAnimations() {
-        Log.i("dsds","STARTEROOO")
         ballSize = (bounds.width() * BALLSIZE).toInt()
         stopAllAnimations()
         animateBallSize(0, ballSize, 300, null, null)
