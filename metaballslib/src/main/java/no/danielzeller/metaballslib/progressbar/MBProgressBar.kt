@@ -94,12 +94,6 @@ class MBProgressBar : FrameLayout {
         progressDrawable?.stopAndHide(this, onProgressBarHiddenListener)
     }
 
-    /**
-     * Call this after stopAnimated
-     */
-    fun startAnimating() {
-        progressDrawable?.startAnimations()
-    }
 
     private fun loadAttributesFromXml(attrs: AttributeSet?) {
         val typedArray = context.theme.obtainStyledAttributes(

@@ -49,7 +49,9 @@ class MainActivity : AppCompatActivity() {
 
         val viewPager = findViewById<ViewPager>(R.id.viewPager)
         viewPager.adapter = SectionsPagerAdapter(supportFragmentManager)
-        findViewById<MetaBallPageIndicator>(R.id.pageIndicator).attachToViewPager(viewPager)
+        val metaBallPageIndicator = findViewById<MetaBallPageIndicator>(R.id.pageIndicator)
+        metaBallPageIndicator.attachToViewPager(viewPager) 
+        metaBallPageIndicator.onDotClicked = { pageIndex -> viewPager.setCurrentItem(pageIndex, true) }
     }
 
     inner class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {

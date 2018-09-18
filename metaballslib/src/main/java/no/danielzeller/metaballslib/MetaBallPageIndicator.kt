@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -80,6 +81,10 @@ class MetaBallPageIndicator : FrameLayout, ViewPager.OnPageChangeListener, ViewP
             pageIndicatorDrawable?.isFirstRender = true
         }
 
+    /**
+     * Callback for when a dot is clicked
+     */
+    var onDotClicked: ((pageIndex: Int) -> Unit)? = null
 
     private var viewPager: ViewPager? = null
     private var currentPageIndex: Int = 0
@@ -171,6 +176,26 @@ class MetaBallPageIndicator : FrameLayout, ViewPager.OnPageChangeListener, ViewP
                 0f, 0f, 0f, 160f, -255 * 128f
         ))))
         return metaBallsPaint
+    }
+
+    private var touchDownDotIndex = -1
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        if (onDotClicked != null) {
+            if (event.action == MotionEvent.ACTION_DOWN && pageIndicatorDrawable != null) {
+                touchDownDotIndex = pageIndicatorDrawable!!.getTouchedRect(event.x, event.y)
+                if (touchDownDotIndex != -1) {
+                    return true
+                }
+            } else if (event.action == MotionEvent.ACTION_UP && pageIndicatorDrawable != null) {
+                val touchUpDotIndex = pageIndicatorDrawable!!.getTouchedRect(event.x, event.y)
+                if (touchDownDotIndex == touchUpDotIndex) {
+                    onDotClicked!!.invoke(touchDownDotIndex)
+                    touchDownDotIndex = -1
+                }
+            }
+        }
+        return super.onTouchEvent(event)
     }
 
     inner class PageIndicatorDrawable(val gradientDrawable: Drawable, val dropDrawable: DropDrawable) : Drawable() {
@@ -290,6 +315,17 @@ class MetaBallPageIndicator : FrameLayout, ViewPager.OnPageChangeListener, ViewP
 
         private fun getTotalWidth(count: Int): Float {
             return (dotSize * count + (count - 1) * dotsMargin).toFloat()
+        }
+
+        fun getTouchedRect(touchX: Float, touchY: Float): Int {
+            val rect = RectF()
+            for (i in 0 until dotsCount) {
+                rect.set(dotPositions[i] - dotSize, centerY - dotSize, dotPositions[i] + dotSize, centerY + dotSize)
+                if (rect.contains(touchX, touchY)) {
+                    return i
+                }
+            }
+            return -1
         }
     }
 }
