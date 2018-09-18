@@ -36,7 +36,7 @@
         app:main_button_icon_color="@color/white"
         app:open_animation_duration="1300"
         app:open_interpolator_resource="@anim/overshoot_interpolator"
-        app:position_grvity="top_right" />
+        app:position_gravity="top_right" />
 
     <no.danielzeller.metaballslib.menu.DirectionalMenu
         android:id="@+id/circularMenuTopLeft"
@@ -57,7 +57,7 @@
         app:main_button_icon_color="@color/white"
         app:open_animation_duration="1300"
         app:open_interpolator_resource="@anim/overshoot_interpolator"
-        app:position_grvity="top_left" />
+        app:position_gravity="top_left" />
 
     <no.danielzeller.metaballslib.menu.DirectionalMenu
         android:id="@+id/circularMenuBottomLeft"
@@ -78,7 +78,7 @@
         app:main_button_icon_color="@color/white"
         app:open_animation_duration="1300"
         app:open_interpolator_resource="@anim/overshoot_interpolator"
-        app:position_grvity="bottom_left" />
+        app:position_gravity="bottom_left" />
 
     <no.danielzeller.metaballslib.menu.DirectionalMenu
         android:id="@+id/circularMenuBottomRight"
@@ -95,7 +95,7 @@
         app:main_button_color="@color/default_metaballs_color"
         app:main_button_icon="@drawable/ic_share_black_24dp"
         app:main_button_icon_color="@color/white"
-        app:position_grvity="bottom_right" />
+        app:position_gravity="bottom_right" />
 
     <no.danielzeller.metaballslib.menu.DirectionalMenu
         android:id="@+id/circularMenuCenter"
@@ -113,7 +113,7 @@
         app:main_button_color="@color/default_metaballs_color"
         app:main_button_icon="@drawable/ic_twitter"
         app:main_button_icon_color="@color/white"
-        app:position_grvity="center" />
+        app:position_gravity="center" />
 
     <no.danielzeller.metaballslib.progressbar.MBProgressBar
         android:layout_width="120dp"
