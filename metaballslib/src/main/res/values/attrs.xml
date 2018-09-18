@@ -12,7 +12,7 @@
         <attr name="main_button_color" format="color" />
         <attr name="main_button_icon_color" format="color" />
 
-        <attr name="position_grvity" format="enum">
+        <attr name="position_gravity" format="enum">
             <enum name="center" value="0" />
             <enum name="top_left" value="1" />
             <enum name="top_right" value="2" />

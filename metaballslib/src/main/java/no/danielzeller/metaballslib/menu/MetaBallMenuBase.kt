@@ -184,7 +184,7 @@ abstract class MetaBallMenuBase : FrameLayout {
             if (typedArray.hasValue(R.styleable.MetaBallsMenu_main_button_icon)) {
                 mainButtonIcon = resources.getDrawable(typedArray.getResourceId(R.styleable.MetaBallsMenu_main_button_icon, 0), null)
             }
-            positionGravity = convertIntToPositionGravity(typedArray.getInteger(R.styleable.MetaBallsMenu_position_grvity, PositionGravity.CENTER.ordinal))
+            positionGravity = convertIntToPositionGravity(typedArray.getInteger(R.styleable.MetaBallsMenu_position_gravity, PositionGravity.CENTER.ordinal))
         } finally {
             typedArray.recycle()
         }
