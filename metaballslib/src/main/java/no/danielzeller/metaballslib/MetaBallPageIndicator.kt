@@ -320,7 +320,8 @@ class MetaBallPageIndicator : FrameLayout, ViewPager.OnPageChangeListener, ViewP
         fun getTouchedRect(touchX: Float, touchY: Float): Int {
             val rect = RectF()
             for (i in 0 until dotsCount) {
-                rect.set(dotPositions[i] - dotSize, centerY - dotSize, dotPositions[i] + dotSize, centerY + dotSize)
+                val halfDotsize = dotSize / 2f
+                rect.set(dotPositions[i] - halfDotsize, centerY - halfDotsize, dotPositions[i] + halfDotsize, centerY + halfDotsize)
                 if (rect.contains(touchX, touchY)) {
                     return i
                 }
