@@ -7,6 +7,7 @@
     android:background="#4F4F4F"
     tools:context=".MainActivity">
 
+
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="0dp"
@@ -21,16 +22,17 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="Hello World!"
-        app:close_animation_duration="1300"
-        app:close_interpolator_resource="@anim/overshoot_interpolator"
-        app:delay_between_items_animation="40"
-        app:expand_direction="vertical"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
+        app:close_animation_duration="1300"
+        app:close_interpolator_resource="@anim/overshoot_interpolator"
+        app:delay_between_items_animation="40"
+        app:expand_direction="vertical"
         app:main_button_color="@color/default_metaballs_color"
         app:main_button_icon="@drawable/ic_share_black_24dp"
         app:main_button_icon_color="@color/white"
@@ -118,7 +120,7 @@
     <no.danielzeller.metaballslib.progressbar.MBProgressBar
         android:layout_width="120dp"
         android:layout_height="120dp"
-        app:colors_array_id="@array/gradient_spinner_colors"
+        app:colors_array_id="@array/pastel_spinner_colors"
         app:drop_drawable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -130,7 +132,7 @@
     <no.danielzeller.metaballslib.progressbar.MBProgressBar
         android:layout_width="120dp"
         android:layout_height="120dp"
-        app:colors_array_id="@array/gradient_spinner_colors"
+        app:colors_array_id="@array/pastel_spinner_colors"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -142,7 +144,7 @@
     <no.danielzeller.metaballslib.progressbar.MBProgressBar
         android:layout_width="120dp"
         android:layout_height="120dp"
-        app:colors_array_id="@array/gradient_spinner_colors"
+        app:colors_array_id="@array/pastel_spinner_colors"
         app:drop_drawable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -156,7 +158,7 @@
         android:id="@+id/dotsSpinner"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        app:colors_array_id="@array/gradient_spinner_colors"
+        app:colors_array_id="@array/pastel_spinner_colors"
         app:drop_drawable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -168,7 +170,7 @@
     <no.danielzeller.metaballslib.progressbar.MBProgressBar
         android:layout_width="120dp"
         android:layout_height="120dp"
-        app:colors_array_id="@array/gradient_spinner_colors"
+        app:colors_array_id="@array/pastel_spinner_colors"
         app:drop_drawable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -182,7 +184,7 @@
     <no.danielzeller.metaballslib.progressbar.MBProgressBar
         android:layout_width="120dp"
         android:layout_height="80dp"
-        app:colors_array_id="@array/gradient_spinner_colors"
+        app:colors_array_id="@array/pastel_spinner_colors"
         app:drop_drawable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

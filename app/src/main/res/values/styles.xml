@@ -1,11 +1,30 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/metal</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="RobotoSlabViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/roboto_slab_regular</item>
+    </style>
+    <style name="H1" parent="RobotoSlabViewStyle">
+        <item name="android:fontFamily">@font/roboto_slab_regular</item>
+        <item name="android:textSize">@dimen/h1_textsize</item>
+        <item name="android:textColor">@color/metal</item>
+    </style>
+    <style name="Caption"  parent="android:Widget.TextView">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColorLink">@color/pastel_blue</item>
+        <item name="android:textSize">@dimen/caption</item>
+        <item name="android:textColor">@color/metal</item>
+    </style>
+    <style name="BulletList"  parent="Caption">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/bullet_list</item>
+    </style>
 </resources>

@@ -161,7 +161,7 @@ class MetaBallPageIndicator : FrameLayout, ViewPager.OnPageChangeListener, ViewP
         pageIndicatorRenderView = ImageView(context)
         pageIndicatorRenderView.setLayerType(View.LAYER_TYPE_HARDWARE, createMetaBallsPaint())
         addView(pageIndicatorRenderView, FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
-        val gradientDrawable = resources.getDrawable(R.mipmap.gradient_oval, null)
+        val gradientDrawable = resources.getDrawable(R.drawable.gradient_oval, null)
         val dropDrawable = DropDrawable(gradientDrawable, true)
         pageIndicatorDrawable = PageIndicatorDrawable(gradientDrawable, dropDrawable)
         pageIndicatorRenderView.setImageDrawable(pageIndicatorDrawable)

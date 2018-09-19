@@ -1,3 +1,52 @@
 <resources>
-    <string name="app_name">MetaBalls</string>
+    <string name="app_name">Meta Balls</string>
+    <string name="pastel_image1_description">Unsplash image by @dooley</string>
+    <string name="unaplsh_icon_descrition">Unaplsh icon</string>
+
+    <string name="demo_card_link">Photo by <a href="https://unsplash.com/@nativemello">ian dooley</a> on Unsplash</string>
+    <string-array name="demo_card_1">
+        <item>Circular menu with position gravity set to bottom right</item>
+
+        <item>Click a menu item to show the circular Progressbar.</item>
+        <item>The menu is using default animation parameters.</item>
+        <item>See the CircularMenu in demo_card1.xml for more info.</item>
+    </string-array>
+
+    <string name="demo_card_link2">Photo by <a href="https://unsplash.com/@icons8">Icons8 team</a> on Unsplash</string>
+    <string-array name="demo_card_2">
+        <item>Showing a Circular menu with position gravity set to center</item>
+
+        <item>Click a menu item to show the Long Path Progressbar with a colors array defined.</item>
+        <item>The menu is using a custom overshoot animation with 1300ms duration.</item>
+        <item>The adapter of the menu uses different colors.</item>
+        <item>See the CircularMenu in demo_card2.xml for more info.</item>
+    </string-array>
+
+    <string name="demo_card_link3">Photo by <a href="https://unsplash.com/@rawpixel">rawpixel</a> on Unsplash</string>
+    <string-array name="demo_card_3">
+        <item>Directional menu with position gravity set to bottom right and layout direction to horizontal</item>
+
+        <item>Click a menu item to show the jumping dot Progressbar with a colors array defined.</item>
+        <item>The menu is using a custom overshoot animation with a delay between each menu item.</item>
+        <item>See the CircularMenu in demo_card3.xml for more info.</item>
+    </string-array>
+
+    <string name="demo_card_link4">Photo by <a href="https://unsplash.com/@rawpixel">rawpixel</a> on Unsplash</string>
+    <string-array name="demo_card_4">
+        <item>Directional menu with position gravity set to top left and layout direction to vertical</item>
+
+        <item>Click a menu item to show the blob Progressbar.</item>
+        <item>The menu is using default animation parameters.</item>
+        <item>See the CircularMenu in demo_card4.xml for more info.</item>
+    </string-array>
+
+    <string name="demo_card_link5">Photo by <a href="https://unsplash.com/@rubavi78">Rubén Bagüés</a> on Unsplash</string>
+    <string-array name="demo_card_5">
+        <item>Directional menu with position gravity set to center and layout direction to horizontal</item>
+
+        <item>Click a menu item to show the sideways eight Progressbar.</item>
+        <item>MArgin between menu items is lower than the default value.</item>
+        <item>The menu is using default animation parameters.</item>
+        <item>See the CircularMenu in demo_card5.xml for more info.</item>
+    </string-array>
 </resources>

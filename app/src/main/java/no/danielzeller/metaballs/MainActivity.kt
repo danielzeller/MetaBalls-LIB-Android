@@ -1,6 +1,9 @@
 package no.danielzeller.metaballs
 
 import android.graphics.Color
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
+import android.graphics.Paint
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
@@ -11,6 +14,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import kotlinx.android.synthetic.main.fragment_main.view.*
 import no.danielzeller.metaballslib.MetaBallPageIndicator
 import no.danielzeller.metaballslib.menu.DirectionalMenu
@@ -52,8 +56,18 @@ class MainActivity : AppCompatActivity() {
         val metaBallPageIndicator = findViewById<MetaBallPageIndicator>(R.id.pageIndicator)
         metaBallPageIndicator.attachToViewPager(viewPager)
         metaBallPageIndicator.onDotClicked = { pageIndex -> viewPager.setCurrentItem(pageIndex, true) }
-    }
 
+    }
+    private fun createMetaBallsPaint(): Paint {
+        val metaBallsPaint = Paint()
+        metaBallsPaint.setColorFilter(ColorMatrixColorFilter(ColorMatrix(floatArrayOf(
+                1f, 0f, 0f, 0f, 0f,
+                0f, 1f, 0f, 0f, 0f,
+                0f, 0f, 1f, 0f, 0f,
+                0f, 0f, 0f, 150f, -255 * 128f
+        ))))
+        return metaBallsPaint
+    }
     inner class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
         override fun getItem(position: Int): Fragment {

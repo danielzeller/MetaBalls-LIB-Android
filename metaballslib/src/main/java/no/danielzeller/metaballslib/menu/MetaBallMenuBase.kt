@@ -1,10 +1,11 @@
 package no.danielzeller.metaballslib.menu
 
-import android.animation.AnimatorInflater
-import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
+import android.animation.*
 import android.content.Context
-import android.graphics.*
+import android.graphics.Color
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
+import android.graphics.Paint
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
@@ -16,7 +17,7 @@ import android.view.animation.LinearInterpolator
 import android.view.animation.PathInterpolator
 import android.widget.FrameLayout
 import android.widget.ImageView
-import no.danielzeller.metaballslib.R 
+import no.danielzeller.metaballslib.R
 
 
 enum class PositionGravity {
@@ -137,6 +138,7 @@ abstract class MetaBallMenuBase : FrameLayout {
         }
 
         isMenuOpen = !isMenuOpen
+        onMenuToggled?.invoke(isMenuOpen)
     }
 
 
@@ -147,11 +149,26 @@ abstract class MetaBallMenuBase : FrameLayout {
         return isMenuOpen
     }
 
+
+    /**
+     *
+     * Callback for when menu is the main menu button is clicked
+     */
+    var onMenuToggled: ((isOpen: Boolean) -> Unit)? = null
+
+
+    /**
+     *
+     * Callback for when menu is fully closed
+     */
+    var onMenuClosed: (() -> Unit)? = null
+
     protected lateinit var metaBallsContainerFrameLayout: FrameLayout
     protected var menuButton: ImageView? = null
     private var runningAnimations: ArrayList<ValueAnimator> = ArrayList()
     private var isMenuOpen = false
     private var openCloseDrawable: OpenCloseDrawable? = null
+
 
     constructor(context: Context) : super(context) {
         setupBaseViews(context)
@@ -190,7 +207,7 @@ abstract class MetaBallMenuBase : FrameLayout {
     protected fun setupBaseViews(context: Context) {
         metaBallsContainerFrameLayout = FrameLayout(context)
         addView(metaBallsContainerFrameLayout, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
-        setLayerType(View.LAYER_TYPE_HARDWARE, createMetaBallsPaint())
+        metaBallsContainerFrameLayout.setLayerType(View.LAYER_TYPE_HARDWARE, createMetaBallsPaint())
     }
 
     private fun createMetaBallsPaint(): Paint {
@@ -237,20 +254,20 @@ abstract class MetaBallMenuBase : FrameLayout {
 
     private fun createMainButton(): ImageView {
         val menuButton = DecreasedTouchImageView(context, resources.getDimension(R.dimen.main_button_touch_area_size))
-        menuButton.setBackgroundResource(R.mipmap.gradient_oval)
+        menuButton.setBackgroundResource(R.drawable.gradient_oval)
         menuButton.background.setTint(mainButtonColor)
         openCloseDrawable = OpenCloseDrawable(mainButtonIcon?.mutate(), mainButtonIconColor, context)
         menuButton.setImageDrawable(openCloseDrawable)
         val padding = resources.getDimension(R.dimen.main_button_padding).toInt()
         menuButton.setPadding(padding, padding, padding, padding)
         menuButton.setOnClickListener({ toggleMenu() })
-        menuButton.stateListAnimator = AnimatorInflater.loadStateListAnimator(context, R.animator.button_scale)
+//        menuButton.stateListAnimator = AnimatorInflater.loadStateListAnimator(context, R.animator.button_scale)
         return menuButton
     }
 
     private fun createMenuItem(i: Int): ImageView {
         val imageView = DecreasedTouchImageView(context, resources.getDimension(R.dimen.menu_item_touch_area_size))
-        imageView.setBackgroundResource(R.mipmap.gradient_oval)
+        imageView.setBackgroundResource(R.drawable.gradient_oval)
         imageView.stateListAnimator = AnimatorInflater.loadStateListAnimator(context, R.animator.button_scale)
         imageView.background.setTint(adapter.menuItemBackgroundColor(i))
         imageView.setImageDrawable(adapter.menuItemIcon(i))
@@ -281,6 +298,7 @@ abstract class MetaBallMenuBase : FrameLayout {
 
     protected fun stopAllRunningAnimations() {
         for (anim in runningAnimations) {
+            anim.removeAllListeners()
             anim.cancel()
         }
         runningAnimations.clear()
@@ -299,12 +317,21 @@ abstract class MetaBallMenuBase : FrameLayout {
         for (i in metaBallsContainerFrameLayout.getChildCount() - 2 downTo 0) {
 
             val ballView = metaBallsContainerFrameLayout.getChildAt(i)
-            animatePosition(ballView, 0f, 0f, startDelay, closeInterpolatorAnimator, closeAnimationDuration)
+            val positionAnim = animatePosition(ballView, 0f, 0f, startDelay, closeInterpolatorAnimator, closeAnimationDuration)
             val menuItemScaleDown = (closeAnimationDuration * 0.33f).toLong()
             animateScale(ballView, 0.1f, menuItemScaleDown, startDelay + menuItemScaleDown, LinearInterpolator())
             fadeIcon((ballView as ImageView).drawable, startDelay, (closeAnimationDuration * 0.16f).toLong(), 0, false)
             startDelay += delayBetweenItemsAnimation;
+            if (i == 0) {
+                positionAnim.addListener(object: AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator?) {
+                        super.onAnimationEnd(animation)
+                        onMenuClosed?.invoke()
+                    }
+                })
+            }
         }
+        animateScale(menuButton as View, 1f, 300, 0)
     }
 
     protected fun fadeIcon(drawable: Drawable, startDelay: Long, duration: Long, toAlpha: Int, animateDrawable: Boolean) {
@@ -328,7 +355,7 @@ abstract class MetaBallMenuBase : FrameLayout {
         startAnimation(alhpa)
     }
 
-    protected fun animatePosition(view: View, x: Float, y: Float, startDelay: Long, interpolator: Interpolator, duration: Long) {
+    protected fun animatePosition(view: View, x: Float, y: Float, startDelay: Long, interpolator: Interpolator, duration: Long): ValueAnimator {
         val translationX = ObjectAnimator.ofFloat(view, View.TRANSLATION_X, view.translationX, x).setDuration(duration)
         translationX.interpolator = interpolator
         translationX.setStartDelay(startDelay)
@@ -337,6 +364,7 @@ abstract class MetaBallMenuBase : FrameLayout {
         translationY.setStartDelay(startDelay)
         translationY.interpolator = interpolator
         startAnimation(translationY)
+        return translationY
     }
 
     protected fun animateScale(view: View, scale: Float, duration: Long, startDelay: Long, interpolator: Interpolator = PathInterpolator(.95f, 0f, .07f, 1f)): ObjectAnimator {

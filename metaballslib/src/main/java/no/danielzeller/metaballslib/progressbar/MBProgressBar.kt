@@ -129,17 +129,17 @@ class MBProgressBar : FrameLayout {
 
     private fun createSpinnerDrawable(): ProgressDrawable {
         if (mbProgressBarType == MBProgressBarType.CIRCULAR) {
-            return ProgressPathDrawable(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray, parsePath(CIRCLE_PATH_DATA), isDropDrawable, isRotate)
+            return ProgressPathDrawable(resources.getDrawable(R.drawable.gradient_oval, null), colorArray, parsePath(CIRCLE_PATH_DATA), isDropDrawable, isRotate)
         } else if (mbProgressBarType == MBProgressBarType.EIGHT) {
-            return ProgressPathDrawable(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray, parsePath(EIGHT_PATH_DATA), isDropDrawable, isRotate, 900, LinearInterpolator())
+            return ProgressPathDrawable(resources.getDrawable(R.drawable.gradient_oval, null), colorArray, parsePath(EIGHT_PATH_DATA), isDropDrawable, isRotate, 900, LinearInterpolator())
         } else if (mbProgressBarType == MBProgressBarType.BLOBS) {
-            return ProgressBlobDrawable(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray, isRotate)
+            return ProgressBlobDrawable(resources.getDrawable(R.drawable.gradient_oval, null), colorArray, isRotate)
         } else if (mbProgressBarType == MBProgressBarType.SQUARE) {
-            return ProgressPathDrawable(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray, parsePath(SQUARE_PATH_DATA), isDropDrawable, isRotate)
+            return ProgressPathDrawable(resources.getDrawable(R.drawable.gradient_oval, null), colorArray, parsePath(SQUARE_PATH_DATA), isDropDrawable, isRotate)
         } else if (mbProgressBarType == MBProgressBarType.LONG_PATH) {
-            return ProgressPathDrawable(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray, parsePath(LONG_PATH_DATA), isDropDrawable, isRotate, 1300, LinearInterpolator())
+            return ProgressPathDrawable(resources.getDrawable(R.drawable.gradient_oval, null), colorArray, parsePath(LONG_PATH_DATA), isDropDrawable, isRotate, 1300, LinearInterpolator())
         }
-        return ProgressJumpingDotDrawable(resources.getDrawable(R.mipmap.gradient_oval, null), colorArray, isDropDrawable)
+        return ProgressJumpingDotDrawable(resources.getDrawable(R.drawable.gradient_oval, null), colorArray, isDropDrawable)
     }
 
     private fun parsePath(pathData: FloatArray): Path {

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/imageFrameLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/demo_card_padding"
+        android:layout_marginTop="8dp"
+        android:background="@color/white"
+        android:elevation="@dimen/card_image_elevation"
+        android:padding="@dimen/demo_card_image_frame_padding"
+        app:layout_constraintDimensionRatio="H,1080:1618"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/pastel_image1_description"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_pastel_yellow" />
+
+    </FrameLayout>
+
+    <no.danielzeller.metaballslib.menu.CircularMenu
+        android:id="@+id/metaBallMenu"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/demo_card_image_frame_padding"
+        android:paddingEnd="10dp"
+        android:paddingBottom="10dp"
+        android:translationZ="@dimen/card_image_elevation"
+        app:layout_constraintBottom_toBottomOf="@+id/imageFrameLayout"
+        app:layout_constraintEnd_toEndOf="@+id/imageFrameLayout"
+        app:layout_constraintStart_toStartOf="@+id/imageFrameLayout"
+        app:layout_constraintTop_toTopOf="@+id/imageFrameLayout"
+        app:radius="100dp"
+        app:position_gravity = "bottom_right"
+        app:main_button_icon = "@drawable/ic_share_black_24dp"
+        app:main_button_color = "@color/metal"
+        app:main_button_icon_color = "@color/white"
+        />
+    <no.danielzeller.metaballslib.progressbar.MBProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:visibility="gone"
+        android:translationZ="@dimen/card_image_elevation"
+        app:layout_constraintBottom_toBottomOf="@+id/imageFrameLayout"
+        app:layout_constraintEnd_toEndOf="@+id/imageFrameLayout"
+        app:layout_constraintStart_toStartOf="@+id/imageFrameLayout"
+        app:layout_constraintTop_toTopOf="@+id/imageFrameLayout"
+        app:progressbar_type="circular"
+        app:colors_array_id="@array/card_menu_single_colors"
+        app:rotate="true" />
+    <include
+        layout="@layout/demo_card_bottom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/demo_card_padding"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageFrameLayout" />
+
+</android.support.constraint.ConstraintLayout>

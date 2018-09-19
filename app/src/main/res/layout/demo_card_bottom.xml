@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/demo_card_padding">
+
+    <ImageView
+        android:id="@+id/unsplashIcon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/ic_oval"
+        android:backgroundTint="@color/pastel_yellow"
+        android:contentDescription="@string/unaplsh_icon_descrition"
+        android:paddingStart="7dp"
+        android:paddingTop="6dp"
+        android:paddingEnd="7dp"
+        android:paddingBottom="8dp"
+        android:tint="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headingTextView"
+        app:srcCompat="@drawable/ic_unsplash" />
+
+    <TextView
+        android:id="@+id/headingTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/demo_card_padding"
+        android:text="TextView"
+        android:textAppearance="@style/H1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/captionTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="TextView"
+        android:textAppearance="@style/Caption"
+        app:layout_constraintBottom_toBottomOf="@+id/unsplashIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/unsplashIcon"
+        app:layout_constraintTop_toTopOf="@+id/unsplashIcon" />
+
+    <LinearLayout
+        android:id="@+id/bulletListContainer"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/unsplashIcon"
+        android:layout_marginTop="24dp"
+        android:paddingBottom="@dimen/spacing_between_demo_cards">
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

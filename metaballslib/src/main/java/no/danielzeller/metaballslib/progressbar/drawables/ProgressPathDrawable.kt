@@ -30,7 +30,7 @@ class ProgressPathDrawable(val metaBallGradient: Drawable, val tinColors: IntArr
     init {
         this.rotate = isRotate
         this.isDropDrawable = isDrop
-        this.tinColorsArray=tinColors
+        this.tinColorsArray = tinColors
     }
 
     override fun setDrop(isDrop: Boolean) {
@@ -62,25 +62,29 @@ class ProgressPathDrawable(val metaBallGradient: Drawable, val tinColors: IntArr
     }
 
     override fun stopAndHide(spinner: View, spinnerHiddenListener: (() -> Unit)?) {
-        var animatedFractionMin = 100000f
-        var lastRunningAnimIndex = 0
-        for (i in 0 until animations.count()) {
-            animations[i].addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationRepeat(animation: Animator?) {
-                    super.onAnimationRepeat(animation)
-                    animations[i].cancel()
+        if (animations.count() != 0) {
+            var animatedFractionMin = 100000f
+            var lastRunningAnimIndex = 0
+            for (i in 0 until animations.count()) {
+                animations[i].addListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationRepeat(animation: Animator?) {
+                        super.onAnimationRepeat(animation)
+                        animations[i].cancel()
+                    }
+                })
+                if (animations[i].animatedFraction > animatedFractionMin) {
+                    animatedFractionMin = animations[i].animatedFraction
+                    lastRunningAnimIndex = i
+                }
+            }
+            animations[lastRunningAnimIndex].addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator?) {
+                    animateBallSize(ballSize, 0, 700, spinner, spinnerHiddenListener)
                 }
             })
-            if (animations[i].animatedFraction > animatedFractionMin) {
-                animatedFractionMin = animations[i].animatedFraction
-                lastRunningAnimIndex = i
-            }
+        } else {
+            spinnerHiddenListener?.invoke()
         }
-        animations[lastRunningAnimIndex].addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator?) {
-                animateBallSize(ballSize, 0, 700, spinner, spinnerHiddenListener)
-            }
-        })
     }
 
     fun animateBallSize(from: Int, to: Int, duration: Long, spinner: View?, spinnerHiddenListener: (() -> Unit)?) {
