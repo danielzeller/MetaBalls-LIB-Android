@@ -34,15 +34,16 @@
         android:layout_margin="@dimen/demo_card_image_frame_padding"
         android:elevation="@dimen/card_image_elevation"
         app:layout_constraintBottom_toBottomOf="@+id/imageFrameLayout"
-        app:layout_constraintEnd_toEndOf="@+id/imageFrameLayout"
-        app:layout_constraintStart_toStartOf="@+id/imageFrameLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageFrameLayout"
         app:expand_direction="horizontal"
-        app:margin_between_menu_items="71dp"
+        app:margin_between_menu_items="75dp"
         app:main_button_color="@color/metal"
         app:main_button_icon="@drawable/ic_share_black_24dp"
         app:main_button_icon_color="@color/white"
-        app:position_gravity="center" />
+        app:position_gravity="center"
+       />
 
     <no.danielzeller.metaballslib.progressbar.MBProgressBar
         android:id="@+id/progressBar"

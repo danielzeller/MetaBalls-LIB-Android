@@ -31,7 +31,7 @@ class MainActivityDemo : AppCompatActivity() {
         setContentView(R.layout.activity_main_demo)
 
 
-        setupCardView(R.id.demo_card1, createAdapter(3, R.array.card_menu_single_colors), R.color.pastel_yellow, R.array.demo_card_1,R.string.demo_card_link)
+        setupCardView(R.id.demo_card1, createAdapter(3, R.array.card_menu_single_colors), R.color.pastel_yellow, R.array.demo_card_1, R.string.demo_card_link)
         setupCardView(R.id.demo_card2, createAdapter(8, R.array.card2_menu_colors), R.color.pastel_green, R.array.demo_card_2, R.string.demo_card_link2)
         setupCardView(R.id.demo_card3, createAdapter(3, R.array.card3_menu_colors), R.color.pastel_pink, R.array.demo_card_3, R.string.demo_card_link3)
         setupCardView(R.id.demo_card4, createAdapter(4, R.array.card_menu_single_colors), R.color.pastel_blue, R.array.demo_card_4, R.string.demo_card_link4)
@@ -69,7 +69,9 @@ class MainActivityDemo : AppCompatActivity() {
         metaBallMenu.adapter = adapter
         metaBallMenu.onItemSelectedListener = { index ->
             Log.i(LOG_TAG, "Clicked menu item: " + index)
-            showSpinner(cardView)
+            if (cardView.progressBar.visibility != View.VISIBLE) {
+                showSpinner(cardView)
+            }
             metaBallMenu.toggleMenu()
         }
     }
