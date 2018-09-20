@@ -12,7 +12,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintDimensionRatio="H,360:506"
         android:scaleType="fitXY"
-        android:src="@drawable/bg_pastel_yellow"/>
+        android:src="@drawable/bg_pastel_yellow" />
 
     <FrameLayout
         android:id="@+id/imageFrameLayout"
@@ -32,7 +32,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="@string/pastel_image1_description"
+            android:contentDescription="@string/unsplash_mage_content_description"
             android:scaleType="centerCrop"
             android:src="@drawable/img_pastel_yellow" />
 
@@ -43,13 +43,14 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="@dimen/demo_card_image_frame_padding"
-        android:paddingEnd="10dp"
-        android:paddingBottom="10dp"
+        android:paddingEnd="@dimen/metaball_menu_side_padding"
+        android:paddingBottom="@dimen/metaball_menu_side_padding"
         android:translationZ="@dimen/card_image_elevation"
         app:layout_constraintBottom_toBottomOf="@+id/imageFrameLayout"
         app:layout_constraintEnd_toEndOf="@+id/imageFrameLayout"
         app:layout_constraintStart_toStartOf="@+id/imageFrameLayout"
         app:layout_constraintTop_toTopOf="@+id/imageFrameLayout"
+
         app:radius="100dp"
         app:position_gravity = "bottom_right"
         app:main_button_icon = "@drawable/ic_share_black_24dp"
@@ -66,6 +67,8 @@
         app:layout_constraintEnd_toEndOf="@+id/imageFrameLayout"
         app:layout_constraintStart_toStartOf="@+id/imageFrameLayout"
         app:layout_constraintTop_toTopOf="@+id/imageFrameLayout"
+
+
         app:progressbar_type="circular"
         app:colors_array_id="@array/card_menu_single_colors"
         app:rotate="true" />

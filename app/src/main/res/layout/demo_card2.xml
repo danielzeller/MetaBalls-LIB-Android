@@ -30,7 +30,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="@string/pastel_image1_description"
+            android:contentDescription="@string/unsplash_mage_content_description"
             android:scaleType="centerCrop"
             android:src="@drawable/img_pastel_green" />
 
@@ -46,6 +46,8 @@
         app:layout_constraintEnd_toEndOf="@+id/imageFrameLayout"
         app:layout_constraintStart_toStartOf="@+id/imageFrameLayout"
         app:layout_constraintTop_toTopOf="@+id/imageFrameLayout"
+
+
         app:radius="90dp"
         app:delay_between_items_animation="40"
         app:open_animation_duration = "1300"
@@ -65,14 +67,16 @@
         android:layout_height="80dp"
         android:translationZ="@dimen/card_image_elevation"
         android:visibility="gone"
-        app:colors_array_id="@array/card2_menu_colors"
         app:layout_constraintBottom_toBottomOf="@+id/imageFrameLayout"
         app:layout_constraintEnd_toEndOf="@+id/imageFrameLayout"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="@+id/imageFrameLayout"
         app:layout_constraintTop_toTopOf="@+id/imageFrameLayout"
         app:layout_constraintVertical_bias="0.13"
-        app:progressbar_type="long_path" />
+
+
+        app:progressbar_type="long_path"
+        app:colors_array_id="@array/card2_menu_colors" />
 
     <include
 

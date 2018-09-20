@@ -6,6 +6,7 @@
 
     <color name="white">#FFFFFF</color>
     <color name="pastel_blue">#91D2DB</color>
+    <color name="pastel_blue2">#90D2DB</color>
     <color name="pastel_yellow">#FECB52</color>
     <color name="pastel_pink">#E9A7C6</color>
     <color name="pastel_green">#8ED1B7</color>
@@ -37,19 +38,21 @@
         <item>@color/black</item>
     </array>
 
-    <array name="card_menu_single_colors2">
+    <array name="card_menu_b_w">
         <item>@color/metal</item>
         <item>@color/white</item>
         <item>@color/metal</item>
         <item>@color/white</item>
         <item>@color/metal</item>
     </array>
+
+    <!-- There is a bug on the resources that makes the loading fail if all colors are the same. Therefore we add the same color in a slight variation-->
     <array name="card3_menu_colors">
+        <item>@color/pastel_blue2</item>
         <item>@color/pastel_blue</item>
+        <item>@color/pastel_blue2</item>
         <item>@color/pastel_blue</item>
-        <item>@color/pastel_blue</item>
-        <item>@color/pastel_blue</item>
-        <item>@color/pastel_blue</item>
+        <item>@color/pastel_blue2</item>
     </array>
     <array name="card4_menu_colors">
         <item>@color/white</item>

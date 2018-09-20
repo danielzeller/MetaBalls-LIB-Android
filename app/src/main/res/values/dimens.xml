@@ -7,4 +7,5 @@
     <dimen name="caption">14sp</dimen>
     <dimen name="bullet_list">14sp</dimen>
     <dimen name="card_image_elevation">30dp</dimen>
+    <dimen name="metaball_menu_side_padding">10dp</dimen>
 </resources>

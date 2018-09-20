@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable
 import no.danielzeller.metaballslib.menu.MetaBallAdapter
 
 class MetaBallMenuAdapter(val drawables: List<MenuItem>) : MetaBallAdapter {
+
     override fun menuItemIconTint(index: Int): Int {
         return drawables[index].drawableTint
     }

@@ -8,10 +8,10 @@ import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.bullet_text.view.*
 import kotlinx.android.synthetic.main.demo_card_bottom.view.*
+import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.launch
@@ -24,7 +24,7 @@ class MainActivityDemo : AppCompatActivity() {
 
     private val LOG_TAG = "METABALL_DEMO"
 
-    val menuIcons = intArrayOf(R.drawable.facebook_animation, R.drawable.instagram_animation,
+    private val menuIcons = intArrayOf(R.drawable.facebook_animation, R.drawable.instagram_animation,
             R.drawable.twitter_animation, R.drawable.linkedin_animation, R.drawable.dribble_animation,
             R.drawable.google_animation, R.drawable.vimeo_animation, R.drawable.behance_animation)
 
@@ -35,7 +35,7 @@ class MainActivityDemo : AppCompatActivity() {
 
         val card1MetaBallMenuAdapter = createMetaBallMenuAdapter(3, R.array.card_menu_single_colors)
         val card2MetaBallMenuAdapter = createMetaBallMenuAdapter(8, R.array.card2_menu_colors)
-        val card3MetaBallMenuAdapter = createMetaBallMenuAdapter(3, R.array.card3_menu_colors)
+        val card3MetaBallMenuAdapter = createMetaBallMenuAdapter(3, R.array.card_menu_single_colors)
         val card4And5MetaBallMenuAdapter = createMetaBallMenuAdapter(4, R.array.card_menu_single_colors)
 
         setupCardView(R.id.demo_card1, card1MetaBallMenuAdapter, R.color.pastel_yellow, R.array.demo_card_1_description, R.string.demo_card_link1_and5)
@@ -45,6 +45,10 @@ class MainActivityDemo : AppCompatActivity() {
         setupCardView(R.id.demo_card5, card4And5MetaBallMenuAdapter, R.color.pastel_beach, R.array.demo_card_5_description, R.string.demo_card_link1_and5)
     }
 
+    /**
+     *
+     * Create some simple adapters with colors for each menu item and icons
+     */
     private fun createMetaBallMenuAdapter(count: Int, colorArrayId: Int): MetaBallMenuAdapter {
         val menuItems = ArrayList<MenuItem>()
         val colors = resources.getIntArray(colorArrayId)
@@ -54,6 +58,11 @@ class MainActivityDemo : AppCompatActivity() {
         return MetaBallMenuAdapter(menuItems)
     }
 
+
+    /**
+     *
+     * Setup the card view with description and MetaBall menu
+     */
     private fun setupCardView(cardId: Int, adapter: MetaBallMenuAdapter, color: Int, stringArrayId: Int, demo_card_link: Int) {
 
         val cardView = findViewById<View>(cardId)
@@ -82,19 +91,36 @@ class MainActivityDemo : AppCompatActivity() {
         for (i in 1 until descriptionText.size) {
             val bulletView = LayoutInflater.from(this).inflate(R.layout.bullet_text, null, false)
             bulletView.bulletText.text = descriptionText[i]
-            cardView.bulletListContainer.addView(bulletView, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
+            cardView.bulletListContainer.addView(bulletView, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT))
         }
     }
 
 
+    /**
+     *
+     * Shows a MetaBall Progressbar and hides it delayed
+     */
     private fun showSpinnerAndHideDelayed(cardView: View) {
         val progressBar = cardView.findViewById<MBProgressBar>(R.id.mpProgressBar)
         progressBar.visibility = View.VISIBLE
-        val progreebar = WeakReference<MBProgressBar>(progressBar)
+        val progressBarWeakRef = WeakReference<MBProgressBar>(progressBar)
 
-        launch(UI) {
+        val job = launch(UI) {
             delay(4800, TimeUnit.MILLISECONDS)
-            progreebar.get()?.stopAnimated()
+            progressBarWeakRef.get()?.stopAnimated()
+        }
+        runningJobs.add(Pair(job, progressBarWeakRef))
+    }
+
+    //Cancel the jobs
+    private var runningJobs = ArrayList<Pair<Job, WeakReference<MBProgressBar>>>()
+
+    override fun onPause() {
+        super.onPause()
+        for (job in runningJobs) {
+            job.first.cancel()
+            job.second.get()?.visibility = View.GONE
         }
     }
+
 }

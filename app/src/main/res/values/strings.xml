@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Meta Balls</string>
-    <string name="pastel_image1_description">Unsplash image by @dooley</string>
     <string name="unaplsh_icon_descrition">Unaplsh icon</string>
+    <string name="unsplash_mage_content_description">Unsplash image by @dooley</string>
 
     <string name="demo_card_link1_and5">Photo by <a href="https://unsplash.com/@nativemello">ian dooley</a> on Unsplash</string>
     <string-array name="demo_card_1_description">
@@ -14,9 +14,9 @@
 
     <string name="demo_card_link2">Photo by <a href="https://unsplash.com/@icons8">Icons8 team</a> on Unsplash</string>
     <string-array name="demo_card_2_description">
-        <item>Showing a Circular menu with position gravity set to center</item>
+        <item>Showing a circular menu with position gravity set to center</item>
 
-        <item>Click a menu item to show the Long Path Progressbar with a colors array defined.</item>
+        <item>Click a menu item to show the long path progressbar with a colors array defined.</item>
         <item>The menu is using a custom overshoot animation with 1300ms duration.</item>
         <item>The adapter of the menu uses different colors.</item>
         <item>See the CircularMenu in demo_card2.xml for more info.</item>
@@ -24,7 +24,7 @@
 
     <string name="demo_card_link3">Photo by <a href="https://unsplash.com/@rawpixel">rawpixel</a> on Unsplash</string>
     <string-array name="demo_card_3_description">
-        <item>Directional menu with position gravity set to bottom right and layout direction to horizontal</item>
+        <item>Directional menu with position gravity set to bottom left and layout direction to horizontal</item>
 
         <item>Click a menu item to show the jumping dot Progressbar with a colors array defined.</item>
         <item>The menu is using a custom overshoot animation with a delay between each menu item.</item>
@@ -35,7 +35,7 @@
     <string-array name="demo_card_4_description">
         <item>Directional menu with position gravity set to top left and layout direction to vertical</item>
 
-        <item>Click a menu item to show the blob Progressbar.</item>
+        <item>Click a menu item to show the blob progressbar.</item>
         <item>The menu is using default animation parameters.</item>
         <item>See the CircularMenu in demo_card4.xml for more info.</item>
     </string-array>
@@ -44,8 +44,8 @@
     <string-array name="demo_card_5_description">
         <item>Directional menu with position gravity set to center and layout direction to horizontal</item>
 
-        <item>Click a menu item to show the sideways eight Progressbar.</item>
-        <item>MArgin between menu items is lower than the default value.</item>
+        <item>Click a menu item to show the sideways eight progressbar.</item>
+        <item>Margin between menu items is lower than the default value.</item>
         <item>The menu is using default animation parameters.</item>
         <item>See the CircularMenu in demo_card5.xml for more info.</item>
     </string-array>

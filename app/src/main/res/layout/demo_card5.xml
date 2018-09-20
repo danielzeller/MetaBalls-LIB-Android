@@ -12,7 +12,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintDimensionRatio="H,360:370"
         android:scaleType="fitXY"
-        android:src="@drawable/bg_pastel_beach"/>
+        android:src="@drawable/bg_pastel_beach" />
 
     <FrameLayout
         android:id="@+id/imageFrameLayout"
@@ -32,7 +32,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="@string/pastel_image1_description"
+            android:contentDescription="@string/unsplash_mage_content_description"
             android:src="@drawable/img_pastel_sand" />
 
     </FrameLayout>
@@ -48,13 +48,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageFrameLayout"
 
+
         app:expand_direction="horizontal"
         app:margin_between_menu_items="75dp"
         app:main_button_color="@color/metal"
         app:main_button_icon="@drawable/ic_share_black_24dp"
         app:main_button_icon_color="@color/white"
-        app:position_gravity="center"
-       />
+        app:position_gravity="center" />
 
     <no.danielzeller.metaballslib.progressbar.MBProgressBar
         android:id="@+id/mpProgressBar"
@@ -62,7 +62,6 @@
         android:layout_height="110dp"
         android:visibility="gone"
         android:elevation="@dimen/card_image_elevation"
-        app:colors_array_id="@array/card_menu_single_colors2"
         app:layout_constraintBottom_toBottomOf="@+id/imageFrameLayout"
         app:layout_constraintEnd_toEndOf="@+id/imageFrameLayout"
         app:layout_constraintHorizontal_bias="0.501"
@@ -70,7 +69,10 @@
         app:layout_constraintTop_toTopOf="@+id/imageFrameLayout"
         app:layout_constraintVertical_bias="1"
 
-        app:progressbar_type="eight" />
+
+        app:progressbar_type="eight"
+        app:colors_array_id="@array/card_menu_b_w" />
+
     <include
         android:id="@+id/bottomCard"
         layout="@layout/demo_card_bottom"

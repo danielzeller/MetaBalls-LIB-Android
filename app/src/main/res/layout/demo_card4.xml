@@ -9,9 +9,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintDimensionRatio="H,360:497"
-        android:scaleType="fitXY"
+        app:layout_constraintDimensionRatio="H,360:515"
+        android:scaleType="centerCrop"
         android:src="@drawable/bg_pastel_blue"/>
+
     <FrameLayout
         android:id="@+id/imageFrameLayout"
         android:layout_width="0dp"
@@ -30,10 +31,9 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="@string/pastel_image1_description"
+            android:contentDescription="@string/unsplash_mage_content_description"
             android:scaleType="centerCrop"
             android:src="@drawable/img_pastel_blue" />
-
     </FrameLayout>
 
     <no.danielzeller.metaballslib.menu.DirectionalMenu
@@ -42,11 +42,15 @@
         android:layout_height="0dp"
         android:layout_margin="@dimen/demo_card_image_frame_padding"
         android:elevation="@dimen/card_image_elevation"
+        android:paddingStart="@dimen/metaball_menu_side_padding"
+        android:paddingTop="@dimen/metaball_menu_side_padding"
         app:layout_constraintBottom_toBottomOf="@+id/imageFrameLayout"
         app:layout_constraintEnd_toEndOf="@+id/imageFrameLayout"
         app:layout_constraintStart_toStartOf="@+id/imageFrameLayout"
         app:layout_constraintTop_toTopOf="@+id/imageFrameLayout"
         app:expand_direction="vertical"
+
+
         app:main_button_color="@color/metal"
         app:main_button_icon="@drawable/ic_share_black_24dp"
         app:main_button_icon_color="@color/white"
@@ -58,14 +62,17 @@
         android:layout_height="150dp"
         android:visibility="gone"
         android:elevation="@dimen/card_image_elevation"
-        app:colors_array_id="@array/card_menu_single_colors"
         app:layout_constraintBottom_toBottomOf="@+id/imageFrameLayout"
         app:layout_constraintEnd_toEndOf="@+id/imageFrameLayout"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="@+id/imageFrameLayout"
         app:layout_constraintTop_toTopOf="@+id/imageFrameLayout"
         app:layout_constraintVertical_bias="0.96"
-        app:progressbar_type="blobs" />
+
+
+        app:progressbar_type="blobs"
+        app:colors_array_id="@array/card_menu_single_colors" />
+
     <include
         android:id="@+id/bottomCard"
         layout="@layout/demo_card_bottom"
@@ -76,5 +83,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageFrameLayout" />
-
 </android.support.constraint.ConstraintLayout>
