@@ -1,7 +1,13 @@
 <resources>
     <string name="app_name">Meta Balls</string>
-    <string name="unaplsh_icon_descrition">Unaplsh icon</string>
-    <string name="unsplash_mage_content_description">Unsplash image by @dooley</string>
+    <string name="unsplash_icon_description">Unsplash icon</string>
+    <string name="bg_content_description">Background Image</string>
+    <string name="unsplash_image_content_description">Unsplash image by @dooley</string>
+    <string name="footer_text"> Come say hi over at <a href="https://danielzeller.no">danielzeller.no</a> or checkout some other fun projects on my GitHub page: https://github.com/danielzeller</string>
+    <string name="footer_heading_heading">Thanks for having a look</string>
+    <string name="viewpager_heading">Demonstration of Page Indicator for a ViewPager</string>
+    <string name="job_coroutine_key_id">job_coroutine_key_id</string>
+
 
     <string name="demo_card_link1_and5">Photo by <a href="https://unsplash.com/@nativemello">ian dooley</a> on Unsplash</string>
     <string-array name="demo_card_1_description">
@@ -40,7 +46,7 @@
         <item>See the CircularMenu in demo_card4.xml for more info.</item>
     </string-array>
 
-    <string name="demo_card_link5">Photo by <a href="https://unsplash.com/@rubavi78">Rubén Bagüés</a> on Unsplash</string>
+
     <string-array name="demo_card_5_description">
         <item>Directional menu with position gravity set to center and layout direction to horizontal</item>
 
@@ -50,8 +56,4 @@
         <item>See the CircularMenu in demo_card5.xml for more info.</item>
     </string-array>
 
-    <string name="footer_text"> Come say hi over at <a href="https://danielzeller.no">danielzeller.no</a> or checkout some other fun projects on my GitHub page: https://github.com/danielzeller</string>
-    <string name="footer_heading_heading">Thanks for having a look</string>
-    <string name="viewpager_heading">Domonstration of Page Indicator for a ViewPager</string>
-    <string name="job_coroutine_key_id">job_coroutine_kei_id</string>
 </resources>

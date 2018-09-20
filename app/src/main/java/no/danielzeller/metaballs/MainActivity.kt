@@ -12,7 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
-import kotlinx.android.synthetic.main.activity_main_demo.*
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.bottom_viewpager.*
 import kotlinx.android.synthetic.main.bullet_text.view.*
 import kotlinx.android.synthetic.main.demo_card_bottom.view.*
@@ -25,9 +25,9 @@ import no.danielzeller.metaballslib.progressbar.MBProgressBar
 import java.lang.ref.WeakReference
 import java.util.concurrent.TimeUnit
 
-class MainActivityDemo : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
-    private val LOG_TAG = "METABALL_DEMO"
+    val LOG_TAG = "META BALL DEMO"
 
     private val menuIcons = intArrayOf(R.drawable.facebook_animation, R.drawable.instagram_animation,
             R.drawable.twitter_animation, R.drawable.linkedin_animation, R.drawable.dribble_animation,
@@ -36,7 +36,7 @@ class MainActivityDemo : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_demo)
+        setContentView(R.layout.activity_main)
 
         setupMetaBallMenuDemo()
         setupPageIndicatorDemo()
@@ -91,7 +91,7 @@ class MainActivityDemo : AppCompatActivity() {
         val metaBallMenu = cardView.findViewById<MetaBallMenuBase>(R.id.metaBallMenu)
         metaBallMenu.adapter = adapter
         metaBallMenu.onItemSelectedListener = { index ->
-            Log.i(LOG_TAG, "Clicked menu item: " + index)
+            Log.i(LOG_TAG, "Clicked menu item: $index")
             if (cardView.findViewById<View>(R.id.mbProgressBar).visibility != View.VISIBLE) {
                 showSpinnerAndHideDelayed(cardView)
             }
@@ -105,7 +105,7 @@ class MainActivityDemo : AppCompatActivity() {
         cardView.headingTextView.text = descriptionText[0]
 
         cardView.captionTextView.setText(demo_card_link)
-        cardView.captionTextView.setMovementMethod(LinkMovementMethod.getInstance());
+        cardView.captionTextView.movementMethod = LinkMovementMethod.getInstance()
 
 
         for (i in 1 until descriptionText.size) {
@@ -148,7 +148,9 @@ class MainActivityDemo : AppCompatActivity() {
     }
 
     inner class ImagePagerAdapter : PagerAdapter() {
-        val images = intArrayOf(R.drawable.img_pastel_yellow, R.drawable.img_pastel_green, R.drawable.img_pastel_pink, R.drawable.img_pastel_blue, R.drawable.img_pastel_beach)
+
+        private val images = intArrayOf(R.drawable.img_pastel_yellow, R.drawable.img_pastel_green, R.drawable.img_pastel_pink, R.drawable.img_pastel_blue, R.drawable.img_pastel_beach)
+
         override fun isViewFromObject(view: View, obj: Any): Boolean {
             return view == obj
         }

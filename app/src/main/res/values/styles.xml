@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light">
+    <style name="AppTheme" parent="Theme.AppCompat">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/metal</item>
@@ -14,7 +14,7 @@
 
     <style name="H1" parent="RobotoSlabViewStyle">
         <item name="android:fontFamily">@font/roboto_slab_regular</item>
-        <item name="android:textSize">@dimen/h1_textsize</item>
+        <item name="android:textSize">@dimen/h1_text_size</item>
         <item name="android:textColor">@color/metal</item>
     </style>
 

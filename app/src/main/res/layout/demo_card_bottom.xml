@@ -12,7 +12,7 @@
         android:layout_marginTop="24dp"
         android:background="@drawable/ic_oval"
         android:backgroundTint="@color/pastel_yellow"
-        android:contentDescription="@string/unaplsh_icon_descrition"
+        android:contentDescription="@string/unsplash_icon_description"
         android:paddingStart="7dp"
         android:paddingTop="6dp"
         android:paddingEnd="7dp"

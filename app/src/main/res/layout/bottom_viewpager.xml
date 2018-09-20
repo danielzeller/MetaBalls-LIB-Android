@@ -16,7 +16,8 @@
         android:layout_marginHorizontal="@dimen/demo_card_padding"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:targetApi="o" />
 
     <no.danielzeller.metaballslib.MetaBallPageIndicator
         android:id="@+id/metaBallPageIndicator"
@@ -29,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@id/bottomViewPagerHeading"
 
 
-        app:dot_colors_override_array_id="@array/viepager_page_indicator_colors"
+        app:dot_colors_override_array_id="@array/viewpager_page_indicator_colors"
         app:selected_dot_color="@color/white"
         app:dot_size="30dp"
         app:dot_margin="10dp"
@@ -82,7 +83,8 @@
             android:gravity="center"
             android:textAppearance="@style/Body_light"
             android:text="@string/footer_text"
-            android:autoLink="all"/>
+            android:autoLink="all"
+            tools:targetApi="o" />
 
     </LinearLayout>
 

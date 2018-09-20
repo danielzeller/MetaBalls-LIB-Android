@@ -3,7 +3,7 @@
     <dimen name="demo_card_padding">32dp</dimen>
     <dimen name="spacing_between_demo_cards">64dp</dimen>
     <dimen name="demo_card_image_frame_padding">7dp</dimen>
-    <dimen name="h1_textsize">24sp</dimen>
+    <dimen name="h1_text_size">24sp</dimen>
     <dimen name="caption">14sp</dimen>
     <dimen name="bullet_list">14sp</dimen>
     <dimen name="card_image_elevation">30dp</dimen>

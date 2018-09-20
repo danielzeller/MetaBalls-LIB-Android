@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">@color/white</color>
-    <color name="colorPrimaryDark">@color/pastel_yellow</color>
     <color name="colorAccent">@color/pastel_blue</color>
 
     <color name="white">#FFFFFF</color>
@@ -13,16 +12,7 @@
     <color name="pastel_beach">#FFC697</color>
 
     <color name="metal">#25282A</color>
-    <color name="transparent_black">#80000000</color>
     <color name="black">#000000</color>
-
-    <array name="pastel_spinner_colors">
-        <item>@color/pastel_beach</item>
-        <item>@color/pastel_blue</item>
-        <item>@color/pastel_pink</item>
-        <item>@color/pastel_green</item>
-        <item>@color/pastel_yellow</item>
-    </array>
 
     <array name="card_menu_single_colors">
         <item>@color/black</item>
@@ -54,13 +44,6 @@
         <item>@color/pastel_blue</item>
         <item>@color/pastel_blue2</item>
     </array>
-    <array name="card4_menu_colors">
-        <item>@color/white</item>
-        <item>@color/white</item>
-        <item>@color/white</item>
-        <item>@color/white</item>
-        <item>@color/white</item>
-    </array>
 
     <array name="card2_menu_colors">
         <item>@color/pastel_pink</item>
@@ -73,7 +56,7 @@
         <item>@color/pastel_blue</item>
     </array>
 
-    <array name="viepager_page_indicator_colors">
+    <array name="viewpager_page_indicator_colors">
         <item>@color/pastel_yellow</item>
         <item>@color/pastel_green</item>
         <item>@color/pastel_pink</item>
