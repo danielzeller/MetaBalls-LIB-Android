@@ -29,7 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:outlineSpotShadowColor="@color/pastel_yellow"
+        android:outlineSpotShadowColor="@color/yellow_dark"
         tools:targetApi="28">
 
         <ImageView
@@ -63,18 +63,18 @@
 
     <no.danielzeller.metaballslib.progressbar.MBProgressBar
         android:id="@+id/mbProgressBar"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:visibility="gone"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:translationZ="@dimen/card_image_elevation"
-        app:layout_constraintBottom_toBottomOf="@+id/imageFrameLayout"
-        app:layout_constraintEnd_toEndOf="@+id/imageFrameLayout"
         app:layout_constraintStart_toStartOf="@+id/imageFrameLayout"
         app:layout_constraintTop_toTopOf="@+id/imageFrameLayout"
 
 
         app:progressbar_type="circular"
-        app:colors_array_id="@array/card_menu_single_colors"
+        app:colors_array_id="@array/gradient_green"
         app:rotate="true" />
 
     <include

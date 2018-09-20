@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:clipChildren="false">
     <ImageView
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -47,7 +48,7 @@
         android:paddingStart="@dimen/metaball_menu_side_padding"
         android:paddingBottom="@dimen/metaball_menu_side_padding"
         app:layout_constraintBottom_toBottomOf="@+id/imageFrameLayout"
-        app:layout_constraintEnd_toEndOf="@+id/imageFrameLayout"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/imageFrameLayout"
         app:layout_constraintTop_toTopOf="@+id/imageFrameLayout"
 
@@ -78,7 +79,7 @@
 
 
         app:progressbar_type="dots"
-        app:colors_array_id="@array/card3_menu_colors" />
+        app:colors_array_id="@array/jumping_spinner" />
 
 
     <include

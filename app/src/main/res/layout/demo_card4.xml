@@ -61,8 +61,8 @@
 
     <no.danielzeller.metaballslib.progressbar.MBProgressBar
         android:id="@+id/mbProgressBar"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:visibility="gone"
         android:elevation="@dimen/card_image_elevation"
         app:layout_constraintBottom_toBottomOf="@+id/imageFrameLayout"
@@ -74,7 +74,7 @@
 
 
         app:progressbar_type="blobs"
-        app:colors_array_id="@array/card_menu_single_colors" />
+        app:colors_array_id="@array/blobs_spinner" />
 
     <include
         android:id="@+id/bottomCard"

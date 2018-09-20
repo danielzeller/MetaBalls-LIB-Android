@@ -4,28 +4,55 @@
     <color name="colorAccent">@color/pastel_blue</color>
 
     <color name="white">#FFFFFF</color>
+
     <color name="pastel_blue">#91D2DB</color>
-    <color name="pastel_blue2">#90D2DB</color>
     <color name="pastel_yellow">#FECB52</color>
-    <color name="pastel_pink">#E9A7C6</color>
     <color name="pastel_green">#8ED1B7</color>
     <color name="pastel_beach">#FFC697</color>
+    <color name="pastel_pink">#E9A7C6</color>
+
+    <color name="pastel_pink2">#AA7E94</color>
+    <color name="pastel_pink3">#836575</color>
+    <color name="pastel_pink4">#584953</color>
 
     <color name="metal">#25282A</color>
-    <color name="black">#000000</color>
+    <color name="metal2">#23282A</color>
+    <color name="yellow_dark">#A99A55</color>
 
     <array name="card_menu_single_colors">
-        <item>@color/black</item>
+        <item>@color/metal2</item>
         <item>@color/metal</item>
-        <item>@color/black</item>
+        <item>@color/metal2</item>
         <item>@color/metal</item>
-        <item>@color/black</item>
+        <item>@color/metal2</item>
         <item>@color/metal</item>
-        <item>@color/black</item>
+        <item>@color/metal2</item>
         <item>@color/metal</item>
-        <item>@color/black</item>
+        <item>@color/metal2</item>
         <item>@color/metal</item>
-        <item>@color/black</item>
+        <item>@color/metal2</item>
+    </array>
+
+    <array name="gradient_green">
+        <item>@color/pastel_pink</item>
+        <item>@color/pastel_pink2</item>
+        <item>@color/pastel_pink3</item>
+        <item>@color/pastel_pink4</item>
+        <item>@color/metal</item>
+    </array>
+
+    <array name="jumping_spinner">
+        <item>@color/pastel_blue</item>
+        <item>@color/pastel_green</item>
+        <item>@color/pastel_yellow</item>
+        <item>@color/pastel_pink</item>
+    </array>
+    <array name="blobs_spinner">
+        <item>@color/pastel_pink</item>
+        <item>@color/pastel_beach</item>
+        <item>@color/pastel_yellow</item>
+        <item>@color/pastel_pink</item>
+        <item>@color/pastel_yellow</item>
     </array>
 
     <array name="card_menu_b_w">
@@ -34,15 +61,6 @@
         <item>@color/metal</item>
         <item>@color/white</item>
         <item>@color/metal</item>
-    </array>
-
-    <!-- There is a bug on the resources that makes the loading fail if all colors are the same. Therefore we add the same color in a slight variation-->
-    <array name="card3_menu_colors">
-        <item>@color/pastel_blue2</item>
-        <item>@color/pastel_blue</item>
-        <item>@color/pastel_blue2</item>
-        <item>@color/pastel_blue</item>
-        <item>@color/pastel_blue2</item>
     </array>
 
     <array name="card2_menu_colors">

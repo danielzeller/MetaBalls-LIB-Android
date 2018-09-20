@@ -281,13 +281,13 @@ abstract class MetaBallMenuBase : FrameLayout {
 
     private fun getLayoutGravity(): Int {
         if (positionGravity == PositionGravity.BOTTOM_LEFT)
-            return Gravity.BOTTOM or Gravity.LEFT
+            return Gravity.BOTTOM or Gravity.START
         else if (positionGravity == PositionGravity.BOTTOM_RIGHT)
-            return Gravity.BOTTOM or Gravity.RIGHT
+            return Gravity.BOTTOM or Gravity.END
         else if (positionGravity == PositionGravity.TOP_RIGHT)
-            return Gravity.TOP or Gravity.RIGHT
+            return Gravity.TOP or Gravity.END
         else if (positionGravity == PositionGravity.TOP_LEFT)
-            return Gravity.TOP or Gravity.LEFT
+            return Gravity.TOP or Gravity.START
         return Gravity.CENTER
     }
 

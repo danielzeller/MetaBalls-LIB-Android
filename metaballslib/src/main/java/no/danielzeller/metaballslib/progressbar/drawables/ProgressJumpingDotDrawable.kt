@@ -114,16 +114,17 @@ class ProgressJumpingDotDrawable(val metaBall: Drawable, val tinColors: IntArray
 
     override fun draw(canvas: Canvas) {
 
+
+        drawDot(pathStartX, pathStartY, 0, canvas)
+        drawDot(pathCenterX, pathStartY, 1, canvas)
+        drawDot(pathEndX, pathStartY, 2, canvas)
+
         pathMeasure.getPosTan(pathMeasure.length * dropDrawable.pathPercent, aCoordinates, null)
         dropDrawable.setTint(tinColors[3])
         dropDrawable.x = aCoordinates[0]
         dropDrawable.y = aCoordinates[1]
         dropDrawable.draw(canvas)
         metaBall.setBounds(-ballSize, -ballSize, ballSize, ballSize)
-        drawDot(pathStartX, pathStartY, 0, canvas)
-        drawDot(pathCenterX, pathStartY, 1, canvas)
-        drawDot(pathEndX, pathStartY, 2, canvas)
-
         invalidateSelf()
     }
 

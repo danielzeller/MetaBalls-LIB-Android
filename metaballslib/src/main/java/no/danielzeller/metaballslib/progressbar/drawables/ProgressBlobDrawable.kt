@@ -26,7 +26,7 @@ class ProgressBlobDrawable(val metaBall: Drawable, val tinColors: IntArray, val 
 
     init {
         this.rotate = isRotate
-        this.tinColorsArray=tinColors
+        this.tinColorsArray = tinColors
     }
 
     override fun startAnimations() {
@@ -37,7 +37,10 @@ class ProgressBlobDrawable(val metaBall: Drawable, val tinColors: IntArray, val 
         val boundsSizeY = bounds.height().toFloat()
         motion.clear()
         for (i in 0 until 5) {
-            motion.add(BrownianMotion(Vector3(boundsSizeX * 0.8f, boundsSizeY * 0.8f, 1000f)))
+            val brownianMotion = BrownianMotion(Vector3(boundsSizeX * 0.8f, boundsSizeY * 0.8f, 1000f))
+            brownianMotion.positionFrequency = 0.15f
+            brownianMotion.positionFractalLevel = 4
+            motion.add(brownianMotion)
         }
     }
 
@@ -57,7 +60,7 @@ class ProgressBlobDrawable(val metaBall: Drawable, val tinColors: IntArray, val 
             ballSize = animation.animatedValue as Int
             metaBall.setBounds(-ballSize, -ballSize, ballSize, ballSize)
         }
-        if (spinner != null){
+        if (spinner != null) {
             sizeAnim?.addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator?) {
                     super.onAnimationEnd(animation)
@@ -102,6 +105,6 @@ class ProgressBlobDrawable(val metaBall: Drawable, val tinColors: IntArray, val 
         return PixelFormat.TRANSLUCENT
     }
 
-    override fun setColorFilter(colorFilter: ColorFilter?) {  }
-    override fun setDrop(isDrop: Boolean) {  }
+    override fun setColorFilter(colorFilter: ColorFilter?) {}
+    override fun setDrop(isDrop: Boolean) {}
 }

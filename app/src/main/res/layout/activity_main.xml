@@ -1,50 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:id="@+id/scrollViewRoot"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:theme="@style/AppTheme"
+        >
 
-        <include
-            android:id="@+id/demo_card1"
-            layout="@layout/demo_card1"
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="?attr/actionBarSize"
+            android:gravity="center"
+            android:textAppearance="@style/ActionBarTextStyle"
+            android:text="@string/app_name" />
+    </android.support.design.widget.AppBarLayout>
 
-        <include
-            android:id="@+id/demo_card2"
-            layout="@layout/demo_card2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize">
 
-        <include
-            android:id="@+id/demo_card3"
-            layout="@layout/demo_card3"
+        <LinearLayout
+            android:id="@+id/scrollViewRoot"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <include
-            android:id="@+id/demo_card4"
-            layout="@layout/demo_card4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <include
+                android:id="@+id/demo_card1"
+                layout="@layout/demo_card1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <include
-            android:id="@+id/demo_card5"
-            layout="@layout/demo_card5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <include
-            android:id="@+id/bottomViewPagerLayout"
-            layout="@layout/bottom_viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-</ScrollView>
+            <include
+                android:id="@+id/demo_card2"
+                layout="@layout/demo_card2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <include
+                android:id="@+id/demo_card3"
+                layout="@layout/demo_card3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <include
+                android:id="@+id/demo_card4"
+                layout="@layout/demo_card4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <include
+                android:id="@+id/demo_card5"
+                layout="@layout/demo_card5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <include
+                android:id="@+id/bottomViewPagerLayout"
+                layout="@layout/bottom_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

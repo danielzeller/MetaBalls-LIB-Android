@@ -14,7 +14,7 @@
         app:layout_constraintDimensionRatio="H,360:370"
         android:scaleType="fitXY"
         android:src="@drawable/bg_pastel_beach"
-        android:contentDescription="R" />
+        android:contentDescription="@string/bg_content_description" />
 
     <FrameLayout
         android:id="@+id/imageFrameLayout"
