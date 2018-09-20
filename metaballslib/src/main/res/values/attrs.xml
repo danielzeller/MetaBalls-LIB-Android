@@ -20,11 +20,11 @@
             <enum name="bottom_right" value="4" />
         </attr>
 
-        <!-- CircularMenu -->
+        <!-- CircularMenu only -->
         <attr name="radius" format="dimension" />
         <attr name="angle_between_menu_items" format="float" />
 
-        <!-- DirectionMenu -->
+        <!-- DirectionMenu  only -->
         <attr name="margin_between_menu_items" format="dimension" />
         <attr name="expand_direction" format="enum">
             <enum name="horizontal" value="0" />
@@ -32,7 +32,7 @@
         </attr>
     </declare-styleable>
 
-
+    <!-- MPProgressBar -->
     <declare-styleable name="MetaBallsProgressBar">
         <attr name="colors_array_id" format="reference" />
         <attr name="drop_drawable" format="boolean" />
@@ -46,6 +46,8 @@
             <enum name="long_path" value="5" />
         </attr>
     </declare-styleable>
+
+    <!-- MetaBallPageIndicator -->
     <declare-styleable name="MetaBallsPageIndicator">
         <attr name="dot_colors_override_array_id" format="reference" />
         <attr name="selected_dot_color" format="color" />
