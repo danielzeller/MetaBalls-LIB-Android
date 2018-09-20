@@ -88,9 +88,9 @@ class MBProgressBar : FrameLayout {
 
     /**
      * Stops the spinner animated, and sets View.GONE after an exit animation.
-     * @param spinnerHiddenListener  Callback for when the Spinner is hidden.
+     * @param onProgressBarHiddenListener  Callback for when the Spinner is hidden.
      */
-    fun stopAnimated( onProgressBarHiddenListener: (() -> Unit)? = null) {
+    fun stopAnimated(onProgressBarHiddenListener: (() -> Unit)? = null) {
         progressDrawable?.stopAndHide(this, onProgressBarHiddenListener)
     }
 
@@ -103,7 +103,7 @@ class MBProgressBar : FrameLayout {
         try {
             val colorsArrayID = typedArray.getResourceId(R.styleable.MetaBallsProgressBar_colors_array_id, R.array.default_spinner_colors)
             colorArray = resources.getIntArray(colorsArrayID)
-            mbProgressBarType = convertIntToSpinnertype(typedArray.getInteger(R.styleable.MetaBallsProgressBar_progressbar_type, MBProgressBarType.CIRCULAR.ordinal))
+            mbProgressBarType = convertIntToSpinnerType(typedArray.getInteger(R.styleable.MetaBallsProgressBar_progressbar_type, MBProgressBarType.CIRCULAR.ordinal))
             isDropDrawable = typedArray.getBoolean(R.styleable.MetaBallsProgressBar_drop_drawable, isDropDrawable)
             isRotate = typedArray.getBoolean(R.styleable.MetaBallsProgressBar_rotate, false)
 
@@ -128,18 +128,14 @@ class MBProgressBar : FrameLayout {
     }
 
     private fun createSpinnerDrawable(): ProgressDrawable {
-        if (mbProgressBarType == MBProgressBarType.CIRCULAR) {
-            return ProgressPathDrawable(resources.getDrawable(R.drawable.gradient_oval, null), colorArray, parsePath(CIRCLE_PATH_DATA), isDropDrawable, isRotate)
-        } else if (mbProgressBarType == MBProgressBarType.EIGHT) {
-            return ProgressPathDrawable(resources.getDrawable(R.drawable.gradient_oval, null), colorArray, parsePath(EIGHT_PATH_DATA), isDropDrawable, isRotate, 900, LinearInterpolator())
-        } else if (mbProgressBarType == MBProgressBarType.BLOBS) {
-            return ProgressBlobDrawable(resources.getDrawable(R.drawable.gradient_oval, null), colorArray, isRotate)
-        } else if (mbProgressBarType == MBProgressBarType.SQUARE) {
-            return ProgressPathDrawable(resources.getDrawable(R.drawable.gradient_oval, null), colorArray, parsePath(SQUARE_PATH_DATA), isDropDrawable, isRotate)
-        } else if (mbProgressBarType == MBProgressBarType.LONG_PATH) {
-            return ProgressPathDrawable(resources.getDrawable(R.drawable.gradient_oval, null), colorArray, parsePath(LONG_PATH_DATA), isDropDrawable, isRotate, 1300, LinearInterpolator())
+        when (mbProgressBarType) {
+            MBProgressBarType.CIRCULAR -> return ProgressPathDrawable(resources.getDrawable(R.drawable.gradient_oval, null), colorArray, parsePath(CIRCLE_PATH_DATA), isDropDrawable, isRotate)
+            MBProgressBarType.EIGHT -> return ProgressPathDrawable(resources.getDrawable(R.drawable.gradient_oval, null), colorArray, parsePath(EIGHT_PATH_DATA), isDropDrawable, isRotate, 900, LinearInterpolator())
+            MBProgressBarType.BLOBS -> return ProgressBlobDrawable(resources.getDrawable(R.drawable.gradient_oval, null), colorArray, isRotate)
+            MBProgressBarType.SQUARE -> return ProgressPathDrawable(resources.getDrawable(R.drawable.gradient_oval, null), colorArray, parsePath(SQUARE_PATH_DATA), isDropDrawable, isRotate)
+            MBProgressBarType.LONG_PATH -> return ProgressPathDrawable(resources.getDrawable(R.drawable.gradient_oval, null), colorArray, parsePath(LONG_PATH_DATA), isDropDrawable, isRotate, 1300, LinearInterpolator())
+            else -> return ProgressJumpingDotDrawable(resources.getDrawable(R.drawable.gradient_oval, null), colorArray, isDropDrawable)
         }
-        return ProgressJumpingDotDrawable(resources.getDrawable(R.drawable.gradient_oval, null), colorArray, isDropDrawable)
     }
 
     private fun parsePath(pathData: FloatArray): Path {
@@ -167,16 +163,16 @@ class MBProgressBar : FrameLayout {
 
     private fun createMetaBallsPaint(): Paint {
         val metaBallsPaint = Paint()
-        metaBallsPaint.setColorFilter(ColorMatrixColorFilter(ColorMatrix(floatArrayOf(
+        metaBallsPaint.colorFilter = ColorMatrixColorFilter(ColorMatrix(floatArrayOf(
                 1f, 0f, 0f, 0f, 0f,
                 0f, 1f, 0f, 0f, 0f,
                 0f, 0f, 1f, 0f, 0f,
                 0f, 0f, 0f, 150f, -255 * 128f
-        ))))
+        )))
         return metaBallsPaint
     }
 
-    private fun convertIntToSpinnertype(id: Int): MBProgressBarType {
+    private fun convertIntToSpinnerType(id: Int): MBProgressBarType {
         for (f in MBProgressBarType.values()) {
             if (f.ordinal == id) return f
         }

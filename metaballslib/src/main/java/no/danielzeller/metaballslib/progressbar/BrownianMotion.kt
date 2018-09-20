@@ -11,22 +11,17 @@ class BrownianMotion {
     var positionFractalLevel = 3
     private val fbmNorm = 1 / 0.75f
 
-    private val time: FloatArray
+    private val time: FloatArray = FloatArray(6)
     val position = Vector3(0f, 0f, 0f)
-    private val frameRate = FrameRateCounter();
+    private val frameRate = FrameRateCounter()
 
     init {
-        time = FloatArray(6)
         rehash()
         frameRate.timeStep()
     }
 
-    constructor() {
-
-    }
-
     constructor(positionScale: Vector3) {
-        this.positionScale = positionScale;
+        this.positionScale = positionScale
     }
 
     fun rehash() {
@@ -63,10 +58,10 @@ class BrownianMotion {
 
         fun noise(x: Float): Float {
             var x = x
-            val X = Math.floor(x.toDouble()).toInt() and 0xff
+            val x1 = Math.floor(x.toDouble()).toInt() and 0xff
             x -= Math.floor(x.toDouble()).toFloat()
             val u = fade(x)
-            return lerp(u, grad(perm[X], x), grad(perm[X + 1], x - 1)) * 2
+            return lerp(u, grad(perm[x1], x), grad(perm[x1 + 1], x - 1)) * 2
         }
 
         fun fbm(x: Float, octave: Int): Float {

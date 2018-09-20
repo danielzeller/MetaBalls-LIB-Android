@@ -43,10 +43,10 @@ class CircularMenu : MetaBallMenuBase {
         stopAllRunningAnimations()
 
         val startAngle = getStartAngle()
-        var startDelay = 0L;
+        var startDelay = 0L
 
-        for (i in 0 until metaBallsContainerFrameLayout.getChildCount() - 1) {
-            var angleDeg = startAngle + i.toFloat() * angleBetweenMenuItems
+        for (i in 0 until metaBallsContainerFrameLayout.childCount - 1) {
+            val angleDeg = startAngle + i.toFloat() * angleBetweenMenuItems
             val angleRad = (angleDeg * Math.PI / 180f).toFloat()
             val x = radius * Math.cos(angleRad.toDouble()).toFloat()
             val y = radius * Math.sin(angleRad.toDouble()).toFloat()
@@ -56,20 +56,18 @@ class CircularMenu : MetaBallMenuBase {
             val menuItemFadeDuration = (openAnimationDuration * 0.33f).toLong()
             animateScale(ballView, 1.0f, menuItemScaleUpDuration, startDelay)
             fadeIcon((ballView as ImageView).drawable, startDelay + menuItemFadeDuration, menuItemFadeDuration, 255, true)
-            startDelay += delayBetweenItemsAnimation;
+            startDelay += delayBetweenItemsAnimation
             ballView.isEnabled = true
         }
     }
 
     private fun getStartAngle(): Float {
-        if (positionGravity == PositionGravity.BOTTOM_LEFT)
-            return 270f
-        else if (positionGravity == PositionGravity.BOTTOM_RIGHT)
-            return 180f
-        else if (positionGravity == PositionGravity.TOP_RIGHT)
-            return 90f
-        else if (positionGravity == PositionGravity.TOP_LEFT)
-            return 0f
-        return 270f
+        when (positionGravity) {
+            PositionGravity.BOTTOM_LEFT -> return 270f
+            PositionGravity.BOTTOM_RIGHT -> return 180f
+            PositionGravity.TOP_RIGHT -> return 90f
+            PositionGravity.TOP_LEFT -> return 0f
+            else -> return 270f
+        }
     }
 }

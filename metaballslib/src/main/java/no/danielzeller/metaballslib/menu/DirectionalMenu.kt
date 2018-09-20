@@ -17,8 +17,7 @@ class DirectionalMenu : MetaBallMenuBase {
      *
      * In what direction should the menu expand?
      */
-    lateinit var expandDirection : ExpandDirection//This really does'nt be a letinit, but at
-    //the  moment there is a bug in the compiler that freezes it to ehatever value set here -_-
+    lateinit var expandDirection : ExpandDirection
 
 
     /**
@@ -59,10 +58,10 @@ class DirectionalMenu : MetaBallMenuBase {
         stopAllRunningAnimations()
 
         val startAngle = getStartAngle()
-        var startDelay = 0L;
+        var startDelay = 0L
         var marginIncrease = 1
-        for (i in 0 until metaBallsContainerFrameLayout.getChildCount() - 1) {
-            var angleDeg = startAngle
+        for (i in 0 until metaBallsContainerFrameLayout.childCount - 1) {
+            val angleDeg = startAngle
             val angleRad = (angleDeg * Math.PI / 180f).toFloat()
 
             //Used when Position_Gravity = CENTER
@@ -82,7 +81,7 @@ class DirectionalMenu : MetaBallMenuBase {
             animateScale(ballView, 1.0f, menuItemScaleUpDuration, startDelay)
             fadeIcon((ballView as ImageView).drawable, startDelay + menuItemFadeDuration, menuItemFadeDuration, 255, true)
 
-            startDelay += delayBetweenItemsAnimation;
+            startDelay += delayBetweenItemsAnimation
             ballView.isEnabled = true
         }
 

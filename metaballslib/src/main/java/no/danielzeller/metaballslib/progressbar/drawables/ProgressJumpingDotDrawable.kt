@@ -5,14 +5,14 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.graphics.*
 import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.View
 import android.view.animation.PathInterpolator
 
 
 class ProgressJumpingDotDrawable(val metaBall: Drawable, val tinColors: IntArray, val isDrop: Boolean) : ProgressDrawable() {
 
-
+    private val BALL_SIZE = 0.23f
+    private val JUMP_DURATION = 600L
     private val path = Path()
     private val animations: ArrayList<ValueAnimator> = ArrayList()
     private lateinit var pathMeasure: PathMeasure
@@ -20,8 +20,6 @@ class ProgressJumpingDotDrawable(val metaBall: Drawable, val tinColors: IntArray
     private var sizeAnim: ValueAnimator? = null
     private var dropDrawable: DropDrawable
     private val aCoordinates = floatArrayOf(0f, 0f)
-    private val BALLSIZE = 0.23f
-    private val JUMP_DURATION = 600L
     private var pathStartX = 0f
     private var pathStartY = 0f
     private var pathCenterX = 0f
@@ -40,7 +38,7 @@ class ProgressJumpingDotDrawable(val metaBall: Drawable, val tinColors: IntArray
     }
 
     override fun startAnimations() {
-        ballSize = (bounds.width() * BALLSIZE).toInt()
+        ballSize = (bounds.width() * BALL_SIZE).toInt()
         stopAllAnimations()
         animateBallSize(0, ballSize, 300, null, null)
         startJumpingSequence()
@@ -128,10 +126,10 @@ class ProgressJumpingDotDrawable(val metaBall: Drawable, val tinColors: IntArray
         invalidateSelf()
     }
 
-    fun drawDot(xPos: Float, yPos: Float, tindIndex: Int, canvas: Canvas) {
+    fun drawDot(xPos: Float, yPos: Float, tintIndex: Int, canvas: Canvas) {
         val count = canvas.save()
         canvas.translate(xPos, yPos)
-        metaBall.setTint(tinColors[tindIndex])
+        metaBall.setTint(tinColors[tintIndex])
         metaBall.draw(canvas)
         canvas.restoreToCount(count)
     }
@@ -139,7 +137,7 @@ class ProgressJumpingDotDrawable(val metaBall: Drawable, val tinColors: IntArray
     override fun onBoundsChange(bounds: Rect) {
         super.onBoundsChange(bounds)
 
-        ballSize = (bounds.width() * BALLSIZE).toInt()
+        ballSize = (bounds.width() * BALL_SIZE).toInt()
         createPath()
         startAnimations()
     }
@@ -152,14 +150,14 @@ class ProgressJumpingDotDrawable(val metaBall: Drawable, val tinColors: IntArray
         pathCenterX = bounds.centerX().toFloat()
         pathEndX = (bounds.width() - ballSize).toFloat()
         val endY = pathStartY - (pathCenterX - pathStartX)
-        val halfWidthBetwenPoints = (pathCenterX - pathStartX) / 2f
-        val halfHeightBetwenPoints = pathStartY - ((pathStartY - endY) / 2f)
+        val halfWidthBetweenPoints = (pathCenterX - pathStartX) / 2f
+        val halfHeightBetweenPoints = pathStartY - ((pathStartY - endY) / 2f)
 
         path.moveTo(pathStartX, pathStartY)
-        path.cubicTo(pathStartX, halfHeightBetwenPoints, pathStartX + halfWidthBetwenPoints / 2f, endY, pathStartX + halfWidthBetwenPoints, endY)
-        path.cubicTo(pathCenterX - halfWidthBetwenPoints / 2f, endY, pathCenterX, halfHeightBetwenPoints, pathCenterX, pathStartY)
-        path.cubicTo(pathCenterX, halfHeightBetwenPoints, pathCenterX + halfWidthBetwenPoints / 2f, endY, pathCenterX + halfWidthBetwenPoints, endY)
-        path.cubicTo(pathEndX - halfWidthBetwenPoints / 2f, endY, pathEndX, halfHeightBetwenPoints, pathEndX, pathStartY)
+        path.cubicTo(pathStartX, halfHeightBetweenPoints, pathStartX + halfWidthBetweenPoints / 2f, endY, pathStartX + halfWidthBetweenPoints, endY)
+        path.cubicTo(pathCenterX - halfWidthBetweenPoints / 2f, endY, pathCenterX, halfHeightBetweenPoints, pathCenterX, pathStartY)
+        path.cubicTo(pathCenterX, halfHeightBetweenPoints, pathCenterX + halfWidthBetweenPoints / 2f, endY, pathCenterX + halfWidthBetweenPoints, endY)
+        path.cubicTo(pathEndX - halfWidthBetweenPoints / 2f, endY, pathEndX, halfHeightBetweenPoints, pathEndX, pathStartY)
 
         pathMeasure = PathMeasure(path, false)
     }

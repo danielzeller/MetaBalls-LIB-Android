@@ -73,7 +73,7 @@ abstract class MetaBallMenuBase : FrameLayout {
     var mainButtonIconColor = Color.WHITE
         set(value) {
             field = value
-            openCloseDrawable?.iconDawable?.setTint(value)
+            openCloseDrawable?.iconDrawable?.setTint(value)
         }
 
 
@@ -83,8 +83,8 @@ abstract class MetaBallMenuBase : FrameLayout {
     var mainButtonIcon: Drawable? = null
         set(value) {
             field = value
-            openCloseDrawable?.iconDawable = value
-            openCloseDrawable?.iconDawable?.setTint(mainButtonIconColor)
+            openCloseDrawable?.iconDrawable = value
+            openCloseDrawable?.iconDrawable?.setTint(mainButtonIconColor)
         }
 
 
@@ -126,7 +126,7 @@ abstract class MetaBallMenuBase : FrameLayout {
 
 
     /**
-     * Opens or closes the menu dpending on if the menu is open or closed
+     * Opens or closes the menu depending on if the menu is open or closed
      */
     fun toggleMenu() {
         if (isMenuOpen) {
@@ -191,8 +191,8 @@ abstract class MetaBallMenuBase : FrameLayout {
             delayBetweenItemsAnimation = typedArray.getInteger(R.styleable.MetaBallsMenu_delay_between_items_animation, 40).toLong()
             openAnimationDuration = typedArray.getInteger(R.styleable.MetaBallsMenu_open_animation_duration, 600).toLong()
             closeAnimationDuration = typedArray.getInteger(R.styleable.MetaBallsMenu_close_animation_duration, 600).toLong()
-            openInterpolatorAnimator = AnimationUtils.loadInterpolator(getContext(), typedArray.getResourceId(R.styleable.MetaBallsMenu_open_interpolator_resource, R.anim.default_menu_interpolator)) as Interpolator
-            closeInterpolatorAnimator = AnimationUtils.loadInterpolator(getContext(), typedArray.getResourceId(R.styleable.MetaBallsMenu_close_interpolator_resource, R.anim.default_menu_interpolator)) as Interpolator
+            openInterpolatorAnimator = AnimationUtils.loadInterpolator(context, typedArray.getResourceId(R.styleable.MetaBallsMenu_open_interpolator_resource, R.anim.default_menu_interpolator)) as Interpolator
+            closeInterpolatorAnimator = AnimationUtils.loadInterpolator(context, typedArray.getResourceId(R.styleable.MetaBallsMenu_close_interpolator_resource, R.anim.default_menu_interpolator)) as Interpolator
             mainButtonColor = typedArray.getColor(R.styleable.MetaBallsMenu_main_button_color, Color.BLACK)
             mainButtonIconColor = typedArray.getColor(R.styleable.MetaBallsMenu_main_button_icon_color, Color.WHITE)
             if (typedArray.hasValue(R.styleable.MetaBallsMenu_main_button_icon)) {
@@ -212,12 +212,12 @@ abstract class MetaBallMenuBase : FrameLayout {
 
     private fun createMetaBallsPaint(): Paint {
         val metaBallsPaint = Paint()
-        metaBallsPaint.setColorFilter(ColorMatrixColorFilter(ColorMatrix(floatArrayOf(
+        metaBallsPaint.colorFilter = ColorMatrixColorFilter(ColorMatrix(floatArrayOf(
                 1f, 0f, 0f, 0f, 0f,
                 0f, 1f, 0f, 0f, 0f,
                 0f, 0f, 1f, 0f, 0f,
                 0f, 0f, 0f, 200f, -255 * 128f
-        ))))
+        )))
         return metaBallsPaint
     }
 
@@ -260,8 +260,7 @@ abstract class MetaBallMenuBase : FrameLayout {
         menuButton.setImageDrawable(openCloseDrawable)
         val padding = resources.getDimension(R.dimen.main_button_padding).toInt()
         menuButton.setPadding(padding, padding, padding, padding)
-        menuButton.setOnClickListener({ toggleMenu() })
-//        menuButton.stateListAnimator = AnimatorInflater.loadStateListAnimator(context, R.animator.button_scale)
+        menuButton.setOnClickListener { toggleMenu() }
         return menuButton
     }
 
@@ -305,7 +304,7 @@ abstract class MetaBallMenuBase : FrameLayout {
     }
 
     /**
-     * Diffent implementations in CircularMenu and DirectionalMenu
+     * Different implementations in CircularMenu and DirectionalMenu
      */
     open fun openMenu() {
 
@@ -313,15 +312,15 @@ abstract class MetaBallMenuBase : FrameLayout {
 
     private fun closeMenu() {
         stopAllRunningAnimations()
-        var startDelay = 0L;
-        for (i in metaBallsContainerFrameLayout.getChildCount() - 2 downTo 0) {
+        var startDelay = 0L
+        for (i in metaBallsContainerFrameLayout.childCount - 2 downTo 0) {
 
             val ballView = metaBallsContainerFrameLayout.getChildAt(i)
             val positionAnim = animatePosition(ballView, 0f, 0f, startDelay, closeInterpolatorAnimator, closeAnimationDuration)
             val menuItemScaleDown = (closeAnimationDuration * 0.33f).toLong()
             animateScale(ballView, 0.1f, menuItemScaleDown, startDelay + menuItemScaleDown, LinearInterpolator())
             fadeIcon((ballView as ImageView).drawable, startDelay, (closeAnimationDuration * 0.16f).toLong(), 0, false)
-            startDelay += delayBetweenItemsAnimation;
+            startDelay += delayBetweenItemsAnimation
             if (i == 0) {
                 positionAnim.addListener(object: AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator?) {
@@ -335,12 +334,12 @@ abstract class MetaBallMenuBase : FrameLayout {
     }
 
     protected fun fadeIcon(drawable: Drawable, startDelay: Long, duration: Long, toAlpha: Int, animateDrawable: Boolean) {
-        val alhpa = ValueAnimator.ofInt(drawable.alpha, toAlpha).setDuration(duration)
+        val alpha = ValueAnimator.ofInt(drawable.alpha, toAlpha).setDuration(duration)
         if (animateDrawable) {
             drawable.alpha = 0
         }
         var hasVectorAnimStarted = false
-        alhpa.addUpdateListener { animation ->
+        alpha.addUpdateListener { animation ->
             drawable.alpha = animation.animatedValue as Int
             if (animateDrawable && drawable is AnimatedVectorDrawable) {
 
@@ -351,17 +350,17 @@ abstract class MetaBallMenuBase : FrameLayout {
             }
         }
 
-        alhpa.setStartDelay(startDelay)
-        startAnimation(alhpa)
+        alpha.startDelay = startDelay
+        startAnimation(alpha)
     }
 
     protected fun animatePosition(view: View, x: Float, y: Float, startDelay: Long, interpolator: Interpolator, duration: Long): ValueAnimator {
         val translationX = ObjectAnimator.ofFloat(view, View.TRANSLATION_X, view.translationX, x).setDuration(duration)
         translationX.interpolator = interpolator
-        translationX.setStartDelay(startDelay)
+        translationX.startDelay = startDelay
         startAnimation(translationX)
         val translationY = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, view.translationY, y).setDuration(duration)
-        translationY.setStartDelay(startDelay)
+        translationY.startDelay = startDelay
         translationY.interpolator = interpolator
         startAnimation(translationY)
         return translationY
@@ -369,11 +368,11 @@ abstract class MetaBallMenuBase : FrameLayout {
 
     protected fun animateScale(view: View, scale: Float, duration: Long, startDelay: Long, interpolator: Interpolator = PathInterpolator(.95f, 0f, .07f, 1f)): ObjectAnimator {
         val scaleX = ObjectAnimator.ofFloat(view, View.SCALE_X, view.scaleX, scale).setDuration(duration)
-        scaleX.setStartDelay(startDelay)
+        scaleX.startDelay = startDelay
         scaleX.interpolator = interpolator
         startAnimation(scaleX)
         val scaleY = ObjectAnimator.ofFloat(view, View.SCALE_Y, view.scaleY, scale).setDuration(duration)
-        scaleY.setStartDelay(startDelay)
+        scaleY.startDelay = startDelay
         scaleY.interpolator = interpolator
         startAnimation(scaleY)
         return scaleX

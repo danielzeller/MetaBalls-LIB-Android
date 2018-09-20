@@ -17,7 +17,7 @@ class MetaBallPageIndicator : FrameLayout, ViewPager.OnPageChangeListener, ViewP
 
     /**
      *
-     * Size of the dots. Note: Since the MetaBall ColorMatric cuts off the transparent edges of
+     * Size of the dots. Note: Since the MetaBall ColorMatrix cuts off the transparent edges of
      * the drawable, the size will appear smaller than it actually is.
      */
     var dotSize = 0
@@ -29,7 +29,7 @@ class MetaBallPageIndicator : FrameLayout, ViewPager.OnPageChangeListener, ViewP
 
     /**
      *
-     * Margin beteween dots
+     * Margin between dots
      */
     var dotsMargin = 0f
         set(value) {
@@ -41,7 +41,7 @@ class MetaBallPageIndicator : FrameLayout, ViewPager.OnPageChangeListener, ViewP
     /**
      *
      * Default color of the unselected page indicator dots. If dotColorsOverrideArray is set,
-     * those colors will be usen instead.
+     * those colors will be used instead.
      */
     var unSelectedDotColor = 0
         set(value) {
@@ -169,12 +169,12 @@ class MetaBallPageIndicator : FrameLayout, ViewPager.OnPageChangeListener, ViewP
 
     private fun createMetaBallsPaint(): Paint {
         val metaBallsPaint = Paint()
-        metaBallsPaint.setColorFilter(ColorMatrixColorFilter(ColorMatrix(floatArrayOf(
+        metaBallsPaint.colorFilter = ColorMatrixColorFilter(ColorMatrix(floatArrayOf(
                 1f, 0f, 0f, 0f, 0f,
                 0f, 1f, 0f, 0f, 0f,
                 0f, 0f, 1f, 0f, 0f,
                 0f, 0f, 0f, 160f, -255 * 128f
-        ))))
+        )))
         return metaBallsPaint
     }
 
@@ -205,7 +205,7 @@ class MetaBallPageIndicator : FrameLayout, ViewPager.OnPageChangeListener, ViewP
         private var centerY = 0f
         private var combinedDotsWidth = 0f
         private var dotsCount = 0
-        private var startXCood = 0f
+        private var startXCoord = 0f
         private var distanceBetweenDots = 0f
         private val DROP_SCALE = 0.79f
 
@@ -218,13 +218,13 @@ class MetaBallPageIndicator : FrameLayout, ViewPager.OnPageChangeListener, ViewP
 
             if (dotsCount != null && viewPager?.adapter != null) {
 
-                dotsCount = viewPager?.adapter?.getCount()!!
+                dotsCount = viewPager?.adapter?.count!!
                 combinedDotsWidth = getTotalWidth(dotsCount)
-                startXCood = bounds.width() / 2f - combinedDotsWidth / 2f + dotSize / 2f
+                startXCoord = bounds.width() / 2f - combinedDotsWidth / 2f + dotSize / 2f
 
                 dotPositions = FloatArray(dotsCount)
                 for (i in 0 until dotsCount) {
-                    dotPositions[i] = startXCood + dotsMargin * i + dotSize * i
+                    dotPositions[i] = startXCoord + dotsMargin * i + dotSize * i
                 }
 
                 distanceBetweenDots = dotsMargin + dotSize
@@ -249,7 +249,7 @@ class MetaBallPageIndicator : FrameLayout, ViewPager.OnPageChangeListener, ViewP
         override fun onBoundsChange(bounds: Rect) {
             super.onBoundsChange(bounds)
             calculateCoordinates()
-            dropDrawable.setBounds(bounds)
+            dropDrawable.bounds = bounds
             dropDrawable.ballSize = (dotSize * DROP_SCALE).toInt()
         }
 
@@ -314,14 +314,14 @@ class MetaBallPageIndicator : FrameLayout, ViewPager.OnPageChangeListener, ViewP
 
 
         private fun getTotalWidth(count: Int): Float {
-            return (dotSize * count + (count - 1) * dotsMargin).toFloat()
+            return (dotSize * count + (count - 1) * dotsMargin)
         }
 
         fun getTouchedRect(touchX: Float, touchY: Float): Int {
             val rect = RectF()
             for (i in 0 until dotsCount) {
-                val halfDotsize = dotSize / 2f
-                rect.set(dotPositions[i] - halfDotsize, centerY - halfDotsize, dotPositions[i] + halfDotsize, centerY + halfDotsize)
+                val halfDotSize = dotSize / 2f
+                rect.set(dotPositions[i] - halfDotSize, centerY - halfDotSize, dotPositions[i] + halfDotSize, centerY + halfDotSize)
                 if (rect.contains(touchX, touchY)) {
                     return i
                 }

@@ -21,7 +21,7 @@ class ProgressBlobDrawable(val metaBall: Drawable, val tinColors: IntArray, val 
     private var ballSize = 0
     private var sizeAnim: ValueAnimator? = null
     private var rotation = 0f
-    private var framerate = FrameRateCounter()
+    private var frameRate = FrameRateCounter()
     private val ROTATE_SPEED = 40f
 
     init {
@@ -38,8 +38,7 @@ class ProgressBlobDrawable(val metaBall: Drawable, val tinColors: IntArray, val 
         motion.clear()
         for (i in 0 until 5) {
             val brownianMotion = BrownianMotion(Vector3(boundsSizeX * 0.8f, boundsSizeY * 0.8f, 1000f))
-            brownianMotion.positionFrequency = 0.15f
-            brownianMotion.positionFractalLevel = 4
+            brownianMotion.positionFrequency = 0.2f
             motion.add(brownianMotion)
         }
     }
@@ -76,7 +75,7 @@ class ProgressBlobDrawable(val metaBall: Drawable, val tinColors: IntArray, val 
     override fun draw(canvas: Canvas) {
         if (rotate) {
             canvas.rotate(rotation, bounds.width().toFloat() / 2f, bounds.height().toFloat() / 2f)
-            rotation += ROTATE_SPEED * framerate.timeStep()
+            rotation += ROTATE_SPEED * frameRate.timeStep()
         }
         canvas.translate((bounds.width() / 2).toFloat(), (bounds.height() / 2).toFloat())
         for (i in 0 until 5) {

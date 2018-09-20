@@ -7,7 +7,7 @@ import android.graphics.drawable.Drawable
 import android.view.animation.PathInterpolator
 import no.danielzeller.metaballslib.R
 
-class OpenCloseDrawable(var iconDawable: Drawable?, iconColor: Int, context: Context) : Drawable() {
+class OpenCloseDrawable(var iconDrawable: Drawable?, iconColor: Int, context: Context) : Drawable() {
 
     private val paint = Paint()
     private val closeLineRectF = RectF()
@@ -27,7 +27,7 @@ class OpenCloseDrawable(var iconDawable: Drawable?, iconColor: Int, context: Con
     init {
         paint.color = iconColor
         closeLineHeight = context.resources.getDimension(R.dimen.close_line_stroke)
-        iconDawable?.setTint(iconColor)
+        iconDrawable?.setTint(iconColor)
     }
 
     fun closeState() {
@@ -70,23 +70,23 @@ class OpenCloseDrawable(var iconDawable: Drawable?, iconColor: Int, context: Con
 
     override fun setAlpha(alpha: Int) {
         paint.alpha = alpha
-        iconDawable?.alpha = alpha
+        iconDrawable?.alpha = alpha
     }
 
     override fun getOpacity(): Int {
-        return PixelFormat.TRANSLUCENT;
+        return PixelFormat.TRANSLUCENT
     }
 
     override fun setColorFilter(colorFilter: ColorFilter?) {
-        paint.setColorFilter(colorFilter)
-        iconDawable?.colorFilter = colorFilter
+        paint.colorFilter = colorFilter
+        iconDrawable?.colorFilter = colorFilter
     }
 
     override fun draw(canvas: Canvas) {
         drawXLine(canvas, closeLineRotation)
         drawXLine(canvas, -closeLineRotation)
-        iconDawable?.bounds = getIconBounds()
-        iconDawable?.draw(canvas)
+        iconDrawable?.bounds = getIconBounds()
+        iconDrawable?.draw(canvas)
     }
 
     private fun getIconBounds(): Rect {
@@ -101,11 +101,11 @@ class OpenCloseDrawable(var iconDawable: Drawable?, iconColor: Int, context: Con
         val centerY = bounds.width().toFloat() / 2f
         canvas.save()
         canvas.rotate(rotation, centerX, centerY)
-        canvas.drawRoundRect(getClosLineRect(), closeLineHeight, closeLineHeight, paint)
+        canvas.drawRoundRect(getCloseLineRect(), closeLineHeight, closeLineHeight, paint)
         canvas.restore()
     }
 
-    private fun getClosLineRect(): RectF {
+    private fun getCloseLineRect(): RectF {
         val centerX = bounds.width().toFloat() / 2f
         val centerY = bounds.width().toFloat() / 2f
         closeLineRectF.set(centerX - centerX * closeLineWidth, centerY - closeLineHeight / 2f, centerX + centerX * closeLineWidth, centerY + closeLineHeight / 2f)
