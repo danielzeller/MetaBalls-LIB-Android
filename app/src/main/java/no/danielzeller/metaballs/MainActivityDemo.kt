@@ -3,12 +3,17 @@ package no.danielzeller.metaballs
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import android.support.v4.view.PagerAdapter
 import android.support.v7.app.AppCompatActivity
 import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
+import kotlinx.android.synthetic.main.activity_main_demo.*
+import kotlinx.android.synthetic.main.bottom_viewpager.*
 import kotlinx.android.synthetic.main.bullet_text.view.*
 import kotlinx.android.synthetic.main.demo_card_bottom.view.*
 import kotlinx.coroutines.experimental.Job
@@ -33,6 +38,11 @@ class MainActivityDemo : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_demo)
 
+        setupMetaBallMenuDemo()
+        setupPageIndicatorDemo()
+    }
+
+    private fun setupMetaBallMenuDemo() {
         val card1MetaBallMenuAdapter = createMetaBallMenuAdapter(3, R.array.card_menu_single_colors)
         val card2MetaBallMenuAdapter = createMetaBallMenuAdapter(8, R.array.card2_menu_colors)
         val card3MetaBallMenuAdapter = createMetaBallMenuAdapter(3, R.array.card_menu_single_colors)
@@ -44,6 +54,16 @@ class MainActivityDemo : AppCompatActivity() {
         setupCardView(R.id.demo_card4, card4And5MetaBallMenuAdapter, R.color.pastel_blue, R.array.demo_card_4_description, R.string.demo_card_link4)
         setupCardView(R.id.demo_card5, card4And5MetaBallMenuAdapter, R.color.pastel_beach, R.array.demo_card_5_description, R.string.demo_card_link1_and5)
     }
+
+    private fun setupPageIndicatorDemo() {
+        bottomViewPager.adapter = ImagePagerAdapter()
+        metaBallPageIndicator.attachToViewPager(bottomViewPager)
+        metaBallPageIndicatorSmall.attachToViewPager(bottomViewPager)
+        metaBallPageIndicator.onDotClicked = { pageIndex ->
+            bottomViewPager.setCurrentItem(pageIndex, true)
+        }
+    }
+
 
     /**
      *
@@ -72,7 +92,7 @@ class MainActivityDemo : AppCompatActivity() {
         metaBallMenu.adapter = adapter
         metaBallMenu.onItemSelectedListener = { index ->
             Log.i(LOG_TAG, "Clicked menu item: " + index)
-            if (cardView.findViewById<View>(R.id.mpProgressBar).visibility != View.VISIBLE) {
+            if (cardView.findViewById<View>(R.id.mbProgressBar).visibility != View.VISIBLE) {
                 showSpinnerAndHideDelayed(cardView)
             }
             metaBallMenu.toggleMenu()
@@ -101,7 +121,7 @@ class MainActivityDemo : AppCompatActivity() {
      * Shows a MetaBall Progressbar and hides it delayed
      */
     private fun showSpinnerAndHideDelayed(cardView: View) {
-        val progressBar = cardView.findViewById<MBProgressBar>(R.id.mpProgressBar)
+        val progressBar = cardView.findViewById<MBProgressBar>(R.id.mbProgressBar)
         progressBar.visibility = View.VISIBLE
         val progressBarWeakRef = WeakReference<MBProgressBar>(progressBar)
 
@@ -109,18 +129,44 @@ class MainActivityDemo : AppCompatActivity() {
             delay(4800, TimeUnit.MILLISECONDS)
             progressBarWeakRef.get()?.stopAnimated()
         }
-        runningJobs.add(Pair(job, progressBarWeakRef))
-    }
 
-    //Cancel the jobs
-    private var runningJobs = ArrayList<Pair<Job, WeakReference<MBProgressBar>>>()
+        //The View holds on to the coroutine so that we can cancel it in onPause :)
+        cardView.setTag(R.string.job_coroutine_key_id, job)
+    }
 
     override fun onPause() {
         super.onPause()
-        for (job in runningJobs) {
-            job.first.cancel()
-            job.second.get()?.visibility = View.GONE
+
+        for (i in 0 until scrollViewRoot.childCount) {
+            val cardView = scrollViewRoot.getChildAt(i)
+            val job = cardView.getTag(R.string.job_coroutine_key_id)
+            if (job != null && job is Job) {
+                job.cancel()
+                cardView.findViewById<MBProgressBar>(R.id.mbProgressBar).visibility= View.GONE
+            }
         }
     }
 
+    inner class ImagePagerAdapter : PagerAdapter() {
+        val images = intArrayOf(R.drawable.img_pastel_yellow, R.drawable.img_pastel_green, R.drawable.img_pastel_pink, R.drawable.img_pastel_blue, R.drawable.img_pastel_beach)
+        override fun isViewFromObject(view: View, obj: Any): Boolean {
+            return view == obj
+        }
+
+        override fun instantiateItem(container: ViewGroup, position: Int): Any {
+            val imageView = ImageView(container.context)
+            imageView.setImageResource(images[position])
+            imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+            container.addView(imageView)
+            return imageView
+        }
+
+        override fun destroyItem(container: ViewGroup, position: Int, view: Any) {
+            container.removeView(view as View)
+        }
+
+        override fun getCount(): Int {
+            return images.size
+        }
+    }
 }

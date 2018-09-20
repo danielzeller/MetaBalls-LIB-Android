@@ -49,4 +49,9 @@
         <item>The menu is using default animation parameters.</item>
         <item>See the CircularMenu in demo_card5.xml for more info.</item>
     </string-array>
+
+    <string name="footer_text"> Come say hi over at <a href="https://danielzeller.no">danielzeller.no</a> or checkout some other fun projects on my GitHub page: https://github.com/danielzeller</string>
+    <string name="footer_heading_heading">Thanks for having a look</string>
+    <string name="viewpager_heading">Domonstration of Page Indicator for a ViewPager</string>
+    <string name="job_coroutine_key_id">job_coroutine_kei_id</string>
 </resources>

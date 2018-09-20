@@ -57,7 +57,7 @@
         app:position_gravity="top_left" />
 
     <no.danielzeller.metaballslib.progressbar.MBProgressBar
-        android:id="@+id/mpProgressBar"
+        android:id="@+id/mbProgressBar"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:visibility="gone"

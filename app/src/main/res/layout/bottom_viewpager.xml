@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/bottomViewPagerHeading"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textAppearance="@style/H1"
+        android:text="@string/viewpager_heading"
+        android:layout_marginHorizontal="@dimen/demo_card_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <no.danielzeller.metaballslib.MetaBallPageIndicator
+        android:id="@+id/metaBallPageIndicator"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/demo_card_padding"
+        android:background="@color/metal"
+        app:layout_constraintTop_toBottomOf="@id/bottomViewPagerHeading"
+
+
+        app:dot_colors_override_array_id="@array/viepager_page_indicator_colors"
+        app:selected_dot_color="@color/white"
+        app:dot_size="30dp"
+        app:dot_margin="10dp"
+        app:selected_indicator_is_drop_drawable="true"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/bottomViewPager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/metaBallPageIndicator"
+        app:layout_constraintDimensionRatio="H,1080:1200"/>
+
+    <no.danielzeller.metaballslib.MetaBallPageIndicator
+        android:id="@+id/metaBallPageIndicatorSmall"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/bottomViewPager"
+        android:alpha="0.8"
+
+
+        app:un_selected_dot_color="@color/metal" />
+
+
+    <LinearLayout
+        app:layout_constraintTop_toBottomOf="@id/bottomViewPager"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="vertical"
+        android:padding="@dimen/demo_card_padding"
+        android:background="@color/metal">
+
+        <TextView
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/H1_light"
+            android:text="@string/footer_heading_heading"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="16dp"
+            android:gravity="center"
+            android:textAppearance="@style/Body_light"
+            android:text="@string/footer_text"
+            android:autoLink="all"/>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

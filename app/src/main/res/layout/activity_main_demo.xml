@@ -7,6 +7,7 @@
     tools:context=".MainActivityDemo">
 
     <LinearLayout
+        android:id="@+id/scrollViewRoot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -38,6 +39,11 @@
         <include
             android:id="@+id/demo_card5"
             layout="@layout/demo_card5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <include
+            android:id="@+id/bottomViewPagerLayout"
+            layout="@layout/bottom_viewpager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

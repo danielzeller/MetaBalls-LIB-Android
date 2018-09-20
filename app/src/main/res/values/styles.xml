@@ -11,20 +11,31 @@
     <style name="RobotoSlabViewStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/roboto_slab_regular</item>
     </style>
+
     <style name="H1" parent="RobotoSlabViewStyle">
         <item name="android:fontFamily">@font/roboto_slab_regular</item>
         <item name="android:textSize">@dimen/h1_textsize</item>
         <item name="android:textColor">@color/metal</item>
     </style>
-    <style name="Caption"  parent="android:Widget.TextView">
+
+    <style name="H1_light" parent="H1">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Caption" parent="android:Widget.TextView">
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColorLink">@color/pastel_blue</item>
         <item name="android:textSize">@dimen/caption</item>
         <item name="android:textColor">@color/metal</item>
     </style>
-    <style name="BulletList"  parent="Caption">
+
+    <style name="Body" parent="Caption">
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">@dimen/bullet_list</item>
+    </style>
+
+    <style name="Body_light" parent="Body">
+        <item name="android:textColor">@color/white</item>
     </style>
 </resources>

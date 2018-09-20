@@ -233,8 +233,8 @@ class MetaBallPageIndicator : FrameLayout, ViewPager.OnPageChangeListener, ViewP
         }
 
         override fun draw(canvas: Canvas) {
-            val selectedDotXCoord = dotPositions[currentPageIndex] + positionOffset * distanceBetweenDots
             if (dotsCount != 0) {
+                val selectedDotXCoord = dotPositions[currentPageIndex] + positionOffset * distanceBetweenDots
                 for (i in 0 until dotsCount) {
                     drawDotScaled(canvas, dotPositions[i], getUnselectedColor(i), selectedDotXCoord)
                 }

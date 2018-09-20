@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@string/unsplash_mage_content_description"
-            android:src="@drawable/img_pastel_sand" />
+            android:src="@drawable/img_pastel_beach" />
 
     </FrameLayout>
 
@@ -57,7 +57,7 @@
         app:position_gravity="center" />
 
     <no.danielzeller.metaballslib.progressbar.MBProgressBar
-        android:id="@+id/mpProgressBar"
+        android:id="@+id/mbProgressBar"
         android:layout_width="120dp"
         android:layout_height="110dp"
         android:visibility="gone"

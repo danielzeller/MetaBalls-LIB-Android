@@ -72,4 +72,12 @@
         <item>@color/pastel_pink</item>
         <item>@color/pastel_blue</item>
     </array>
+
+    <array name="viepager_page_indicator_colors">
+        <item>@color/pastel_yellow</item>
+        <item>@color/pastel_green</item>
+        <item>@color/pastel_pink</item>
+        <item>@color/pastel_blue</item>
+        <item>@color/pastel_beach</item>
+    </array>
 </resources>

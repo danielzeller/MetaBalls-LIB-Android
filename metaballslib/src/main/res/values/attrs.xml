@@ -32,7 +32,7 @@
         </attr>
     </declare-styleable>
 
-    <!-- MPProgressBar -->
+    <!-- MBProgressBar -->
     <declare-styleable name="MetaBallsProgressBar">
         <attr name="colors_array_id" format="reference" />
         <attr name="drop_drawable" format="boolean" />

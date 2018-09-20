@@ -57,8 +57,9 @@
         app:main_button_color = "@color/metal"
         app:main_button_icon_color = "@color/white"
         />
+
     <no.danielzeller.metaballslib.progressbar.MBProgressBar
-        android:id="@+id/mpProgressBar"
+        android:id="@+id/mbProgressBar"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:visibility="gone"
