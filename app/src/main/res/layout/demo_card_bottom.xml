@@ -26,7 +26,7 @@
         android:id="@+id/headingTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/demo_card_padding"
+        android:layout_marginTop="16dp"
         android:text="TextView"
         android:textAppearance="@style/H1"
         app:layout_constraintEnd_toEndOf="parent"

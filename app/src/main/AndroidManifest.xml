@@ -23,7 +23,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivityDemo">
+        <activity
+            android:name=".MainActivityDemo"
+            android:colorMode="wideColorGamut">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

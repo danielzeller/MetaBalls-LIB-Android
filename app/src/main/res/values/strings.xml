@@ -3,8 +3,8 @@
     <string name="pastel_image1_description">Unsplash image by @dooley</string>
     <string name="unaplsh_icon_descrition">Unaplsh icon</string>
 
-    <string name="demo_card_link">Photo by <a href="https://unsplash.com/@nativemello">ian dooley</a> on Unsplash</string>
-    <string-array name="demo_card_1">
+    <string name="demo_card_link1_and5">Photo by <a href="https://unsplash.com/@nativemello">ian dooley</a> on Unsplash</string>
+    <string-array name="demo_card_1_description">
         <item>Circular menu with position gravity set to bottom right</item>
 
         <item>Click a menu item to show the circular Progressbar.</item>
@@ -13,7 +13,7 @@
     </string-array>
 
     <string name="demo_card_link2">Photo by <a href="https://unsplash.com/@icons8">Icons8 team</a> on Unsplash</string>
-    <string-array name="demo_card_2">
+    <string-array name="demo_card_2_description">
         <item>Showing a Circular menu with position gravity set to center</item>
 
         <item>Click a menu item to show the Long Path Progressbar with a colors array defined.</item>
@@ -23,7 +23,7 @@
     </string-array>
 
     <string name="demo_card_link3">Photo by <a href="https://unsplash.com/@rawpixel">rawpixel</a> on Unsplash</string>
-    <string-array name="demo_card_3">
+    <string-array name="demo_card_3_description">
         <item>Directional menu with position gravity set to bottom right and layout direction to horizontal</item>
 
         <item>Click a menu item to show the jumping dot Progressbar with a colors array defined.</item>
@@ -32,7 +32,7 @@
     </string-array>
 
     <string name="demo_card_link4">Photo by <a href="https://unsplash.com/@rawpixel">rawpixel</a> on Unsplash</string>
-    <string-array name="demo_card_4">
+    <string-array name="demo_card_4_description">
         <item>Directional menu with position gravity set to top left and layout direction to vertical</item>
 
         <item>Click a menu item to show the blob Progressbar.</item>
@@ -41,7 +41,7 @@
     </string-array>
 
     <string name="demo_card_link5">Photo by <a href="https://unsplash.com/@rubavi78">Rubén Bagüés</a> on Unsplash</string>
-    <string-array name="demo_card_5">
+    <string-array name="demo_card_5_description">
         <item>Directional menu with position gravity set to center and layout direction to horizontal</item>
 
         <item>Click a menu item to show the sideways eight Progressbar.</item>

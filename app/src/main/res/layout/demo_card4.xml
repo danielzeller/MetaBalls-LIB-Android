@@ -3,7 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintDimensionRatio="H,360:497"
+        android:scaleType="fitXY"
+        android:src="@drawable/bg_pastel_blue"/>
     <FrameLayout
         android:id="@+id/imageFrameLayout"
         android:layout_width="0dp"
@@ -16,7 +24,8 @@
         app:layout_constraintDimensionRatio="H,1080:1620"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:outlineSpotShadowColor="@color/pastel_blue">
 
         <ImageView
             android:layout_width="match_parent"
@@ -44,7 +53,7 @@
         app:position_gravity="top_left" />
 
     <no.danielzeller.metaballslib.progressbar.MBProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/mpProgressBar"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:visibility="gone"
@@ -58,6 +67,7 @@
         app:layout_constraintVertical_bias="0.96"
         app:progressbar_type="blobs" />
     <include
+        android:id="@+id/bottomCard"
         layout="@layout/demo_card_bottom"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

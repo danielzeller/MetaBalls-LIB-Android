@@ -18,13 +18,13 @@
     </style>
     <style name="Caption"  parent="android:Widget.TextView">
         <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textStyle">normal</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:textColorLink">@color/pastel_blue</item>
         <item name="android:textSize">@dimen/caption</item>
         <item name="android:textColor">@color/metal</item>
     </style>
     <style name="BulletList"  parent="Caption">
-        <item name="android:textStyle">bold</item>
+        <item name="android:textStyle">normal</item>
         <item name="android:textSize">@dimen/bullet_list</item>
     </style>
 </resources>

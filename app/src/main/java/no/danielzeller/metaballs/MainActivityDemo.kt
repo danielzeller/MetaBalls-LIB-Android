@@ -2,10 +2,8 @@ package no.danielzeller.metaballs
 
 import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.content.res.AppCompatResources
 import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,32 +11,41 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.bullet_text.view.*
-import kotlinx.android.synthetic.main.demo_card1.view.*
 import kotlinx.android.synthetic.main.demo_card_bottom.view.*
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.delay
+import kotlinx.coroutines.experimental.launch
 import no.danielzeller.metaballslib.menu.MetaBallMenuBase
+import no.danielzeller.metaballslib.progressbar.MBProgressBar
+import java.lang.ref.WeakReference
+import java.util.concurrent.TimeUnit
 
 class MainActivityDemo : AppCompatActivity() {
 
     private val LOG_TAG = "METABALL_DEMO"
+
     val menuIcons = intArrayOf(R.drawable.facebook_animation, R.drawable.instagram_animation,
             R.drawable.twitter_animation, R.drawable.linkedin_animation, R.drawable.dribble_animation,
             R.drawable.google_animation, R.drawable.vimeo_animation, R.drawable.behance_animation)
 
-    private val handler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_demo)
 
+        val card1MetaBallMenuAdapter = createMetaBallMenuAdapter(3, R.array.card_menu_single_colors)
+        val card2MetaBallMenuAdapter = createMetaBallMenuAdapter(8, R.array.card2_menu_colors)
+        val card3MetaBallMenuAdapter = createMetaBallMenuAdapter(3, R.array.card3_menu_colors)
+        val card4And5MetaBallMenuAdapter = createMetaBallMenuAdapter(4, R.array.card_menu_single_colors)
 
-        setupCardView(R.id.demo_card1, createAdapter(3, R.array.card_menu_single_colors), R.color.pastel_yellow, R.array.demo_card_1, R.string.demo_card_link)
-        setupCardView(R.id.demo_card2, createAdapter(8, R.array.card2_menu_colors), R.color.pastel_green, R.array.demo_card_2, R.string.demo_card_link2)
-        setupCardView(R.id.demo_card3, createAdapter(3, R.array.card3_menu_colors), R.color.pastel_pink, R.array.demo_card_3, R.string.demo_card_link3)
-        setupCardView(R.id.demo_card4, createAdapter(4, R.array.card_menu_single_colors), R.color.pastel_blue, R.array.demo_card_4, R.string.demo_card_link4)
-        setupCardView(R.id.demo_card5, createAdapter(4, R.array.card_menu_single_colors), R.color.pastel_beach, R.array.demo_card_1, R.string.demo_card_link)
+        setupCardView(R.id.demo_card1, card1MetaBallMenuAdapter, R.color.pastel_yellow, R.array.demo_card_1_description, R.string.demo_card_link1_and5)
+        setupCardView(R.id.demo_card2, card2MetaBallMenuAdapter, R.color.pastel_green, R.array.demo_card_2_description, R.string.demo_card_link2)
+        setupCardView(R.id.demo_card3, card3MetaBallMenuAdapter, R.color.pastel_pink, R.array.demo_card_3_description, R.string.demo_card_link3)
+        setupCardView(R.id.demo_card4, card4And5MetaBallMenuAdapter, R.color.pastel_blue, R.array.demo_card_4_description, R.string.demo_card_link4)
+        setupCardView(R.id.demo_card5, card4And5MetaBallMenuAdapter, R.color.pastel_beach, R.array.demo_card_5_description, R.string.demo_card_link1_and5)
     }
 
-    private fun createAdapter(count: Int, colorArrayId: Int): MetaBallMenuAdapter {
+    private fun createMetaBallMenuAdapter(count: Int, colorArrayId: Int): MetaBallMenuAdapter {
         val menuItems = ArrayList<MenuItem>()
         val colors = resources.getIntArray(colorArrayId)
         for (i in 0 until count) {
@@ -48,48 +55,46 @@ class MainActivityDemo : AppCompatActivity() {
     }
 
     private fun setupCardView(cardId: Int, adapter: MetaBallMenuAdapter, color: Int, stringArrayId: Int, demo_card_link: Int) {
+
         val cardView = findViewById<View>(cardId)
-        cardView.unsplashIcon.background = AppCompatResources.getDrawable(this, R.drawable.ic_oval)!!.mutate()
+
+        //Setup the metaball menu with an adapter and click listener. Showing a spinner when a menu item is clicked.
+        val metaBallMenu = cardView.findViewById<MetaBallMenuBase>(R.id.metaBallMenu)
+        metaBallMenu.adapter = adapter
+        metaBallMenu.onItemSelectedListener = { index ->
+            Log.i(LOG_TAG, "Clicked menu item: " + index)
+            if (cardView.findViewById<View>(R.id.mpProgressBar).visibility != View.VISIBLE) {
+                showSpinnerAndHideDelayed(cardView)
+            }
+            metaBallMenu.toggleMenu()
+        }
+
+        // Setup the rest of the View with description and colors
         cardView.unsplashIcon.background.setTint(ContextCompat.getColor(this, color))
 
-        val strings = resources.getStringArray(stringArrayId)
-        cardView.headingTextView.text = strings[0]
+        val descriptionText = resources.getStringArray(stringArrayId)
+        cardView.headingTextView.text = descriptionText[0]
 
         cardView.captionTextView.setText(demo_card_link)
         cardView.captionTextView.setMovementMethod(LinkMovementMethod.getInstance());
 
 
-        for (i in 1 until strings.size) {
+        for (i in 1 until descriptionText.size) {
             val bulletView = LayoutInflater.from(this).inflate(R.layout.bullet_text, null, false)
-            bulletView.bulletText.text = strings[i]
+            bulletView.bulletText.text = descriptionText[i]
             cardView.bulletListContainer.addView(bulletView, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
         }
-
-        val metaBallMenu = cardView.findViewById<MetaBallMenuBase>(R.id.metaBallMenu)
-        metaBallMenu.adapter = adapter
-        metaBallMenu.onItemSelectedListener = { index ->
-            Log.i(LOG_TAG, "Clicked menu item: " + index)
-            if (cardView.progressBar.visibility != View.VISIBLE) {
-                showSpinner(cardView)
-            }
-            metaBallMenu.toggleMenu()
-        }
     }
 
 
-    private fun showSpinner(cardView: View) {
-        cardView.progressBar.visibility = View.VISIBLE
+    private fun showSpinnerAndHideDelayed(cardView: View) {
+        val progressBar = cardView.findViewById<MBProgressBar>(R.id.mpProgressBar)
+        progressBar.visibility = View.VISIBLE
+        val progreebar = WeakReference<MBProgressBar>(progressBar)
 
-        //Pretending we do some work here and hiding the progressbar after a sek delay
-        handler.postDelayed(hideDelayedRunnable(cardView), 4800)
-
-    }
-
-    fun hideDelayedRunnable(cardView: View): Runnable {
-        return object : Runnable {
-            override fun run() {
-                cardView.progressBar.stopAnimated()
-            }
+        launch(UI) {
+            delay(4800, TimeUnit.MILLISECONDS)
+            progreebar.get()?.stopAnimated()
         }
     }
 }
