@@ -2,13 +2,12 @@ package no.danielzeller.metaballslib.menu
 
 import android.animation.*
 import android.content.Context
-import android.graphics.Color
-import android.graphics.ColorMatrix
-import android.graphics.ColorMatrixColorFilter
-import android.graphics.Paint
+import android.graphics.*
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.graphics.drawable.Drawable
+import android.opengl.GLSurfaceView
 import android.util.AttributeSet
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -17,6 +16,7 @@ import android.view.animation.LinearInterpolator
 import android.view.animation.PathInterpolator
 import android.widget.FrameLayout
 import android.widget.ImageView
+import no.agens.bbctransitions.opengl.renderers.MetaBallRenderer
 import no.danielzeller.metaballslib.R
 
 
@@ -207,7 +207,7 @@ abstract class MetaBallMenuBase : FrameLayout {
     protected fun setupBaseViews(context: Context) {
         metaBallsContainerFrameLayout = FrameLayout(context)
         addView(metaBallsContainerFrameLayout, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
-        metaBallsContainerFrameLayout.setLayerType(View.LAYER_TYPE_HARDWARE, createMetaBallsPaint())
+        //  metaBallsContainerFrameLayout.setLayerType(View.LAYER_TYPE_HARDWARE, createMetaBallsPaint())
     }
 
     private fun createMetaBallsPaint(): Paint {
@@ -250,7 +250,30 @@ abstract class MetaBallMenuBase : FrameLayout {
         }
         menuButton = createMainButton()
         frameLayout.addView(menuButton, mainButtonLayoutParams)
+        glView = GLSurfaceView(context)
+
+        glView.setEGLContextClientVersion(2)
+        glView.setBackgroundColor(Color.TRANSPARENT)
+        glView.setZOrderOnTop(true);
+        glView.getHolder().setFormat(PixelFormat.RGBA_8888);
+        glView.setEGLConfigChooser(8, 8, 8, 8, 16, 0);
+        renderer = MetaBallRenderer(context)
+        glView.setRenderer(renderer)
+        frameLayout.addView(glView, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
+
     }
+
+    override fun dispatchDraw(canvas: Canvas) {
+//        super.dispatchDraw(canvas)
+        val glCanvas = renderer.surfaceTexture.beginDraw()
+        glCanvas?.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
+        super.dispatchDraw(glCanvas)
+        renderer.surfaceTexture.endDraw()
+
+    }
+
+    lateinit var glView: GLSurfaceView
+    lateinit var renderer: MetaBallRenderer
 
     private fun createMainButton(): ImageView {
         val menuButton = DecreasedTouchImageView(context, resources.getDimension(R.dimen.main_button_touch_area_size))
@@ -313,7 +336,7 @@ abstract class MetaBallMenuBase : FrameLayout {
     private fun closeMenu() {
         stopAllRunningAnimations()
         var startDelay = 0L
-        for (i in metaBallsContainerFrameLayout.childCount - 2 downTo 0) {
+        for (i in metaBallsContainerFrameLayout.childCount - 3 downTo 0) {
 
             val ballView = metaBallsContainerFrameLayout.getChildAt(i)
             val positionAnim = animatePosition(ballView, 0f, 0f, startDelay, closeInterpolatorAnimator, closeAnimationDuration)
@@ -322,7 +345,7 @@ abstract class MetaBallMenuBase : FrameLayout {
             fadeIcon((ballView as ImageView).drawable, startDelay, (closeAnimationDuration * 0.16f).toLong(), 0, false)
             startDelay += delayBetweenItemsAnimation
             if (i == 0) {
-                positionAnim.addListener(object: AnimatorListenerAdapter() {
+                positionAnim.addListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator?) {
                         super.onAnimationEnd(animation)
                         onMenuClosed?.invoke()
@@ -331,6 +354,19 @@ abstract class MetaBallMenuBase : FrameLayout {
             }
         }
         animateScale(menuButton as View, 1f, 300, 0)
+
+        updateChache(startDelay)
+    }
+
+    fun updateChache(startDelay: Long) {
+        val updateChache = ValueAnimator.ofFloat(0f, 0f).setDuration(startDelay + closeAnimationDuration)
+        updateChache.addUpdateListener {
+            val glCanvas = renderer.surfaceTexture.beginDraw()
+            glCanvas?.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
+            super.dispatchDraw(glCanvas)
+            renderer.surfaceTexture.endDraw()
+        }
+        updateChache.start()
     }
 
     protected fun fadeIcon(drawable: Drawable, startDelay: Long, duration: Long, toAlpha: Int, animateDrawable: Boolean) {

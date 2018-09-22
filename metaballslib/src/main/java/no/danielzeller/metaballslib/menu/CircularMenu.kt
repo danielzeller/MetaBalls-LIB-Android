@@ -45,7 +45,7 @@ class CircularMenu : MetaBallMenuBase {
         val startAngle = getStartAngle()
         var startDelay = 0L
 
-        for (i in 0 until metaBallsContainerFrameLayout.childCount - 1) {
+        for (i in 0 until metaBallsContainerFrameLayout.childCount - 2) {
             val angleDeg = startAngle + i.toFloat() * angleBetweenMenuItems
             val angleRad = (angleDeg * Math.PI / 180f).toFloat()
             val x = radius * Math.cos(angleRad.toDouble()).toFloat()
@@ -59,6 +59,7 @@ class CircularMenu : MetaBallMenuBase {
             startDelay += delayBetweenItemsAnimation
             ballView.isEnabled = true
         }
+        updateChache(startDelay)
     }
 
     private fun getStartAngle(): Float {
