@@ -1,10 +1,7 @@
 package no.danielzeller.metaballslib.menu
 
 import android.content.Context
-import android.graphics.Canvas
 import android.util.AttributeSet
-import android.util.Log
-import android.view.ViewTreeObserver
 import android.widget.ImageView
 import no.danielzeller.metaballslib.R
 
@@ -69,12 +66,12 @@ class CircularMenu : MetaBallMenuBase {
     }
 
     private fun getStartAngle(): Float {
-        when (positionGravity) {
-            PositionGravity.BOTTOM_LEFT -> return 270f
-            PositionGravity.BOTTOM_RIGHT -> return 180f
-            PositionGravity.TOP_RIGHT -> return 90f
-            PositionGravity.TOP_LEFT -> return 0f
-            else -> return 270f
+        return when (positionGravity) {
+            PositionGravity.BOTTOM_LEFT -> 270f
+            PositionGravity.BOTTOM_RIGHT -> 180f
+            PositionGravity.TOP_RIGHT -> 90f
+            PositionGravity.TOP_LEFT -> 0f
+            else -> 270f
         }
     }
 }

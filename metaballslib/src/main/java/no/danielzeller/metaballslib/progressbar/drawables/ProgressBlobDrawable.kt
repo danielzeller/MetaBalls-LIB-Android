@@ -8,7 +8,6 @@ import android.graphics.ColorFilter
 import android.graphics.PixelFormat
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
-import android.os.Handler
 import android.view.View
 import android.view.animation.PathInterpolator
 import no.danielzeller.metaballslib.progressbar.BrownianMotion
@@ -52,7 +51,7 @@ class ProgressBlobDrawable(val metaBall: Drawable, val tinColors: IntArray, val 
         animateBallSize(ballSize, 0, 700, spinner, spinnerHiddenListener)
     }
 
-    fun animateBallSize(from: Int, to: Int, duration: Long, spinner: View?, spinnerHiddenListener: (() -> Unit)?) {
+    private fun animateBallSize(from: Int, to: Int, duration: Long, spinner: View?, spinnerHiddenListener: (() -> Unit)?) {
         sizeAnim?.cancel()
         sizeAnim = ValueAnimator.ofInt(from, to).setDuration(duration)
         sizeAnim?.interpolator = PathInterpolator(.88f, 0f, .15f, 1f)
@@ -90,8 +89,6 @@ class ProgressBlobDrawable(val metaBall: Drawable, val tinColors: IntArray, val 
         }
         invalidateSelf()
     }
-
-    private val handler = Handler()
 
     override fun onBoundsChange(bounds: Rect) {
         super.onBoundsChange(bounds)

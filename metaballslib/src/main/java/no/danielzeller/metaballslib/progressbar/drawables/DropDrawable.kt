@@ -14,14 +14,14 @@ class DropDrawable(val metaDrawable: Drawable, val idDropEnabled: Boolean) : Dra
 
     var x = 0f
     var y = 0f
-    var x1 = 0f
-    var y1 = 0f
-    var x2 = 0f
-    var y2 = 0f
-    var x3 = 0f
-    var y3 = 0f
+    private var x1 = 0f
+    private  var y1 = 0f
+    private  var x2 = 0f
+    private  var y2 = 0f
+    private  var x3 = 0f
+    private  var y3 = 0f
     var ballSize = 0
-    val frameRate = FrameRateCounter()
+    private val frameRate = FrameRateCounter()
     var easeSpeed = 25f
     var easeSpeedLast = 35f
     var pathPercent: Float = 0f
@@ -47,7 +47,7 @@ class DropDrawable(val metaDrawable: Drawable, val idDropEnabled: Boolean) : Dra
         }
     }
 
-    fun drawBall(canvas: Canvas, xPos: Float, yPos: Float, scale: Float) {
+    private fun drawBall(canvas: Canvas, xPos: Float, yPos: Float, scale: Float) {
         val count = canvas.save()
         canvas.translate(xPos, yPos)
         setDrawableBounds(scale)

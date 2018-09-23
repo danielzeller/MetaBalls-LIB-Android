@@ -61,8 +61,7 @@ class DirectionalMenu : MetaBallMenuBase {
         var startDelay = 0L
         var marginIncrease = 1
         for (i in 0 until metaBallsContainerFrameLayout.childCount - 1) {
-            val angleDeg = startAngle
-            val angleRad = (angleDeg * Math.PI / 180f).toFloat()
+            val angleRad = (startAngle * Math.PI / 180f).toFloat()
 
             //Used when Position_Gravity = CENTER
             val layoutDirection = isNegativeDirection(i)

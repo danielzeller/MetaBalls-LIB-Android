@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.graphics.*
 import android.graphics.drawable.Drawable
-import android.os.Handler
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.Interpolator
@@ -108,7 +107,7 @@ class ProgressPathDrawable(val metaBallGradient: Drawable, tinColors: IntArray, 
         sizeAnim?.start()
     }
 
-    fun animateDrawable(i: Int) {
+    private fun animateDrawable(i: Int) {
         val anim = ValueAnimator.ofFloat(0f, 1f).setDuration(animationDuration)
         anim.startDelay = (getStartDelay() * i)
         anim.interpolator = interpolator
@@ -120,7 +119,7 @@ class ProgressPathDrawable(val metaBallGradient: Drawable, tinColors: IntArray, 
         anim.start()
     }
 
-    fun getStartDelay(): Long {
+    private fun getStartDelay(): Long {
         return if (isDropDrawable)
             170
         else
@@ -153,7 +152,7 @@ class ProgressPathDrawable(val metaBallGradient: Drawable, tinColors: IntArray, 
         startAnimations()
     }
 
-    fun createPath() {
+    private fun createPath() {
         val scale = bounds.width() / 100f
         val scaleY = bounds.height() / 100f
         val scaleMatrix = Matrix()

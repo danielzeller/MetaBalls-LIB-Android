@@ -9,7 +9,7 @@ import android.view.MotionEvent
  * match the clipped size, we use this class with a fixed(smaller) touch area.
  */
 
-class DecreasedTouchImageView(context: Context, val touchAreaSize: Float) : android.support.v7.widget.AppCompatImageView(context) {
+class DecreasedTouchImageView(context: Context, private val touchAreaSize: Float) : android.support.v7.widget.AppCompatImageView(context) {
 
     private val tempRect = Rect()
 
@@ -21,7 +21,7 @@ class DecreasedTouchImageView(context: Context, val touchAreaSize: Float) : andr
         }
     }
 
-    fun getDecreasedHitRect(): Rect {
+    private fun getDecreasedHitRect(): Rect {
         val widthOffset = (width - touchAreaSize) / 2f
         val heightOffset = (height - touchAreaSize) / 2f
 

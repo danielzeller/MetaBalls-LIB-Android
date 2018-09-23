@@ -1,18 +1,15 @@
-package no.opengl.danielzeller.opengltesting.opengl.transforms
+package no.danielzeller.compbat
 
+
+import android.opengl.GLES20.*
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
 
-
-import android.opengl.GLES20.GL_FLOAT
-import android.opengl.GLES20.glEnableVertexAttribArray
-import android.opengl.GLES20.glVertexAttribPointer
-
 class VertexArray(vertexData: FloatArray) {
 
     private val floatBuffer: FloatBuffer
-    val BYTES_PER_FLOAT = 4
+    private val BYTES_PER_FLOAT = 4
 
     init {
         floatBuffer = ByteBuffer

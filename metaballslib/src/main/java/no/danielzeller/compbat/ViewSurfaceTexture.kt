@@ -1,4 +1,4 @@
-package no.agens.bbctransitions.opengl.gameobject
+package no.danielzeller.compbat
 
 import android.content.Context
 import android.graphics.Canvas
@@ -6,22 +6,17 @@ import android.graphics.SurfaceTexture
 import android.opengl.GLES11Ext.GL_TEXTURE_EXTERNAL_OES
 import android.opengl.GLES20.*
 import android.opengl.GLUtils
-import android.os.Build
-import android.os.Handler
 import android.util.Log
 import android.view.Surface
-import no.danielzeller.compbat.SnapshotTexture
 
 class ViewSurfaceTexture : SnapshotTexture() {
-    var surfaceTexture: SurfaceTexture? = null
-    private var surface: Surface? = null
-
-
 
     var textureWidth: Int = 0
     var textureHeight: Int = 0
 
     private var isReady: Boolean = false
+    private var surfaceTexture: SurfaceTexture? = null
+    private var surface: Surface? = null
 
     override fun createSurface(width: Int, height: Int, context: Context) {
         if (textureWidth == 0) {
@@ -36,7 +31,6 @@ class ViewSurfaceTexture : SnapshotTexture() {
             }
         }
     }
-
 
     override fun updateTexture() {
         surfaceTexture?.updateTexImage()
@@ -57,14 +51,9 @@ class ViewSurfaceTexture : SnapshotTexture() {
 
         if (surface != null) {
             try {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     return surface?.lockHardwareCanvas()
-                } else {
-                    return surface?.lockCanvas(null)
-                }
-
             } catch (e: Exception) {
-                Log.e("GL_ERROR", "error while rendering view to gl: " + e)
+                Log.e("GL_ERROR", "error while rendering view to gl: $e")
             }
         }
         return null
@@ -95,9 +84,8 @@ class ViewSurfaceTexture : SnapshotTexture() {
         return textures[0]
     }
 
-
-    fun checkGlError(op: String) {
-        var error: Int = glGetError()
+    private fun checkGlError(op: String) {
+        val error: Int = glGetError()
         if (error != GL_NO_ERROR) {
             Log.e("GL_ERROR", op + ": glError " + GLUtils.getEGLErrorString(error))
         }

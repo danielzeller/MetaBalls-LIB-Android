@@ -4,7 +4,6 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.Drawable
-import android.os.Handler
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
 import android.util.AttributeSet
@@ -365,9 +364,6 @@ class MetaBallPageIndicator : CompBatMBLayout, ViewPager.OnPageChangeListener, V
             }
             return -1
         }
-
-        private val handler = Handler()
-
     }
 }
 

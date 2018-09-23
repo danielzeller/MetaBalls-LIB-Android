@@ -1,15 +1,11 @@
-package no.opengl.danielzeller.opengltesting.opengl.meshes
-
-import no.opengl.danielzeller.opengltesting.opengl.transforms.VertexArray
-import no.opengl.danielzeller.opengltesting.opengl.shaderprograms.ShaderProgram
+package no.danielzeller.compbat
 
 import android.opengl.GLES20.GL_TRIANGLE_FAN
 import android.opengl.GLES20.glDrawArrays
 
 class SpriteMesh {
 
-    var vertexArray: VertexArray
-    var vertexArrayScreenSpace: VertexArray? = null
+    private var vertexArray: VertexArray
 
     init {
         vertexArray = VertexArray(VERTEX_DATA)
@@ -36,9 +32,9 @@ class SpriteMesh {
 
     companion object {
 
-        val BYTES_PER_FLOAT = 4
-        private val POSITION_COMPONENT_COUNT = 2
-        private val TEXTURE_COORDINATES_COMPONENT_COUNT = 2
+        private const val BYTES_PER_FLOAT = 4
+        private const val POSITION_COMPONENT_COUNT = 2
+        private const val TEXTURE_COORDINATES_COMPONENT_COUNT = 2
         private val STRIDE = (POSITION_COMPONENT_COUNT + TEXTURE_COORDINATES_COMPONENT_COUNT) * BYTES_PER_FLOAT
 
 

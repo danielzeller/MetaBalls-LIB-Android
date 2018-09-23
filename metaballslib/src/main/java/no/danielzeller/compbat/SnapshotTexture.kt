@@ -9,8 +9,8 @@ import android.graphics.Canvas
 open class SnapshotTexture {
     var surfaceTextureID: Int = 0
 
-    open fun getTextrueID():Int{
-        return surfaceTextureID;
+    open fun getTextureID():Int{
+        return surfaceTextureID
     }
     open fun createSurface(width: Int, height: Int, context: Context) {}
 
@@ -27,6 +27,4 @@ open class SnapshotTexture {
     open fun beginDraw(): Canvas? {
         return null
     }
-
-
 }

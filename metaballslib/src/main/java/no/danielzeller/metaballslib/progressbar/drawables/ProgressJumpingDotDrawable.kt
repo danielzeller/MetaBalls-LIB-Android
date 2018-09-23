@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.graphics.*
 import android.graphics.drawable.Drawable
-import android.os.Handler
 import android.view.View
 import android.view.animation.PathInterpolator
 
@@ -84,7 +83,7 @@ class ProgressJumpingDotDrawable(val metaBall: Drawable, val tinColors: IntArray
         animateBallSize(ballSize, 0, 700, spinner, spinnerHiddenListener)
     }
 
-    fun animateBallSize(from: Int, to: Int, duration: Long, spinner: View?, spinnerHiddenListener: (() -> Unit)?) {
+    private fun animateBallSize(from: Int, to: Int, duration: Long, spinner: View?, spinnerHiddenListener: (() -> Unit)?) {
         sizeAnim?.cancel()
         sizeAnim = ValueAnimator.ofInt(from, to).setDuration(duration)
         sizeAnim?.interpolator = PathInterpolator(.88f, 0f, .15f, 1f)
@@ -104,7 +103,7 @@ class ProgressJumpingDotDrawable(val metaBall: Drawable, val tinColors: IntArray
         sizeAnim?.start()
     }
 
-    fun getDropScale(): Float {
+    private fun getDropScale(): Float {
         if (isDropDrawable) {
             return 0.75f
         }
@@ -128,7 +127,7 @@ class ProgressJumpingDotDrawable(val metaBall: Drawable, val tinColors: IntArray
     }
 
 
-    fun drawDot(xPos: Float, yPos: Float, tintIndex: Int, canvas: Canvas) {
+    private fun drawDot(xPos: Float, yPos: Float, tintIndex: Int, canvas: Canvas) {
         val count = canvas.save()
         canvas.translate(xPos, yPos)
         metaBall.setTint(tinColors[tintIndex])
@@ -144,7 +143,7 @@ class ProgressJumpingDotDrawable(val metaBall: Drawable, val tinColors: IntArray
         startAnimations()
     }
 
-    fun createPath() {
+    private fun createPath() {
         path.reset()
         pathStartY = (bounds.height() - ballSize).toFloat()
 

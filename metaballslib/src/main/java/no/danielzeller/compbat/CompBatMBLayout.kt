@@ -14,7 +14,7 @@ open class CompBatMBLayout : FrameLayout {
     protected lateinit var textureView: TextureView
     protected lateinit var textureViewRenderer: TextureViewRenderer
 
-    constructor(context: Context) : super(context) {}
+    constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         textureViewRenderer = TextureViewRenderer(context)

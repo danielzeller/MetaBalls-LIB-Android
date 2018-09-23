@@ -1,4 +1,4 @@
-package no.opengl.danielzeller.opengltesting.opengl.util
+package no.danielzeller.compbat
 
 import android.content.Context
 import android.content.res.Resources
@@ -23,9 +23,9 @@ object TextResourceReader {
                 body.append("\n")
             }
         } catch (e: IOException) {
-            throw RuntimeException("Could not open resource: " + resourceId, e)
+            throw RuntimeException("Could not open resource: $resourceId", e)
         } catch (nfe: Resources.NotFoundException) {
-            throw RuntimeException("Resource not found: " + resourceId, nfe)
+            throw RuntimeException("Resource not found: $resourceId", nfe)
         }
 
         return body.toString()
