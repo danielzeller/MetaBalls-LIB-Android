@@ -1,11 +1,11 @@
 package no.danielzeller.metaballslib.progressbar
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.graphics.Paint
 import android.graphics.Path
-import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
@@ -13,6 +13,7 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.animation.LinearInterpolator
 import android.widget.FrameLayout
 import android.widget.ImageView
+import no.danielzeller.compbat.CompBatMBLayout
 import no.danielzeller.metaballslib.R
 import no.danielzeller.metaballslib.progressbar.drawables.ProgressBlobDrawable
 import no.danielzeller.metaballslib.progressbar.drawables.ProgressDrawable
@@ -24,7 +25,7 @@ enum class MBProgressBarType {
     CIRCULAR, BLOBS, DOTS, EIGHT, SQUARE, LONG_PATH
 }
 
-class MBProgressBar : FrameLayout {
+class MBProgressBar : CompBatMBLayout {
 
 
     /**
@@ -78,6 +79,7 @@ class MBProgressBar : FrameLayout {
     private val CIRCLE_PATH_DATA = floatArrayOf(51.243f, 12.001f, 69.013f, 12.001f, 88.112f, 27.121f, 88.112f, 50f, 88.112f, 72.879f, 67.671f, 87.084f, 51.243f, 87.084f, 34.815f, 87.084f, 13.04f, 75.041f, 13.04f, 49.679f, 13.04f, 24.318f, 33.473f, 12.001f, 51.243f, 12.001f)
     private val SQUARE_PATH_DATA = floatArrayOf(50.554f, 12.523f, 50.554f, 12.523f, 88.638f, 50.647f, 88.638f, 50.647f, 88.638f, 50.647f, 50.554f, 88.58f, 50.554f, 88.58f, 50.554f, 88.58f, 12.365f, 50.647f, 12.365f, 50.647f, 12.365f, 50.647f, 50.554f, 12.523f, 50.554f, 12.523f)
     private val LONG_PATH_DATA = floatArrayOf(15f, 53.44f, 15f, 49.571f, 13.841f, 13.301f, 25.976f, 13.301f, 38.112f, 13.301f, 38.229f, 45.513f, 38.229f, 53.44f, 38.229f, 61.368f, 39.76f, 89.087f, 50f, 89.087f, 60.24f, 89.087f, 60.797f, 60.835f, 60.797f, 53.44f, 60.797f, 46.045f, 61.581f, 13.301f, 73.29f, 13.301f, 84.999f, 13.301f, 84.999f, 40.987f, 84.999f, 53.44f, 84.999f, 65.894f, 84.999f, 90.718f, 73.29f, 90.718f, 61.581f, 90.718f, 60.797f, 64.684f, 60.797f, 53.44f, 60.797f, 42.197f, 61.771f, 13.301f, 50f, 13.301f, 38.229f, 13.301f, 38.229f, 42.623f, 38.229f, 53.44f, 38.229f, 64.257f, 37.07f, 89.087f, 25.976f, 89.087f, 14.883f, 89.087f, 15f, 57.31f, 15f, 53.44f)
+    private var updateTextureViewAnimation: ValueAnimator? = null
 
     constructor(context: Context) : super(context)
 
@@ -119,12 +121,16 @@ class MBProgressBar : FrameLayout {
         }
     }
 
-    private fun setupBaseViews(context: Context) {
+    override fun setupBaseViews(context: Context) {
+        super.setupBaseViews(context)
+
         spinnerImageView = ImageView(context)
-        spinnerImageView.setLayerType(View.LAYER_TYPE_HARDWARE, createMetaBallsPaint())
-        progressDrawable = createSpinnerDrawable()
-        spinnerImageView.setImageDrawable(progressDrawable as Drawable)
+        rebuildDrawable()
         addView(spinnerImageView, FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT))
+        if (!isPreAndroidPie) {
+            spinnerImageView.setLayerType(View.LAYER_TYPE_HARDWARE, createMetaBallsPaint())
+        }
+        compBatAddTextureView(this)
     }
 
     private fun createSpinnerDrawable(): ProgressDrawable {
@@ -151,14 +157,17 @@ class MBProgressBar : FrameLayout {
         super.onVisibilityChanged(changedView, visibility)
         if (visibility == View.VISIBLE) {
             progressDrawable?.startAnimations()
+            updateTextureView()
         } else {
             progressDrawable?.stopAllAnimations()
+            updateTextureViewAnimation?.cancel()
         }
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         progressDrawable?.stopAllAnimations()
+        updateTextureViewAnimation?.cancel()
     }
 
     private fun createMetaBallsPaint(): Paint {
@@ -181,7 +190,24 @@ class MBProgressBar : FrameLayout {
 
     private fun rebuildDrawable() {
         progressDrawable?.stopAllAnimations()
+        updateTextureViewAnimation?.cancel()
         progressDrawable = createSpinnerDrawable()
         spinnerImageView.setImageDrawable(progressDrawable)
+    }
+
+    override fun getCutoffFactor(): Float {
+        return 0.8f
+    }
+
+    private fun updateTextureView() {
+        if (isPreAndroidPie) {
+            updateTextureViewAnimation?.cancel()
+            updateTextureViewAnimation = ValueAnimator.ofFloat(0f, 0f).setDuration(100000000000)
+            updateTextureViewAnimation?.addUpdateListener {
+                drawTextureView()
+            }
+            updateTextureViewAnimation?.start()
+            drawTextureView()
+        }
     }
 }

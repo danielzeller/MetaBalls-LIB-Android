@@ -22,9 +22,7 @@ abstract class ShaderProgram(protected var vertexShaderResourceId: Int, protecte
     var textureCoordinatesAttributeLocation: Int = 0
         set
         get
-    var textureCoordinatesAttributeLocation2: Int = 0
-        set
-        get
+
 
 
     open fun load(context: Context) {
@@ -54,6 +52,5 @@ abstract class ShaderProgram(protected var vertexShaderResourceId: Int, protecte
 
         val A_POSITION = "a_Position"
         val A_TEXTURE_COORDINATES = "a_TextureCoordinates"
-        val A_TEXTURE_COORDINATES2 = "a_TextureCoordinates2"
     }
 }

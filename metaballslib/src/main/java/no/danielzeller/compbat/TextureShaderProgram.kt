@@ -3,15 +3,8 @@ package no.opengl.danielzeller.opengltesting.opengl.shaderprograms
 import android.content.Context
 import android.opengl.GLES11Ext
 import android.opengl.GLES20
+import android.opengl.GLES20.*
 
-import android.opengl.GLES20.GL_TEXTURE0
-import android.opengl.GLES20.GL_TEXTURE_2D
-import android.opengl.GLES20.glActiveTexture
-import android.opengl.GLES20.glBindTexture
-import android.opengl.GLES20.glGetAttribLocation
-import android.opengl.GLES20.glGetUniformLocation
-import android.opengl.GLES20.glUniform1i
-import android.opengl.GLES20.glUniformMatrix4fv
 import android.opengl.GLES30
 import android.opengl.GLUtils
 import android.util.Log
@@ -29,16 +22,16 @@ class TextureShaderProgram(vertexShaderResourceId: Int, fragmentShaderResourceId
 
         positionAttributeLocation = glGetAttribLocation(program, ShaderProgram.Companion.A_POSITION)
         textureCoordinatesAttributeLocation = glGetAttribLocation(program, ShaderProgram.Companion.A_TEXTURE_COORDINATES)
-        textureCoordinatesAttributeLocation2 = glGetAttribLocation(program, ShaderProgram.Companion.A_TEXTURE_COORDINATES2)
     }
 
-    fun setUniforms(matrix: FloatArray, textureId: Int) {
+    fun setUniforms(matrix: FloatArray, textureId: Int, cutoffFactor: Float) {
 
         glUniformMatrix4fv(uMatrixLocation, 1, false, matrix, 0)
 
         glActiveTexture(GLES30.GL_TEXTURE0)
         glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, textureId)
         glUniform1i(glGetUniformLocation(program, "surface_texture"), 0)
+        glUniform1f(glGetUniformLocation(program, "cutoff"), cutoffFactor)
     }
 
     fun checkGlError(op: String) {

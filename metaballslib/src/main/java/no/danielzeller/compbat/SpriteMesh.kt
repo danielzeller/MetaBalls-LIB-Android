@@ -28,11 +28,6 @@ class SpriteMesh {
                 textureProgram.textureCoordinatesAttributeLocation,
                 TEXTURE_COORDINATES_COMPONENT_COUNT,
                 STRIDE)
-        vertexArrayScreenSpace?.setVertexAttribPointer(
-                POSITION_COMPONENT_COUNT,
-                textureProgram.textureCoordinatesAttributeLocation2,
-                TEXTURE_COORDINATES_COMPONENT_COUNT,
-                STRIDE)
     }
 
     fun draw() {

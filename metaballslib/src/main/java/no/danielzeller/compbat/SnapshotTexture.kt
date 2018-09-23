@@ -28,7 +28,5 @@ open class SnapshotTexture {
         return null
     }
 
-    open fun endDraw() {
 
-    }
 }

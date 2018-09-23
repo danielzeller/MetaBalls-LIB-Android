@@ -1,8 +1,10 @@
 package no.danielzeller.metaballslib
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.Drawable
+import android.os.Handler
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
 import android.util.AttributeSet
@@ -11,9 +13,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
+import no.danielzeller.compbat.CompBatMBLayout
 import no.danielzeller.metaballslib.progressbar.drawables.DropDrawable
 
-class MetaBallPageIndicator : FrameLayout, ViewPager.OnPageChangeListener, ViewPager.OnAdapterChangeListener {
+class MetaBallPageIndicator : CompBatMBLayout, ViewPager.OnPageChangeListener, ViewPager.OnAdapterChangeListener {
 
     /**
      *
@@ -91,13 +94,13 @@ class MetaBallPageIndicator : FrameLayout, ViewPager.OnPageChangeListener, ViewP
     private var positionOffset: Float = 0f
     private var pageIndicatorDrawable: PageIndicatorDrawable? = null
     private lateinit var pageIndicatorRenderView: ImageView
-
+    private var updateTextureViewAnimation: ValueAnimator? = null
 
     constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         loadAttributesFromXML(attrs)
-        setupView(context)
+        setupBaseViews(context)
     }
 
     /**
@@ -124,15 +127,38 @@ class MetaBallPageIndicator : FrameLayout, ViewPager.OnPageChangeListener, ViewP
         pageIndicatorDrawable?.calculateCoordinates()
     }
 
-    override fun onPageScrollStateChanged(scrollState: Int) {}
+    override fun onPageScrollStateChanged(scrollState: Int) {
+
+        if (scrollState == ViewPager.SCROLL_STATE_IDLE) {
+            updateTextureViewAnimation?.cancel()
+        } else   {
+            updateTextureView()
+        }
+
+    }
 
     override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
         this.currentPageIndex = position
         this.positionOffset = positionOffset
         pageIndicatorDrawable?.invalidateSelf()
+
     }
 
-    override fun onPageSelected(position: Int) {}
+    override fun onPageSelected(position: Int) {
+
+    }
+
+
+    private fun updateTextureView() {
+        if (isPreAndroidPie) {
+            updateTextureViewAnimation?.cancel()
+            updateTextureViewAnimation = ValueAnimator.ofFloat(0f, 0f).setDuration(100000000000)
+            updateTextureViewAnimation?.addUpdateListener {
+                drawTextureView()
+            }
+            updateTextureViewAnimation?.start()
+        }
+    }
 
     private fun loadAttributesFromXML(attrs: AttributeSet?) {
 
@@ -156,15 +182,20 @@ class MetaBallPageIndicator : FrameLayout, ViewPager.OnPageChangeListener, ViewP
         }
     }
 
-    private fun setupView(context: Context) {
+    override fun setupBaseViews(context: Context) {
+        super.setupBaseViews(context)
 
         pageIndicatorRenderView = ImageView(context)
-        pageIndicatorRenderView.setLayerType(View.LAYER_TYPE_HARDWARE, createMetaBallsPaint())
         addView(pageIndicatorRenderView, FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
         val gradientDrawable = resources.getDrawable(R.drawable.gradient_oval, null)
         val dropDrawable = DropDrawable(gradientDrawable, true)
         pageIndicatorDrawable = PageIndicatorDrawable(gradientDrawable, dropDrawable)
         pageIndicatorRenderView.setImageDrawable(pageIndicatorDrawable)
+        if (isPreAndroidPie) {
+            compBatAddTextureView(this)
+        } else {
+            pageIndicatorRenderView.setLayerType(View.LAYER_TYPE_HARDWARE, createMetaBallsPaint())
+        }
     }
 
     private fun createMetaBallsPaint(): Paint {
@@ -198,6 +229,10 @@ class MetaBallPageIndicator : FrameLayout, ViewPager.OnPageChangeListener, ViewP
         return super.onTouchEvent(event)
     }
 
+    override fun getCutoffFactor(): Float {
+        return 0.79f
+    }
+
     inner class PageIndicatorDrawable(val gradientDrawable: Drawable, val dropDrawable: DropDrawable) : Drawable() {
 
         var isFirstRender = true
@@ -229,6 +264,7 @@ class MetaBallPageIndicator : FrameLayout, ViewPager.OnPageChangeListener, ViewP
 
                 distanceBetweenDots = dotsMargin + dotSize
                 invalidateSelf()
+                drawTextureView()
             }
         }
 
@@ -245,6 +281,7 @@ class MetaBallPageIndicator : FrameLayout, ViewPager.OnPageChangeListener, ViewP
                 }
             }
         }
+
 
         override fun onBoundsChange(bounds: Rect) {
             super.onBoundsChange(bounds)
@@ -328,6 +365,9 @@ class MetaBallPageIndicator : FrameLayout, ViewPager.OnPageChangeListener, ViewP
             }
             return -1
         }
+
+        private val handler = Handler()
+
     }
 }
 

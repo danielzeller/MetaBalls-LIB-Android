@@ -1,7 +1,10 @@
 package no.danielzeller.metaballslib.menu
 
 import android.content.Context
+import android.graphics.Canvas
 import android.util.AttributeSet
+import android.util.Log
+import android.view.ViewTreeObserver
 import android.widget.ImageView
 import no.danielzeller.metaballslib.R
 
@@ -39,13 +42,14 @@ class CircularMenu : MetaBallMenuBase {
         }
     }
 
+
     override fun openMenu() {
         stopAllRunningAnimations()
 
         val startAngle = getStartAngle()
         var startDelay = 0L
 
-        for (i in 0 until metaBallsContainerFrameLayout.childCount - 2) {
+        for (i in 0 until metaBallsContainerFrameLayout.childCount - 1) {
             val angleDeg = startAngle + i.toFloat() * angleBetweenMenuItems
             val angleRad = (angleDeg * Math.PI / 180f).toFloat()
             val x = radius * Math.cos(angleRad.toDouble()).toFloat()
@@ -59,7 +63,9 @@ class CircularMenu : MetaBallMenuBase {
             startDelay += delayBetweenItemsAnimation
             ballView.isEnabled = true
         }
-        updateChache(startDelay)
+        if (isPreAndroidPie) {
+            updateTextureView(startDelay)
+        }
     }
 
     private fun getStartAngle(): Float {

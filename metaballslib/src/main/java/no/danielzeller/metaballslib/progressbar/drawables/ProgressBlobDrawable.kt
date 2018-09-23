@@ -8,6 +8,7 @@ import android.graphics.ColorFilter
 import android.graphics.PixelFormat
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
+import android.os.Handler
 import android.view.View
 import android.view.animation.PathInterpolator
 import no.danielzeller.metaballslib.progressbar.BrownianMotion
@@ -63,7 +64,7 @@ class ProgressBlobDrawable(val metaBall: Drawable, val tinColors: IntArray, val 
             sizeAnim?.addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator?) {
                     super.onAnimationEnd(animation)
-                    spinner.visibility = View.GONE
+                    spinner.visibility = View.INVISIBLE
                     spinnerHiddenListener?.invoke()
                 }
             })
@@ -90,6 +91,7 @@ class ProgressBlobDrawable(val metaBall: Drawable, val tinColors: IntArray, val 
         invalidateSelf()
     }
 
+    private val handler = Handler()
 
     override fun onBoundsChange(bounds: Rect) {
         super.onBoundsChange(bounds)

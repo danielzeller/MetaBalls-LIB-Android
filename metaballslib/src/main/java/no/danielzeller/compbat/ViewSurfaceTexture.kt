@@ -14,13 +14,14 @@ import no.danielzeller.compbat.SnapshotTexture
 
 class ViewSurfaceTexture : SnapshotTexture() {
     var surfaceTexture: SurfaceTexture? = null
-    var surface: Surface? = null
+    private var surface: Surface? = null
 
 
-    var surfaceCanvas: Canvas? = null
 
     var textureWidth: Int = 0
     var textureHeight: Int = 0
+
+    private var isReady: Boolean = false
 
     override fun createSurface(width: Int, height: Int, context: Context) {
         if (textureWidth == 0) {
@@ -56,30 +57,22 @@ class ViewSurfaceTexture : SnapshotTexture() {
 
         if (surface != null) {
             try {
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                    surfaceCanvas = surface?.lockHardwareCanvas()
-//                } else {
-                    surfaceCanvas = surface?.lockCanvas(null)
-//                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    return surface?.lockHardwareCanvas()
+                } else {
+                    return surface?.lockCanvas(null)
+                }
 
             } catch (e: Exception) {
                 Log.e("GL_ERROR", "error while rendering view to gl: " + e)
             }
         }
-        return surfaceCanvas
+        return null
     }
 
-    var isReady: Boolean = false
-    var handler = Handler()
-
-    override fun endDraw() {
-        surface?.unlockCanvasAndPost(surfaceCanvas)
-        if (surface != null && !isReady) {
-            handler.postDelayed(object : Runnable {
-                override fun run() {
-                    isReady = true
-                }
-            }, 0)
+    fun endDraw(surfaceCanvas: Canvas?) {
+        if (surfaceCanvas != null) {
+            surface?.unlockCanvasAndPost(surfaceCanvas)
         }
     }
 

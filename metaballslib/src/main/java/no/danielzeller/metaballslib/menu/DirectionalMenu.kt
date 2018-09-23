@@ -86,6 +86,9 @@ class DirectionalMenu : MetaBallMenuBase {
         }
 
         animateScale(menuButton as View, 0.78f, 300, 0)
+        if(isPreAndroidPie){
+            updateTextureView(startDelay)
+        }
     }
 
     private fun isNegativeDirection(i: Int): Float {

@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.graphics.*
 import android.graphics.drawable.Drawable
+import android.os.Handler
 import android.view.View
 import android.view.animation.PathInterpolator
 
@@ -30,7 +31,7 @@ class ProgressJumpingDotDrawable(val metaBall: Drawable, val tinColors: IntArray
         dropDrawable = DropDrawable(metaBall, isDropDrawable)
         dropDrawable.easeSpeed = 15f
         dropDrawable.easeSpeedLast = 11f
-        this.tinColorsArray=tinColors
+        this.tinColorsArray = tinColors
     }
 
     override fun setDrop(isDrop: Boolean) {
@@ -125,6 +126,7 @@ class ProgressJumpingDotDrawable(val metaBall: Drawable, val tinColors: IntArray
         metaBall.setBounds(-ballSize, -ballSize, ballSize, ballSize)
         invalidateSelf()
     }
+
 
     fun drawDot(xPos: Float, yPos: Float, tintIndex: Int, canvas: Canvas) {
         val count = canvas.save()
