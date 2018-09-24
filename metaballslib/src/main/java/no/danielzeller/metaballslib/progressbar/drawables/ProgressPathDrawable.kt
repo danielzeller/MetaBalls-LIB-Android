@@ -60,7 +60,7 @@ class ProgressPathDrawable(val metaBallGradient: Drawable, tinColors: IntArray, 
         sizeAnim?.cancel()
     }
 
-    override fun stopAndHide(spinner: View, spinnerHiddenListener: (() -> Unit)?) {
+    override fun stopAndHide(progressBar: View, progressBarHiddenListener: (() -> Unit)?) {
         if (animations.count() != 0) {
             var animatedFractionMin = 100000f
             var lastRunningAnimIndex = 0
@@ -78,15 +78,15 @@ class ProgressPathDrawable(val metaBallGradient: Drawable, tinColors: IntArray, 
             }
             animations[lastRunningAnimIndex].addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator?) {
-                    animateBallSize(ballSize, 0, 700, spinner, spinnerHiddenListener)
+                    animateBallSize(ballSize, 0, 700, progressBar, progressBarHiddenListener)
                 }
             })
         } else {
-            spinnerHiddenListener?.invoke()
+            progressBarHiddenListener?.invoke()
         }
     }
 
-    fun animateBallSize(from: Int, to: Int, duration: Long, spinner: View?, spinnerHiddenListener: (() -> Unit)?) {
+    fun animateBallSize(from: Int, to: Int, duration: Long, progressBar: View?, progressBarHiddenListener: (() -> Unit)?) {
         sizeAnim?.cancel()
         sizeAnim = ValueAnimator.ofInt(from, to).setDuration(duration)
         sizeAnim?.interpolator = PathInterpolator(.88f, 0f, .15f, 1f)
@@ -96,12 +96,12 @@ class ProgressPathDrawable(val metaBallGradient: Drawable, tinColors: IntArray, 
                 dropDrawable.ballSize = ballSize
             }
         }
-        if (spinner != null)
+        if (progressBar != null)
             sizeAnim?.addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator?) {
                     super.onAnimationRepeat(animation)
-                    spinner.visibility = View.GONE
-                    spinnerHiddenListener?.invoke()
+                    progressBar.visibility = View.GONE
+                    progressBarHiddenListener?.invoke()
                 }
             })
         sizeAnim?.start()

@@ -47,11 +47,11 @@ class ProgressBlobDrawable(val metaBall: Drawable, val tinColors: IntArray, val 
         sizeAnim?.cancel()
     }
 
-    override fun stopAndHide(spinner: View, spinnerHiddenListener: (() -> Unit)?) {
-        animateBallSize(ballSize, 0, 700, spinner, spinnerHiddenListener)
+    override fun stopAndHide(progressBar: View, progressBarHiddenListener: (() -> Unit)?) {
+        animateBallSize(ballSize, 0, 700, progressBar, progressBarHiddenListener)
     }
 
-    private fun animateBallSize(from: Int, to: Int, duration: Long, spinner: View?, spinnerHiddenListener: (() -> Unit)?) {
+    private fun animateBallSize(from: Int, to: Int, duration: Long, progressBar: View?, progressBarHiddenListener: (() -> Unit)?) {
         sizeAnim?.cancel()
         sizeAnim = ValueAnimator.ofInt(from, to).setDuration(duration)
         sizeAnim?.interpolator = PathInterpolator(.88f, 0f, .15f, 1f)
@@ -59,12 +59,12 @@ class ProgressBlobDrawable(val metaBall: Drawable, val tinColors: IntArray, val 
             ballSize = animation.animatedValue as Int
             metaBall.setBounds(-ballSize, -ballSize, ballSize, ballSize)
         }
-        if (spinner != null) {
+        if (progressBar != null) {
             sizeAnim?.addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator?) {
                     super.onAnimationEnd(animation)
-                    spinner.visibility = View.INVISIBLE
-                    spinnerHiddenListener?.invoke()
+                    progressBar.visibility = View.INVISIBLE
+                    progressBarHiddenListener?.invoke()
                 }
             })
         }

@@ -5,7 +5,7 @@ import android.view.View
 
 abstract class ProgressDrawable : Drawable() {
 
-    abstract fun stopAndHide(spinner: View, spinnerHiddenListener: (() -> Unit)?)
+    abstract fun stopAndHide(progressBar: View, progressBarHiddenListener: (() -> Unit)?)
 
     abstract fun startAnimations()
 

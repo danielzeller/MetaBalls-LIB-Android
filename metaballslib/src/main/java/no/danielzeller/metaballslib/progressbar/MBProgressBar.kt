@@ -72,7 +72,7 @@ class MBProgressBar : CompBatMBLayout {
             progressDrawable?.tinColorsArray = value
         }
 
-    private lateinit var spinnerImageView: ImageView
+    private lateinit var progressBarImageView: ImageView
     private var progressDrawable: ProgressDrawable? = null
 
     private val EIGHT_PATH_DATA = floatArrayOf(85f, 50.934f, 85f, 58.16f, 81.419f, 67f, 70.09f, 67f, 58.761f, 67f, 51.776f, 53.948f, 48.5f, 50.5f, 45.224f, 47.052f, 37.252f, 34f, 26.717f, 34f, 16.181f, 34f, 12f, 43.123f, 12f, 50.934f, 12f, 58.744f, 16.256f, 67f, 25.354f, 67f, 34.451f, 67f, 44.12f, 55.534f, 48.5f, 50.934f, 52.88f, 46.334f, 59.597f, 34f, 70.77f, 34f, 81.943f, 34f, 85f, 43.708f, 85f, 50.934f)
@@ -89,8 +89,8 @@ class MBProgressBar : CompBatMBLayout {
     }
 
     /**
-     * Stops the spinner animated, and sets View.GONE after an exit animation.
-     * @param onProgressBarHiddenListener  Callback for when the Spinner is hidden.
+     * Stops the progressBar animated, and sets View.GONE after an exit animation.
+     * @param onProgressBarHiddenListener  Callback for when the progressBar is hidden.
      */
     fun stopAnimated(onProgressBarHiddenListener: (() -> Unit)? = null) {
         progressDrawable?.stopAndHide(this, onProgressBarHiddenListener)
@@ -103,9 +103,9 @@ class MBProgressBar : CompBatMBLayout {
                 R.styleable.MetaBallsProgressBar,
                 0, 0)
         try {
-            val colorsArrayID = typedArray.getResourceId(R.styleable.MetaBallsProgressBar_colors_array_id, R.array.default_spinner_colors)
+            val colorsArrayID = typedArray.getResourceId(R.styleable.MetaBallsProgressBar_colors_array_id, R.array.default_progress_bar_colors)
             colorArray = resources.getIntArray(colorsArrayID)
-            mbProgressBarType = convertIntToSpinnerType(typedArray.getInteger(R.styleable.MetaBallsProgressBar_progressbar_type, MBProgressBarType.CIRCULAR.ordinal))
+            mbProgressBarType = convertIntToProgressBarType(typedArray.getInteger(R.styleable.MetaBallsProgressBar_progressbar_type, MBProgressBarType.CIRCULAR.ordinal))
             isDropDrawable = typedArray.getBoolean(R.styleable.MetaBallsProgressBar_drop_drawable, isDropDrawable)
             isRotate = typedArray.getBoolean(R.styleable.MetaBallsProgressBar_rotate, false)
 
@@ -117,23 +117,23 @@ class MBProgressBar : CompBatMBLayout {
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
         if (width != height && isRotate) {
-            Log.w("SPINNER", "Warning: width and height are not equal. This may lead to unexpected results when rotation is enabled.")
+            Log.w("MPProgressBar", "Warning: width and height are not equal. This may lead to unexpected results when rotation is enabled.")
         }
     }
 
     override fun setupBaseViews(context: Context) {
         super.setupBaseViews(context)
 
-        spinnerImageView = ImageView(context)
+        progressBarImageView = ImageView(context)
         rebuildDrawable()
-        addView(spinnerImageView, FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT))
+        addView(progressBarImageView, FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT))
         if (!isPreAndroidPie) {
-            spinnerImageView.setLayerType(View.LAYER_TYPE_HARDWARE, createMetaBallsPaint())
+            progressBarImageView.setLayerType(View.LAYER_TYPE_HARDWARE, createMetaBallsPaint())
         }
         compBatAddTextureView(this)
     }
 
-    private fun createSpinnerDrawable(): ProgressDrawable {
+    private fun createProgressBarDrawable(): ProgressDrawable {
         return when (mbProgressBarType) {
             MBProgressBarType.CIRCULAR -> ProgressPathDrawable(resources.getDrawable(R.drawable.gradient_oval, null), colorArray, parsePath(CIRCLE_PATH_DATA), isDropDrawable, isRotate)
             MBProgressBarType.EIGHT -> ProgressPathDrawable(resources.getDrawable(R.drawable.gradient_oval, null), colorArray, parsePath(EIGHT_PATH_DATA), isDropDrawable, isRotate, 900, LinearInterpolator())
@@ -181,7 +181,7 @@ class MBProgressBar : CompBatMBLayout {
         return metaBallsPaint
     }
 
-    private fun convertIntToSpinnerType(id: Int): MBProgressBarType {
+    private fun convertIntToProgressBarType(id: Int): MBProgressBarType {
         for (f in MBProgressBarType.values()) {
             if (f.ordinal == id) return f
         }
@@ -191,8 +191,8 @@ class MBProgressBar : CompBatMBLayout {
     private fun rebuildDrawable() {
         progressDrawable?.stopAllAnimations()
         updateTextureViewAnimation?.cancel()
-        progressDrawable = createSpinnerDrawable()
-        spinnerImageView.setImageDrawable(progressDrawable)
+        progressDrawable = createProgressBarDrawable()
+        progressBarImageView.setImageDrawable(progressDrawable)
     }
 
     override fun getCutoffFactor(): Float {
