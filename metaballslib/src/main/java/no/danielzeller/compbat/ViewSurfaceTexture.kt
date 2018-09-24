@@ -9,16 +9,17 @@ import android.opengl.GLUtils
 import android.util.Log
 import android.view.Surface
 
-class ViewSurfaceTexture : SnapshotTexture() {
+class ViewSurfaceTexture {
 
     var textureWidth: Int = 0
     var textureHeight: Int = 0
 
-    private var isReady: Boolean = false
     private var surfaceTexture: SurfaceTexture? = null
     private var surface: Surface? = null
 
-    override fun createSurface(width: Int, height: Int, context: Context) {
+    private var surfaceTextureID = -1
+
+    fun createSurface(width: Int, height: Int, context: Context) {
         if (textureWidth == 0) {
             textureWidth = width
             textureHeight = height
@@ -32,26 +33,22 @@ class ViewSurfaceTexture : SnapshotTexture() {
         }
     }
 
-    override fun updateTexture() {
+    fun updateTexture() {
         surfaceTexture?.updateTexImage()
     }
 
-    override fun isLoaded(): Boolean {
-        return isReady
-    }
-
-    override fun releaseSurface() {
+    fun releaseSurface() {
         surface?.release()
         surfaceTexture?.release()
         surface = null
         surfaceTexture = null
     }
 
-    override fun beginDraw(): Canvas? {
+    fun beginDraw(): Canvas? {
 
         if (surface != null) {
             try {
-                    return surface?.lockHardwareCanvas()
+                return surface?.lockHardwareCanvas()
             } catch (e: Exception) {
                 Log.e("GL_ERROR", "error while rendering view to gl: $e")
             }
@@ -89,5 +86,9 @@ class ViewSurfaceTexture : SnapshotTexture() {
         if (error != GL_NO_ERROR) {
             Log.e("GL_ERROR", op + ": glError " + GLUtils.getEGLErrorString(error))
         }
+    }
+
+    fun getTextureID(): Int {
+        return surfaceTextureID
     }
 }

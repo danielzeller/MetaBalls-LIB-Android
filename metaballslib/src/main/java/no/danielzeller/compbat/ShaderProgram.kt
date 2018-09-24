@@ -31,9 +31,10 @@ abstract class ShaderProgram(private var vertexShaderResourceId: Int, private va
 
     companion object {
         const val U_MATRIX = "u_Matrix"
-        const val U_TEXTURE_UNIT = "u_TextureUnit"
+        const val U_TEXTURE_UNIT = "surface_texture"
 
         const val A_POSITION = "a_Position"
         const val A_TEXTURE_COORDINATES = "a_TextureCoordinates"
+        const val A_CUTOFF_LOCATION = "cutoff"
     }
 }

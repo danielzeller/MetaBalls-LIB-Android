@@ -9,15 +9,17 @@ class TextureShaderProgram(vertexShaderResourceId: Int, fragmentShaderResourceId
 
     private var uMatrixLocation: Int = 0
     private var uTextureUnitLocation: Int = 0
+    private var uCutoffUnitLocation: Int = 0
 
     override fun load(context: Context) {
-
         super.load(context)
-        uMatrixLocation = glGetUniformLocation(program, ShaderProgram.U_MATRIX)
-        uTextureUnitLocation = glGetUniformLocation(program, ShaderProgram.U_TEXTURE_UNIT)
 
-        positionAttributeLocation = glGetAttribLocation(program, ShaderProgram.A_POSITION)
-        textureCoordinatesAttributeLocation = glGetAttribLocation(program, ShaderProgram.A_TEXTURE_COORDINATES)
+        uMatrixLocation = glGetUniformLocation(program, U_MATRIX)
+        uTextureUnitLocation = glGetUniformLocation(program, U_TEXTURE_UNIT)
+
+        positionAttributeLocation = glGetAttribLocation(program, A_POSITION)
+        textureCoordinatesAttributeLocation = glGetAttribLocation(program, A_TEXTURE_COORDINATES)
+        uCutoffUnitLocation = glGetUniformLocation(program, A_CUTOFF_LOCATION)
     }
 
     fun setUniforms(matrix: FloatArray, textureId: Int, cutoffFactor: Float) {
@@ -26,7 +28,7 @@ class TextureShaderProgram(vertexShaderResourceId: Int, fragmentShaderResourceId
 
         glActiveTexture(GLES30.GL_TEXTURE0)
         glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, textureId)
-        glUniform1i(glGetUniformLocation(program, "surface_texture"), 0)
-        glUniform1f(glGetUniformLocation(program, "cutoff"), cutoffFactor)
+        glUniform1i(uTextureUnitLocation, 0)
+        glUniform1f(uCutoffUnitLocation, cutoffFactor)
     }
 }

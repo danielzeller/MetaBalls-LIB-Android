@@ -19,15 +19,14 @@ import javax.microedition.khronos.egl.EGLDisplay
 
 class TextureViewRenderer(val context: Context) : TextureView.SurfaceTextureListener {
 
-    var width = 0
-    var height = 0
+
     var isCreated = false
     var cutoffFactor = 0.65f
     var onSurfaceTextureCreated: (() -> Unit)? = null
     val surfaceTexture = ViewSurfaceTexture()
     private lateinit var renderer: RendererThread
 
-    override fun onSurfaceTextureUpdated(surface: SurfaceTexture?) {} // called every time when swapBuffers is called
+    override fun onSurfaceTextureUpdated(surface: SurfaceTexture?) {}
 
     override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture?, width: Int, height: Int) {}
 
@@ -37,13 +36,11 @@ class TextureViewRenderer(val context: Context) : TextureView.SurfaceTextureList
     }
 
     override fun onSurfaceTextureAvailable(surface: SurfaceTexture, width: Int, height: Int) {
-        this.width = width
-        this.height = height
-        renderer = RendererThread(surface)
+        renderer = RendererThread(surface, width, height)
         renderer.start()
     }
 
-    inner class RendererThread(val surface: SurfaceTexture) : Thread() {
+    inner class RendererThread(private val surface: SurfaceTexture, private val width: Int, private val height: Int) : Thread() {
 
         var isStopped = false
         private val handler = Handler()
@@ -84,38 +81,16 @@ class TextureViewRenderer(val context: Context) : TextureView.SurfaceTextureList
                 egl.eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext)
 
                 GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT)
+                GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
                 if (!isCreated) {
+                    onSurfaceCreated()
                     isCreated = true
-                    GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
-                    spriteMesh = SpriteMesh()
-                    fullscreenTextureShader.load(context)
-                    GLES20.glViewport(0, 0, width, height)
-                    GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
-                    val left = -1.0f
-                    val right = 1.0f
-                    val bottom = 1.0f
-                    val top = -1.0f
-                    val near = -1.0f
-                    val far = 1.0f
-
-                    Matrix.setIdentityM(projectionMatrixOrtho, 0)
-                    Matrix.orthoM(projectionMatrixOrtho, 0, left, right, bottom, top, near, far)
-
-                    GLES20.glEnable(GLES20.GL_BLEND)
-                    GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA)
-                    surfaceTexture.createSurface(width, height, context)
-                    val canvas = surfaceTexture.beginDraw()
-                    canvas?.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
-                    surfaceTexture.endDraw(canvas)
-                    handler.post { onSurfaceTextureCreated?.invoke() }
-
                 }
 
-                GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
                 renderFullscreenRenderTexture()
                 egl.eglSwapBuffers(eglDisplay, eglSurface)
 
-                Thread.sleep((1f / 60f * 1000f).toLong()) // in real life this sleep is more complicated
+                Thread.sleep((1f / 60f * 1000f).toLong())
             }
 
             surface.release()
@@ -123,10 +98,45 @@ class TextureViewRenderer(val context: Context) : TextureView.SurfaceTextureList
             egl.eglDestroySurface(eglDisplay, eglSurface)
         }
 
+        fun onSurfaceCreated() {
+            setupViewPort()
+            createRenderingObjects()
+            clearViewSurfaceTexture()
+            handler.post { onSurfaceTextureCreated?.invoke() }
+        }
+
+        fun clearViewSurfaceTexture() {
+            val canvas = surfaceTexture.beginDraw()
+            canvas?.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
+            surfaceTexture.endDraw(canvas)
+        }
+
+        fun createRenderingObjects() {
+            spriteMesh = SpriteMesh()
+            fullscreenTextureShader.load(context)
+            surfaceTexture.createSurface(width, height, context)
+        }
+
+        fun setupViewPort() {
+            GLES20.glViewport(0, 0, width, height)
+            val left = -1.0f
+            val right = 1.0f
+            val bottom = 1.0f
+            val top = -1.0f
+            val near = -1.0f
+            val far = 1.0f
+
+            Matrix.setIdentityM(projectionMatrixOrtho, 0)
+            Matrix.orthoM(projectionMatrixOrtho, 0, left, right, bottom, top, near, far)
+
+            GLES20.glEnable(GLES20.GL_BLEND)
+            GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA)
+        }
+
         private fun renderFullscreenRenderTexture() {
             surfaceTexture.updateTexture()
             fullscreenTextureShader.useProgram()
-            fullscreenTextureShader.setUniforms(projectionMatrixOrtho, surfaceTexture.getTextureID(),cutoffFactor)
+            fullscreenTextureShader.setUniforms(projectionMatrixOrtho, surfaceTexture.getTextureID(), cutoffFactor)
             spriteMesh.bindData(fullscreenTextureShader)
             spriteMesh.draw()
         }
