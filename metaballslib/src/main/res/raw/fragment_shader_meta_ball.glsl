@@ -12,23 +12,23 @@ float remap(float value, float inputMin, float inputMax, float outputMin, float 
 
 void main()                    		
 {
-    vec2 teCoord = v_TextureCoordinates;
-    teCoord.y=1.0-teCoord.y;
+    vec2 textureCoordinates = v_TextureCoordinates;
+    textureCoordinates.y = 1.0 - textureCoordinates.y;
 
- 	vec4 srcColor = texture2D(surface_texture, teCoord);
+ 	vec4 surfaceTextureColor = texture2D(surface_texture, textureCoordinates);
 
-    srcColor.rgb += srcColor.rgb*(1.4-(srcColor.a*1.4));
-
-    if(srcColor.a<0.75){
-        srcColor.rgb += srcColor.rgb*(1.0-(srcColor.a*1.0))*0.07;
+ 	//Adding some more color based on texture alpha to get a more flat look
+    surfaceTextureColor.rgb += surfaceTextureColor.rgb*(1.4-(surfaceTextureColor.a*1.4));
+    if(surfaceTextureColor.a<0.75){
+        surfaceTextureColor.rgb += surfaceTextureColor.rgb*(1.0-(surfaceTextureColor.a*1.0))*0.07;
     }
 
-    if(srcColor.a<cutoff){
-        srcColor.a=0.0;
+    //Chop away a alpha lower than cutoff value
+    if(surfaceTextureColor.a<cutoff){
+        discard;
     } else {
-        srcColor.a=1.0;
+        surfaceTextureColor.a=1.0;
     }
 
-    gl_FragColor =  srcColor;
-
+    gl_FragColor =  surfaceTextureColor;
 }

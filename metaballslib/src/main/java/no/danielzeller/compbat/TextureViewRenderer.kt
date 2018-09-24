@@ -128,9 +128,6 @@ class TextureViewRenderer(val context: Context) : TextureView.SurfaceTextureList
 
             Matrix.setIdentityM(projectionMatrixOrtho, 0)
             Matrix.orthoM(projectionMatrixOrtho, 0, left, right, bottom, top, near, far)
-
-            GLES20.glEnable(GLES20.GL_BLEND)
-            GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA)
         }
 
         private fun renderFullscreenRenderTexture() {
