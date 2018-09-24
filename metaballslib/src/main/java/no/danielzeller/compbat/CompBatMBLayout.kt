@@ -57,6 +57,6 @@ open class CompBatMBLayout : FrameLayout {
     }
 
     open fun setupBaseViews(context: Context) {
-        isPreAndroidPie = android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.P 
+        isPreAndroidPie = android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.P
     }
 }
