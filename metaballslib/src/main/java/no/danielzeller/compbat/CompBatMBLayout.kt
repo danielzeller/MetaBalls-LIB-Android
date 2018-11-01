@@ -34,12 +34,11 @@ open class CompBatMBLayout : FrameLayout {
             textureViewRenderer.cutoffFactor = getCutoffFactor()
             val glCanvas = textureViewRenderer.surfaceTexture.beginDraw()
             glCanvas?.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
-
             if (glCanvas != null){
                 val metaBallContainer = getChildAt(0)
                 drawChild(glCanvas, metaBallContainer, drawingTime)
             }
-
+            textureViewRenderer.updateForMilliSeconds(100)
             textureViewRenderer.surfaceTexture.endDraw(glCanvas)
         }
     }
@@ -58,5 +57,6 @@ open class CompBatMBLayout : FrameLayout {
 
     open fun setupBaseViews(context: Context) {
         isPreAndroidPie = android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.P
+        isPreAndroidPie = true
     }
 }

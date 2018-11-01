@@ -9,6 +9,7 @@ import android.opengl.EGL14.EGL_OPENGL_ES2_BIT
 import android.opengl.GLES20
 import android.opengl.Matrix
 import android.os.Handler
+import android.view.Choreographer
 import android.view.TextureView
 import no.danielzeller.metaballslib.R
 import javax.microedition.khronos.egl.EGL10
@@ -20,9 +21,13 @@ import javax.microedition.khronos.egl.EGLDisplay
 class TextureViewRenderer(val context: Context) : TextureView.SurfaceTextureListener {
 
     var isCreated = false
-    var cutoffFactor = 0.65f
+    var cutoffFactor = 0.69f
     var onSurfaceTextureCreated: (() -> Unit)? = null
     val surfaceTexture = ViewSurfaceTexture()
+
+    var updateTextureView = true
+
+    private var updateViewUntil = -1L
 
     private lateinit var renderer: RendererThread
 
@@ -38,6 +43,11 @@ class TextureViewRenderer(val context: Context) : TextureView.SurfaceTextureList
     override fun onSurfaceTextureAvailable(surface: SurfaceTexture, width: Int, height: Int) {
         renderer = RendererThread(surface, width, height)
         renderer.start()
+        updateForMilliSeconds(2000)
+    }
+
+    fun updateForMilliSeconds(milliSeconds: Long) {
+        updateViewUntil = System.currentTimeMillis() + milliSeconds
     }
 
     inner class RendererThread(private val surface: SurfaceTexture, private val width: Int, private val height: Int) : Thread() {
@@ -60,18 +70,19 @@ class TextureViewRenderer(val context: Context) : TextureView.SurfaceTextureList
 
 
             while (!isStopped && egl.eglGetError() == EGL_SUCCESS) {
-                egl.eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext)
+                if (!isCreated || updateViewUntil > System.currentTimeMillis()) {
+                    egl.eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext)
 
-                GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT)
-                GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
-                if (!isCreated) {
-                    onSurfaceCreated()
-                    isCreated = true
+                    GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT)
+                    GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
+                    if (!isCreated) {
+                        onSurfaceCreated()
+                        isCreated = true
+                    }
+
+                    renderFullscreenRenderTexture()
+                    egl.eglSwapBuffers(eglDisplay, eglSurface)
                 }
-
-                renderFullscreenRenderTexture()
-                egl.eglSwapBuffers(eglDisplay, eglSurface)
-
                 Thread.sleep((1f / 60f * 1000f).toLong())
             }
 
@@ -103,7 +114,7 @@ class TextureViewRenderer(val context: Context) : TextureView.SurfaceTextureList
             setupViewPort()
             createRenderingObjects()
             clearViewSurfaceTexture()
-            handler.post{ onSurfaceTextureCreated?.invoke() }
+            handler.post { onSurfaceTextureCreated?.invoke() }
         }
 
         private fun clearViewSurfaceTexture() {

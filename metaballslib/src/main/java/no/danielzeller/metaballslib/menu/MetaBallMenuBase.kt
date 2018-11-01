@@ -277,6 +277,9 @@ abstract class MetaBallMenuBase : CompBatMBLayout {
         imageView.setPadding(padding, padding, padding, padding)
         imageView.setOnClickListener { onItemSelectedListener?.invoke(i) }
         imageView.isEnabled = false
+        if (!isPreAndroidPie) {
+            imageView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+        }
         return imageView
     }
 
