@@ -6,6 +6,7 @@ import android.graphics.*
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
+import android.view.Choreographer
 import android.view.Gravity
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -344,7 +345,7 @@ abstract class MetaBallMenuBase : CompBatMBLayout {
     fun updateTextureView(startDelay: Long) {
         val updateTextureViewAnimation = ValueAnimator.ofFloat(0f, 0f).setDuration(startDelay + closeAnimationDuration)
         updateTextureViewAnimation.addUpdateListener {
-            drawTextureView()
+            Choreographer.getInstance().postFrameCallback { drawTextureView() }
         }
         updateTextureViewAnimation.start()
     }

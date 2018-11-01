@@ -9,6 +9,7 @@ import android.opengl.EGL14.EGL_OPENGL_ES2_BIT
 import android.opengl.GLES20
 import android.opengl.Matrix
 import android.os.Handler
+import android.os.Process.setThreadPriority
 import android.view.Choreographer
 import android.view.TextureView
 import no.danielzeller.metaballslib.R
@@ -60,7 +61,6 @@ class TextureViewRenderer(val context: Context) : TextureView.SurfaceTextureList
 
         override fun run() {
             super.run()
-
             val egl = EGLContext.getEGL() as EGL10
             val eglDisplay = egl.eglGetDisplay(EGL_DEFAULT_DISPLAY)
             egl.eglInitialize(eglDisplay, intArrayOf(0, 0))   // getting OpenGL ES 2

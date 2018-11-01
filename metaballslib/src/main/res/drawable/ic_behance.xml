@@ -6,7 +6,9 @@
     <group
         android:name="root"
         android:pivotX="24"
-        android:pivotY="24" >
+        android:pivotY="24"
+        android:scaleX="0"
+        android:scaleY="0">
         <path
             android:fillColor="#000000"
             android:fillType="evenOdd"

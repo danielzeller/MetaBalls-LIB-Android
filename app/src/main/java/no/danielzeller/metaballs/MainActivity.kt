@@ -29,9 +29,9 @@ class MainActivity : AppCompatActivity() {
 
     val LOG_TAG = "META BALL DEMO"
 
-    private val menuIcons = intArrayOf(R.drawable.ic_facebook, R.drawable.ic_instagram,
-            R.drawable.ic_twitter, R.drawable.ic_linkedin, R.drawable.ic_dribbble,
-            R.drawable.ic_google, R.drawable.ic_vimeo, R.drawable.ic_behance)
+    private val menuIcons = intArrayOf(R.drawable.facebook_animation, R.drawable.instagram_animation,
+            R.drawable.twitter_animation, R.drawable.linkedin_animation, R.drawable.dribble_animation,
+            R.drawable.google_animation, R.drawable.vimeo_animation, R.drawable.behance_animation)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -141,7 +141,7 @@ class MainActivity : AppCompatActivity() {
             val job = cardView.getTag(R.string.job_coroutine_key_id)
             if (job != null && job is Job) {
                 job.cancel()
-                cardView.findViewById<MBProgressBar>(R.id.mbProgressBar).visibility = View.GONE
+                cardView.findViewById<MBProgressBar>(R.id.mbProgressBar).visibility= View.GONE
             }
         }
     }

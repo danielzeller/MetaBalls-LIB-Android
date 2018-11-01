@@ -1,11 +1,13 @@
 package no.danielzeller.compbat
 
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.util.AttributeSet
 import android.view.TextureView
+import android.view.View
 import android.widget.FrameLayout
 
 open class CompBatMBLayout : FrameLayout {
@@ -24,8 +26,14 @@ open class CompBatMBLayout : FrameLayout {
         if (isPreAndroidPie) {
             textureView = TextureView(context)
             textureView.surfaceTextureListener = textureViewRenderer
-            textureViewRenderer.onSurfaceTextureCreated = { drawTextureView() }
+            textureViewRenderer.onSurfaceTextureCreated = {
+                drawTextureView()
+                val fadein = ObjectAnimator.ofFloat(textureView, View.ALPHA, 0f, 1f).setDuration(200)
+                fadein.start()
+            }
             frameLayout.addView(textureView, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
+            textureView.alpha = 0f
+
         }
     }
 
@@ -34,7 +42,7 @@ open class CompBatMBLayout : FrameLayout {
             textureViewRenderer.cutoffFactor = getCutoffFactor()
             val glCanvas = textureViewRenderer.surfaceTexture.beginDraw()
             glCanvas?.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
-            if (glCanvas != null){
+            if (glCanvas != null) {
                 val metaBallContainer = getChildAt(0)
                 drawChild(glCanvas, metaBallContainer, drawingTime)
             }
@@ -57,6 +65,5 @@ open class CompBatMBLayout : FrameLayout {
 
     open fun setupBaseViews(context: Context) {
         isPreAndroidPie = android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.P
-        isPreAndroidPie = true
     }
 }
