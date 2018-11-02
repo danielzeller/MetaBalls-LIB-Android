@@ -19,7 +19,7 @@ class ViewSurfaceTexture {
 
     private var surfaceTextureID = -1
 
-    fun createSurface(width: Int, height: Int, context: Context) {
+    fun createSurface(width: Int, height: Int) {
         if (textureWidth == 0) {
             textureWidth = width
             textureHeight = height

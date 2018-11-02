@@ -250,7 +250,7 @@ class MetaBallPageIndicator : CompBatMBLayout, ViewPager.OnPageChangeListener, V
         internal fun calculateCoordinates() {
             centerY = bounds.height() / 2f
 
-            if (dotsCount != null && viewPager?.adapter != null) {
+            if (viewPager?.adapter != null) {
 
                 dotsCount = viewPager?.adapter?.count!!
                 combinedDotsWidth = getTotalWidth(dotsCount)

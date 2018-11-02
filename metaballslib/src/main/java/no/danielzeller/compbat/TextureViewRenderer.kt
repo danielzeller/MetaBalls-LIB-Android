@@ -126,7 +126,7 @@ class TextureViewRenderer(val context: Context) : TextureView.SurfaceTextureList
         private fun createRenderingObjects() {
             spriteMesh = SpriteMesh()
             fullscreenTextureShader.load(context)
-            surfaceTexture.createSurface(width, height, context)
+            surfaceTexture.createSurface(width, height)
         }
 
         private fun setupViewPort() {
