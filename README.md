@@ -15,14 +15,14 @@ This library contains 3 different Widgets: MetaballMenu, MetaBallProgressBar and
 Via Gradle
 
 ```
-implementation 'no.danielzeller:metaballslib:1.0.0'
+compile 'no.danielzeller:metaballslib:1.0.1'
 ```
 or Maven
 ```
 <dependency>
   <groupId>no.danielzeller</groupId>
   <artifactId>metaballslib</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <type>pom</type>
 </dependency>
 ```
