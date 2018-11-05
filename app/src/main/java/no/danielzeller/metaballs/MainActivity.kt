@@ -16,10 +16,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.bottom_viewpager.*
 import kotlinx.android.synthetic.main.bullet_text.view.*
 import kotlinx.android.synthetic.main.demo_card_bottom.view.*
-import kotlinx.coroutines.experimental.Job
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.delay
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.android.UI
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import no.danielzeller.metaballslib.menu.MetaBallMenuBase
 import no.danielzeller.metaballslib.progressbar.MBProgressBar
 import java.lang.ref.WeakReference
