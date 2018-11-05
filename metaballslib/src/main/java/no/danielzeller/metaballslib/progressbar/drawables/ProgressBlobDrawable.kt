@@ -14,15 +14,16 @@ import no.danielzeller.metaballslib.progressbar.BrownianMotion
 import no.danielzeller.metaballslib.progressbar.FrameRateCounter
 import no.danielzeller.metaballslib.progressbar.Vector3
 
+private const val ROTATE_SPEED = 40f
 
-class ProgressBlobDrawable(val metaBall: Drawable, val tinColors: IntArray, val isRotate: Boolean) : ProgressDrawable() {
+class ProgressBlobDrawable(private val metaBall: Drawable, private val tinColors: IntArray, private val isRotate: Boolean) : ProgressDrawable() {
 
     private val motion: ArrayList<BrownianMotion> = ArrayList()
     private var ballSize = 0
     private var sizeAnim: ValueAnimator? = null
     private var rotation = 0f
     private var frameRate = FrameRateCounter()
-    private val ROTATE_SPEED = 40f
+
 
     init {
         this.rotate = isRotate

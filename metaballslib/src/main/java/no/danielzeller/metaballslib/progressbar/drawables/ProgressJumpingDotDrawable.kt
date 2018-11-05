@@ -8,11 +8,12 @@ import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.animation.PathInterpolator
 
+private const val BALL_SIZE = 0.23f
+private const val JUMP_DURATION = 600L
 
-class ProgressJumpingDotDrawable(val metaBall: Drawable, val tinColors: IntArray, val isDrop: Boolean) : ProgressDrawable() {
+class ProgressJumpingDotDrawable(private val metaBall: Drawable, private val tinColors: IntArray, private val isDrop: Boolean) : ProgressDrawable() {
 
-    private val BALL_SIZE = 0.23f
-    private val JUMP_DURATION = 600L
+
     private val path = Path()
     private val animations: ArrayList<ValueAnimator> = ArrayList()
     private lateinit var pathMeasure: PathMeasure

@@ -11,16 +11,16 @@ import android.view.animation.Interpolator
 import android.view.animation.PathInterpolator
 import no.danielzeller.metaballslib.progressbar.FrameRateCounter
 
+private const val ROTATE_SPEED = 40f
+private const val BALL_SIZE = 0.21f
 
-class ProgressPathDrawable(val metaBallGradient: Drawable, tinColors: IntArray, val shapePath: Path, val isDrop: Boolean, isRotate: Boolean, val animationDuration: Long = 1800L, val interpolator: Interpolator = PathInterpolator(.65f, .14f, .17f, 1f)) : ProgressDrawable() {
+class ProgressPathDrawable(private val metaBallGradient: Drawable, tinColors: IntArray, private val shapePath: Path, private val isDrop: Boolean, isRotate: Boolean, private val animationDuration: Long = 1800L, val interpolator: Interpolator = PathInterpolator(.65f, .14f, .17f, 1f)) : ProgressDrawable() {
 
-    private val ROTATE_SPEED = 40f
-    private val BALL_SIZE = 0.21f
     private var path = Path()
     private val dropDrawables: ArrayList<DropDrawable> = ArrayList()
     private val animations: ArrayList<ValueAnimator> = ArrayList()
     private val aCoordinates = floatArrayOf(0f, 0f)
-    lateinit var pathMeasure: PathMeasure
+    private lateinit var pathMeasure: PathMeasure
     private var ballSize = 0
     private var sizeAnim: ValueAnimator? = null
     private var rotation = 0f
