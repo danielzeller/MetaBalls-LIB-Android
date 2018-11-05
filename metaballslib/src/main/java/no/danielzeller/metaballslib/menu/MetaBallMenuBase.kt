@@ -5,7 +5,7 @@ import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.graphics.drawable.Drawable
-import android.util.AttributeSet
+import android.util.AttributeSet 
 import android.view.Choreographer
 import android.view.Gravity
 import android.view.View
@@ -167,7 +167,10 @@ abstract class MetaBallMenuBase : CompBatMBLayout {
     private var runningAnimations: ArrayList<ValueAnimator> = ArrayList()
     private var isMenuOpen = false
     private var openCloseDrawable: OpenCloseDrawable? = null
-
+    private var pLeft = 0f
+    private var pRight = 0f
+    private var pTop = 0f
+    private var pBottom = 0f
 
     constructor(context: Context) : super(context) {
         setupBaseViews(context)
@@ -178,7 +181,6 @@ abstract class MetaBallMenuBase : CompBatMBLayout {
         setupBaseViews(context)
         loadAttributesFromXML(attrs)
     }
-
 
     open fun loadAttributesFromXML(attrs: AttributeSet?) {
 
@@ -205,6 +207,12 @@ abstract class MetaBallMenuBase : CompBatMBLayout {
 
     final override fun setupBaseViews(context: Context) {
         super.setupBaseViews(context)
+        pLeft = paddingLeft.toFloat()
+        pRight = paddingRight.toFloat()
+        pTop = paddingTop.toFloat()
+        pBottom = paddingBottom.toFloat()
+        setPadding(0, 0, 0, 0)
+
         metaBallsContainerFrameLayout = FrameLayout(context)
         addView(metaBallsContainerFrameLayout, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
         if (!isPreAndroidPie) {
@@ -240,11 +248,11 @@ abstract class MetaBallMenuBase : CompBatMBLayout {
         val layoutGravity = getLayoutGravity()
 
         val menuItemLayoutParams = FrameLayout.LayoutParams(menuItemsLayoutSize, menuItemsLayoutSize)
-        menuItemLayoutParams.setMargins(marginsToCompensateCutoff + menuItemMargins, marginsToCompensateCutoff + menuItemMargins, marginsToCompensateCutoff + menuItemMargins, marginsToCompensateCutoff + menuItemMargins)
+        menuItemLayoutParams.setMargins(marginsToCompensateCutoff + menuItemMargins + pLeft.toInt(), marginsToCompensateCutoff + menuItemMargins + pTop.toInt(), marginsToCompensateCutoff + menuItemMargins + pRight.toInt(), marginsToCompensateCutoff + menuItemMargins + pBottom.toInt())
         menuItemLayoutParams.gravity = layoutGravity
 
         val mainButtonLayoutParams = FrameLayout.LayoutParams(mainButtonLayoutSize, mainButtonLayoutSize)
-        mainButtonLayoutParams.setMargins(marginsToCompensateCutoff, marginsToCompensateCutoff, marginsToCompensateCutoff, marginsToCompensateCutoff)
+        mainButtonLayoutParams.setMargins(marginsToCompensateCutoff + pLeft.toInt(), marginsToCompensateCutoff + pTop.toInt(), marginsToCompensateCutoff + pRight.toInt(), marginsToCompensateCutoff + pBottom.toInt())
         mainButtonLayoutParams.gravity = layoutGravity
 
         for (i in 0 until adapter.itemsCount()) {
