@@ -6,10 +6,12 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
 
+private const val BYTES_PER_FLOAT = 4
+
 class VertexArray(vertexData: FloatArray) {
 
     private val floatBuffer: FloatBuffer
-    private val BYTES_PER_FLOAT = 4
+
 
     init {
         floatBuffer = ByteBuffer

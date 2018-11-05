@@ -45,7 +45,7 @@ class DirectionalMenu : MetaBallMenuBase {
         }
     }
 
-    fun convertToEnum(intValue: Int): ExpandDirection {
+    private fun convertToEnum(intValue: Int): ExpandDirection {
         if (ExpandDirection.EXPAND_DIRECTION_HORIZONTAL.ordinal == intValue) {
             return ExpandDirection.EXPAND_DIRECTION_HORIZONTAL
         }

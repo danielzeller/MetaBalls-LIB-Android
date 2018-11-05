@@ -3,12 +3,11 @@ package no.danielzeller.metaballslib.progressbar
 import android.os.SystemClock
 import java.util.*
 
-class BrownianMotion {
+class BrownianMotion(private var positionScale: Vector3) {
 
     var positionFrequency = 0.25f
-    var positionAmplitude = 0.5f
-    private var positionScale = Vector3(1000f, 1000f, 1000f)
-    var positionFractalLevel = 3
+    private var positionAmplitude = 0.5f
+    private var positionFractalLevel = 3
     private val fbmNorm = 1 / 0.75f
 
     private val time: FloatArray = FloatArray(6)
@@ -18,10 +17,6 @@ class BrownianMotion {
     init {
         rehash()
         frameRate.timeStep()
-    }
-
-    constructor(positionScale: Vector3) {
-        this.positionScale = positionScale
     }
 
     private fun rehash() {

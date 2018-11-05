@@ -10,7 +10,7 @@ import no.danielzeller.metaballslib.progressbar.FrameRateCounter
  * Draws the first drawable, then draws 3 dots decreasing in size which move eased towards
  * the first drawable, giving the effect of the drawable having a tail :P
  */
-class DropDrawable(val metaDrawable: Drawable, val idDropEnabled: Boolean) : Drawable() {
+class DropDrawable(private val metaDrawable: Drawable, val idDropEnabled: Boolean) : Drawable() {
 
     var x = 0f
     var y = 0f

@@ -55,13 +55,13 @@ class OpenCloseDrawable(var iconDrawable: Drawable?, iconColor: Int, context: Co
         var xProgress = 0f
         var iconProgress = 0f
         var rotateProgress = 0f
-        if (openProgressPercent > 0.5f) {
-            rotateProgress = ((openProgressPercent - 0.5f) * 2f)
-            xProgress = 1f
-        } else if (openProgressPercent > 0.33f) {
-            xProgress = ((openProgressPercent - 0.33f) * 6f)
-        } else {
-            iconProgress = 1f - (openProgressPercent * 3f)
+        when {
+            openProgressPercent > 0.5f -> {
+                rotateProgress = ((openProgressPercent - 0.5f) * 2f)
+                xProgress = 1f
+            }
+            openProgressPercent > 0.33f -> xProgress = ((openProgressPercent - 0.33f) * 6f)
+            else -> iconProgress = 1f - (openProgressPercent * 3f)
         }
         closeLineWidth = xExpandInterpolator.getInterpolation(xProgress)*0.8f
         closeLineRotation = 45 * xRotateInterpolator.getInterpolation(rotateProgress)

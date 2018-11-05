@@ -203,7 +203,7 @@ abstract class MetaBallMenuBase : CompBatMBLayout {
         }
     }
 
-    override fun setupBaseViews(context: Context) {
+    final override fun setupBaseViews(context: Context) {
         super.setupBaseViews(context)
         metaBallsContainerFrameLayout = FrameLayout(context)
         addView(metaBallsContainerFrameLayout, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
@@ -285,15 +285,13 @@ abstract class MetaBallMenuBase : CompBatMBLayout {
     }
 
     private fun getLayoutGravity(): Int {
-        if (positionGravity == PositionGravity.BOTTOM_LEFT)
-            return Gravity.BOTTOM or Gravity.START
-        else if (positionGravity == PositionGravity.BOTTOM_RIGHT)
-            return Gravity.BOTTOM or Gravity.END
-        else if (positionGravity == PositionGravity.TOP_RIGHT)
-            return Gravity.TOP or Gravity.END
-        else if (positionGravity == PositionGravity.TOP_LEFT)
-            return Gravity.TOP or Gravity.START
-        return Gravity.CENTER
+        when (positionGravity) {
+            PositionGravity.BOTTOM_LEFT -> return Gravity.BOTTOM or Gravity.START
+            PositionGravity.BOTTOM_RIGHT -> return Gravity.BOTTOM or Gravity.END
+            PositionGravity.TOP_RIGHT -> return Gravity.TOP or Gravity.END
+            PositionGravity.TOP_LEFT -> return Gravity.TOP or Gravity.START
+            else -> return Gravity.CENTER
+        }
     }
 
     private fun startAnimation(animation: ValueAnimator) {

@@ -13,8 +13,8 @@ import android.widget.FrameLayout
 open class CompBatMBLayout : FrameLayout {
 
     protected var isPreAndroidPie = false
-    protected lateinit var textureView: TextureView
-    protected lateinit var textureViewRenderer: TextureViewRenderer
+    private lateinit var textureView: TextureView
+    private lateinit var textureViewRenderer: TextureViewRenderer
 
     constructor(context: Context) : super(context)
 
@@ -28,8 +28,8 @@ open class CompBatMBLayout : FrameLayout {
             textureView.surfaceTextureListener = textureViewRenderer
             textureViewRenderer.onSurfaceTextureCreated = {
                 drawTextureView()
-                val fadein = ObjectAnimator.ofFloat(textureView, View.ALPHA, 0f, 1f).setDuration(200)
-                fadein.start()
+                val fadeIn = ObjectAnimator.ofFloat(textureView, View.ALPHA, 0f, 1f).setDuration(200)
+                fadeIn.start()
             }
             frameLayout.addView(textureView, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
             textureView.alpha = 0f

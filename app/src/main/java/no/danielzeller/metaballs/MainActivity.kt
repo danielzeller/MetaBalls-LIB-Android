@@ -25,9 +25,10 @@ import no.danielzeller.metaballslib.progressbar.MBProgressBar
 import java.lang.ref.WeakReference
 import java.util.concurrent.TimeUnit
 
+private const val LOG_TAG = "META BALL DEMO"
+
 class MainActivity : AppCompatActivity() {
 
-    val LOG_TAG = "META BALL DEMO"
 
     private val menuIcons = intArrayOf(R.drawable.facebook_animation, R.drawable.instagram_animation,
             R.drawable.twitter_animation, R.drawable.linkedin_animation, R.drawable.dribble_animation,
@@ -108,7 +109,7 @@ class MainActivity : AppCompatActivity() {
 
 
         for (i in 1 until descriptionText.size) {
-            val bulletView = LayoutInflater.from(this).inflate(R.layout.bullet_text, null, false)
+            val bulletView = LayoutInflater.from(this).inflate(R.layout.bullet_text, cardView.bulletListContainer, false)
             bulletView.bulletText.text = descriptionText[i]
             cardView.bulletListContainer.addView(bulletView, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT))
         }

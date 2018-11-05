@@ -15,6 +15,8 @@ import android.widget.ImageView
 import no.danielzeller.compbat.CompBatMBLayout
 import no.danielzeller.metaballslib.progressbar.drawables.DropDrawable
 
+private const val DROP_SCALE = 0.79f
+
 class MetaBallPageIndicator : CompBatMBLayout, ViewPager.OnPageChangeListener, ViewPager.OnAdapterChangeListener {
 
     /**
@@ -232,7 +234,7 @@ class MetaBallPageIndicator : CompBatMBLayout, ViewPager.OnPageChangeListener, V
         return 0.79f
     }
 
-    inner class PageIndicatorDrawable(val gradientDrawable: Drawable, val dropDrawable: DropDrawable) : Drawable() {
+    inner class PageIndicatorDrawable(private val gradientDrawable: Drawable, private val dropDrawable: DropDrawable) : Drawable() {
 
         var isFirstRender = true
         private var dotPositions = FloatArray(0)
@@ -241,7 +243,7 @@ class MetaBallPageIndicator : CompBatMBLayout, ViewPager.OnPageChangeListener, V
         private var dotsCount = 0
         private var startXCoord = 0f
         private var distanceBetweenDots = 0f
-        private val DROP_SCALE = 0.79f
+
 
         init {
             gradientDrawable.setBounds(-dotSize, -dotSize, dotSize, dotSize)

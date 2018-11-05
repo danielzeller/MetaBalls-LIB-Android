@@ -9,8 +9,6 @@ import android.opengl.EGL14.EGL_OPENGL_ES2_BIT
 import android.opengl.GLES20
 import android.opengl.Matrix
 import android.os.Handler
-import android.os.Process.setThreadPriority
-import android.view.Choreographer
 import android.view.TextureView
 import no.danielzeller.metaballslib.R
 import javax.microedition.khronos.egl.EGL10
@@ -25,8 +23,6 @@ class TextureViewRenderer(val context: Context) : TextureView.SurfaceTextureList
     var cutoffFactor = 0.69f
     var onSurfaceTextureCreated: (() -> Unit)? = null
     val surfaceTexture = ViewSurfaceTexture()
-
-    var updateTextureView = true
 
     private var updateViewUntil = -1L
 
