@@ -15,11 +15,16 @@ This library contains 3 different Widgets: MetaballMenu, MetaBallProgressBar and
 Via Gradle
 
 ```
-   Coming soon
+implementation 'no.danielzeller:metaballslib:1.0.0'
 ```
 or Maven
 ```
-  Coming soon
+<dependency>
+  <groupId>no.danielzeller</groupId>
+  <artifactId>metaballslib</artifactId>
+  <version>1.0.0</version>
+  <type>pom</type>
+</dependency>
 ```
 
 ## Metaball Circular Menu
