@@ -2,9 +2,9 @@
 
 Various UI components that simulate a liquid(metaball) effect.
 
-[<img src="/Artwork/TwoClips.gif" width="400"/>](https://youtu.be/dGbpS1JjikU)
+[<img src="/Artwork/TwoClips.gif" width="400"/>](https://youtu.be/YiJP7YC1rJo)
 
-[See demo on youtube](https://youtu.be/dGbpS1JjikU)
+[See demo on youtube](https://youtu.be/YiJP7YC1rJo)
 
 ## Did you mean meatball?
 Nope -> metaball! This is a popular effect often used to simulate fluids. Try searching for metaball on Dribbble and you'll find countless concepts mostly made in After Effects.
@@ -29,7 +29,7 @@ or Maven
 
 ## Metaball Circular Menu
 
-[<img src="/Artwork/Menu2.gif" width="400"/>](https://youtu.be/dGbpS1JjikU)
+[<img src="/Artwork/Menu2.gif" width="400"/>](https://youtu.be/YiJP7YC1rJo)
 
 From XML:
 
@@ -83,7 +83,7 @@ class MenuItem(val backgroundColor: Int, val drawable: Drawable, val drawableTin
 ```
 
 ## Metaball Directional Menu
-[<img src="/Artwork/Menu4.gif" width="400"/>](https://youtu.be/dGbpS1JjikU)
+[<img src="/Artwork/Menu4.gif" width="400"/>](https://youtu.be/YiJP7YC1rJo)
 
 ```xml
  <no.danielzeller.metaballslib.menu.DirectionalMenu
@@ -105,7 +105,7 @@ class MenuItem(val backgroundColor: Int, val drawable: Drawable, val drawableTin
 
 
 ## Metaball Page Indicator
-[<img src="/Artwork/Pager.gif" width="400"/>](https://youtu.be/dGbpS1JjikU)
+[<img src="/Artwork/Pager.gif" width="400"/>](https://youtu.be/YiJP7YC1rJo)
 
 ```xml
    <no.danielzeller.metaballslib.MetaBallPageIndicator
@@ -127,7 +127,7 @@ Then you need to attach the ViewPager to the MetaBallPageIndicator
  ```
 
 ## Metaball Progress Bar 
-[<img src="/Artwork/Menu3.gif" width="400"/>](https://youtu.be/dGbpS1JjikU)
+[<img src="/Artwork/Menu3.gif" width="400"/>](https://youtu.be/YiJP7YC1rJo)
 ```xml
       <no.danielzeller.metaballslib.progressbar.MBProgressBar
           android:id="@+id/mbProgressBar"
@@ -142,7 +142,7 @@ Then you need to attach the ViewPager to the MetaBallPageIndicator
 #### ProgressBar Type 
 Set app:progressbar_type to one of the following: circular, blobs, dots, eight, square or long_path for a different look.
 
-[<img src="/Artwork/Menu5.gif" width="400"/>](https://youtu.be/dGbpS1JjikU) 
+[<img src="/Artwork/Menu5.gif" width="400"/>](https://youtu.be/YiJP7YC1rJo) 
 
 ## Contact
 
