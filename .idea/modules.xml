@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MetaBallsAndroid.iml" filepath="$PROJECT_DIR$/MetaBallsAndroid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MetaBalls.iml" filepath="$PROJECT_DIR$/MetaBalls.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/metaballslib/metaballslib.iml" filepath="$PROJECT_DIR$/metaballslib/metaballslib.iml" />
     </modules>

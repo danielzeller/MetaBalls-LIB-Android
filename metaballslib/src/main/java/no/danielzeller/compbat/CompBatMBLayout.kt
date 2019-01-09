@@ -9,10 +9,12 @@ import android.util.AttributeSet
 import android.view.TextureView
 import android.view.View
 import android.widget.FrameLayout
+import no.danielzeller.metaballslib.R
 
 open class CompBatMBLayout : FrameLayout {
 
     protected var isPreAndroidPie = false
+    protected var useTextureViewOnPrePie = true
     private lateinit var textureView: TextureView
     private lateinit var textureViewRenderer: TextureViewRenderer
 
@@ -20,10 +22,25 @@ open class CompBatMBLayout : FrameLayout {
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         textureViewRenderer = TextureViewRenderer(context)
+        loadAttributesFromXml(attrs)
+    }
+
+    private fun loadAttributesFromXml(attrs: AttributeSet?) {
+        val typedArray = context.theme.obtainStyledAttributes(
+                attrs,
+                R.styleable.MetaBallsProgressBar,
+                0, 0)
+        try {
+            useTextureViewOnPrePie = typedArray.getBoolean(R.styleable.MetaBallsProgressBar_useTextureViewOnPrePie, true)
+
+        } finally {
+            typedArray.recycle()
+        }
     }
 
     fun compBatAddTextureView(frameLayout: FrameLayout) {
         if (isPreAndroidPie) {
+
             textureView = TextureView(context)
             textureView.surfaceTextureListener = textureViewRenderer
             textureViewRenderer.onSurfaceTextureCreated = {
@@ -64,6 +81,10 @@ open class CompBatMBLayout : FrameLayout {
     }
 
     open fun setupBaseViews(context: Context) {
-        isPreAndroidPie = android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.P
+        if (useTextureViewOnPrePie) {
+            isPreAndroidPie = android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.P
+        } else {
+            isPreAndroidPie = false
+        }
     }
 }

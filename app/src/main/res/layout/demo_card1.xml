@@ -72,7 +72,7 @@
         app:layout_constraintStart_toStartOf="@+id/imageFrameLayout"
         app:layout_constraintTop_toTopOf="@+id/imageFrameLayout"
 
-
+        app:useTextureViewOnPrePie = "false"
         app:progressbar_type="circular"
         app:colors_array_id="@array/gradient_green"
         app:rotate="true" />

@@ -37,6 +37,7 @@
         <attr name="colors_array_id" format="reference" />
         <attr name="drop_drawable" format="boolean" />
         <attr name="rotate" format="boolean" />
+        <attr name="useTextureViewOnPrePie" format="boolean" />
         <attr name="progressbar_type" format="enum">
             <enum name="circular" value="0" />
             <enum name="blobs" value="1" />
